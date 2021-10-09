@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS "user" (
     id uuid NOT NULL,
     username text NOT NULL,
     email text NOT NULL,
-    password text NOT NULL,
+    password text NOT NULL, --- TODO: implement best practices for storing passwords
     first_name text,
     last_name text,
     PRIMARY KEY (id),
@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS quote (
     id uuid NOT NULL,
     quote text NOT NULL,
     creator uuid NOT NULL,
+    public boolean NOT NULL DEFAULT true,
     PRIMARY KEY (id),
     UNIQUE (quote, creator),
     CONSTRAINT fk_creator FOREIGN KEY (creator) REFERENCES "user" (id)
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS collection (
     title text NOT NULL,
     description text,
     creator uuid NOT NULL,
+    public boolean NOT NULL DEFAULT true,
     PRIMARY KEY (id),
     UNIQUE (title, creator),
     CONSTRAINT fk_creator FOREIGN KEY (creator) REFERENCES "user" (id)
@@ -75,9 +77,10 @@ CREATE TABLE IF NOT EXISTS likes (
     CHECK ((quote IS NOT NULL AND collection IS NULL) OR (quote IS NULL AND collection IS NOT NULL))
 );
 
---- users can create quotes and collections of quotes
---- users can assign tags to the quotes and collections they create
---- users can search for quotes by text or by tags
---- users can search for collections by title or by tags
---- users can follow other users and tags
---- users can like quotes and collections
+--- users can create quotes and collections
+--- users can add quotes (public or their own) to their own collections
+--- users can assign tags to their own quotes and collections
+--- users can search for quotes (public or their own) by text or by tags
+--- users can search for collections (public or their own) by title/description or by tags
+--- users can follow tags and other users
+--- users can like quotes and collections (public or their own)
