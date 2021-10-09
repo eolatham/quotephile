@@ -17,19 +17,6 @@ CREATE TABLE IF NOT EXISTS quote (
     UNIQUE (quote, creator),
     CONSTRAINT fk_creator FOREIGN KEY (creator) REFERENCES "user" (id)
 );
-CREATE TABLE IF NOT EXISTS tag (
-    id uuid NOT NULL,
-    tag text NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE (tag)
-);
-CREATE TABLE IF NOT EXISTS quote_to_tag (
-    quote uuid NOT NULL,
-    tag uuid NOT NULL,
-    PRIMARY KEY (quote, tag),
-    CONSTRAINT fk_quote FOREIGN KEY (quote) REFERENCES quote (id),
-    CONSTRAINT fk_tag FOREIGN KEY (tag) REFERENCES tag (id)
-);
 CREATE TABLE IF NOT EXISTS collection (
     id uuid NOT NULL,
     title text NOT NULL,
@@ -46,6 +33,26 @@ CREATE TABLE IF NOT EXISTS collection_to_quote (
     CONSTRAINT fk_collection FOREIGN KEY (collection) REFERENCES collection (id),
     CONSTRAINT fk_quote FOREIGN KEY (quote) REFERENCES quote (id)
 );
+CREATE TABLE IF NOT EXISTS tag (
+    id uuid NOT NULL,
+    tag text NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (tag)
+);
+CREATE TABLE IF NOT EXISTS quote_to_tag (
+    quote uuid NOT NULL,
+    tag uuid NOT NULL,
+    PRIMARY KEY (quote, tag),
+    CONSTRAINT fk_quote FOREIGN KEY (quote) REFERENCES quote (id),
+    CONSTRAINT fk_tag FOREIGN KEY (tag) REFERENCES tag (id)
+);
+CREATE TABLE IF NOT EXISTS collection_to_tag (
+    collection uuid NOT NULL,
+    tag uuid NOT NULL,
+    PRIMARY KEY (collection, tag),
+    CONSTRAINT fk_collection FOREIGN KEY (collection) REFERENCES collection (id),
+    CONSTRAINT fk_tag FOREIGN KEY (tag) REFERENCES tag (id)
+);
 CREATE TABLE IF NOT EXISTS follows (
     follower uuid NOT NULL,
     "user" uuid,
@@ -54,7 +61,8 @@ CREATE TABLE IF NOT EXISTS follows (
     CONSTRAINT fk_follower FOREIGN KEY (follower) REFERENCES "user" (id),
     CONSTRAINT fk_user FOREIGN KEY ("user") REFERENCES "user" (id),
     CONSTRAINT fk_tag FOREIGN KEY (tag) REFERENCES tag (id),
-    CHECK (("user" IS NOT NULL AND tag IS NULL) OR ("user" IS NULL AND tag IS NOT NULL))
+    CHECK (("user" IS NOT NULL AND tag IS NULL) OR ("user" IS NULL AND tag IS NOT NULL)),
+    CHECK (follower != "user")
 );
 CREATE TABLE IF NOT EXISTS likes (
     "user" uuid NOT NULL,
@@ -66,3 +74,10 @@ CREATE TABLE IF NOT EXISTS likes (
     CONSTRAINT fk_collection FOREIGN KEY (collection) REFERENCES collection (id),
     CHECK ((quote IS NOT NULL AND collection IS NULL) OR (quote IS NULL AND collection IS NOT NULL))
 );
+
+--- users can create quotes and collections of quotes
+--- users can assign tags to the quotes and collections they create
+--- users can search for quotes by text or by tags
+--- users can search for collections by title or by tags
+--- users can follow other users and tags
+--- users can like quotes and collections
