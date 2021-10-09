@@ -1,0 +1,28 @@
+[project]
+name = "quote.me"
+version = "1.0.0"
+description = "A Flask/React web application for storing, organizing, and searching for text quotes"
+authors = [
+    {name = "Eric Latham", email = "ericoliverlatham@gmail.com"},
+]
+dependencies = [
+    "flask~=2.0",
+    "flask-cors~=3.0",
+    "typeguard~=2.12",
+    "psycopg2-binary~=2.9",
+]
+requires-python = ">=3.9"
+dynamic = ["classifiers"]
+license = {text = "MIT"}
+
+[project.urls]
+homepage = "https://github.com/eolatham/quote.me"
+
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[tool]
+[tool.pdm]
+[tool.pdm.scripts]
+start = "bash -c \"export FLASK_ENV=development; cd public; flask run;\""
