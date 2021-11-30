@@ -1,6 +1,16 @@
 # <span>quote.me</span>
 
+#### Author: Eric Latham
+
+#### Email: ericoliverlatham@gmail.com
+
+---
+
+## Description
+
 A Flask/React web application for storing, organizing, and searching for text quotes
+
+## Instructions
 
 ### Setting Things Up
 
