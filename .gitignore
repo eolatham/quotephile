@@ -1,7 +1,0 @@
-node_modules/
-__pypackages__/
-__pycache__/
-.vscode/
-*.egg-info/
-.pdm.toml
-react-app-env.d.ts
