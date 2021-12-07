@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Quote" representedClassName="Quote" syncable="YES" codeGenerationType="category" coreSpotlightDisplayNameExpression="Quote">
+        <attribute name="author" optional="YES" attributeType="String" minValueString="1" maxValueString="1000" spotlightIndexingEnabled="YES"/>
+        <attribute name="dateChanged" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="text" attributeType="String" minValueString="1" maxValueString="10000" spotlightIndexingEnabled="YES"/>
+        <relationship name="collection" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteCollection" inverseName="quotes" inverseEntity="QuoteCollection"/>
+    </entity>
+    <entity name="QuoteCollection" representedClassName="QuoteCollection" syncable="YES" codeGenerationType="category" coreSpotlightDisplayNameExpression="QuoteCollection">
+        <attribute name="dateChanged" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String" minValueString="1" maxValueString="1000" spotlightIndexingEnabled="YES"/>
+        <relationship name="quotes" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Quote" inverseName="collection" inverseEntity="Quote"/>
+    </entity>
+    <elements>
+        <element name="Quote" positionX="-63" positionY="-18" width="128" height="119"/>
+        <element name="QuoteCollection" positionX="-63" positionY="18" width="128" height="104"/>
+    </elements>
+</model>

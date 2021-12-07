@@ -2,21 +2,20 @@
 //  ContentView.swift
 //  QuoteCollector
 //
-//  Created by Eric Latham on 12/6/21.
+//  Created by Eric Latham on 12/7/21.
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
     var body: some View {
-        QuoteCollectionListView(quoteCollections: QUOTE_COLLECTIONS)
+        QuoteCollectionListView()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ContentView()
-        }
+        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
