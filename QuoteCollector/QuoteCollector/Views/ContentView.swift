@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        QuoteCollectionListView(quoteCollections: quoteCollections)
+        QuoteCollectionListView(quoteCollections: QUOTE_COLLECTIONS)
     }
 }
 

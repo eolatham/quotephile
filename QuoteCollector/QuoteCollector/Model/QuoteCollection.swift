@@ -7,8 +7,14 @@
 
 import Foundation
 
-struct QuoteCollection: Hashable, Codable {
-    var id: UUID
+struct QuoteCollection: Hashable, Codable, Identifiable {
+    let id: UUID
     var name: String
     var quotes: [Quote]
+    
+    init(name: String, quotes: [Quote] = []) {
+        self.id = UUID()
+        self.name = name
+        self.quotes = quotes
+    }
 }

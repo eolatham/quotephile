@@ -11,7 +11,7 @@ struct QuoteCollectionListView: View {
     var quoteCollections: [QuoteCollection]
     var body: some View {
         NavigationView {
-            List(quoteCollections, id: \.id) { quoteCollection in
+            List(quoteCollections) { quoteCollection in
                 NavigationLink {
                     QuoteCollectionView(quoteCollection: quoteCollection)
                 } label: {
@@ -25,6 +25,6 @@ struct QuoteCollectionListView: View {
 
 struct QuoteCollectionListView_Previews: PreviewProvider {
     static var previews: some View {
-        QuoteCollectionListView(quoteCollections: quoteCollections)
+        QuoteCollectionListView(quoteCollections: QUOTE_COLLECTIONS)
     }
 }

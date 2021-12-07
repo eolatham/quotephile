@@ -21,6 +21,6 @@ struct QuoteRowView: View {
 
 struct QuoteRowView_Previews: PreviewProvider {
     static var previews: some View {
-        QuoteRowView(quote: quoteCollections[0].quotes[0])
+        QuoteRowView(quote: QUOTE_COLLECTIONS[0].quotes[0])
     }
 }

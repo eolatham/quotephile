@@ -19,10 +19,12 @@
 		B6E6F011275EF7110094B3DA /* QuoteCollectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6F010275EF7110094B3DA /* QuoteCollectionListView.swift */; };
 		B6E6F013275EF7580094B3DA /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6F012275EF7580094B3DA /* Quote.swift */; };
 		B6E6F015275EF7890094B3DA /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6F014275EF7890094B3DA /* ModelData.swift */; };
-		B6E6F01A275EF8740094B3DA /* quoteData.json in Resources */ = {isa = PBXBuildFile; fileRef = B6E6F019275EF8740094B3DA /* quoteData.json */; };
 		B6E6F01C275EFFBB0094B3DA /* QuoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6F01B275EFFBB0094B3DA /* QuoteRowView.swift */; };
 		B6E6F01E275F05D20094B3DA /* QuoteCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6F01D275F05D20094B3DA /* QuoteCollection.swift */; };
 		B6E6F020275F070B0094B3DA /* QuoteCollectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6F01F275F070B0094B3DA /* QuoteCollectionRowView.swift */; };
+		B6FE9090275FB33C0051F1B8 /* quoteCollection2.txt in Resources */ = {isa = PBXBuildFile; fileRef = B6FE908D275FB33B0051F1B8 /* quoteCollection2.txt */; };
+		B6FE9091275FB33C0051F1B8 /* quoteCollection3.txt in Resources */ = {isa = PBXBuildFile; fileRef = B6FE908E275FB33C0051F1B8 /* quoteCollection3.txt */; };
+		B6FE9092275FB33C0051F1B8 /* quoteCollection1.txt in Resources */ = {isa = PBXBuildFile; fileRef = B6FE908F275FB33C0051F1B8 /* quoteCollection1.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,10 +60,12 @@
 		B6E6F010275EF7110094B3DA /* QuoteCollectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionListView.swift; sourceTree = "<group>"; };
 		B6E6F012275EF7580094B3DA /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		B6E6F014275EF7890094B3DA /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
-		B6E6F019275EF8740094B3DA /* quoteData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = quoteData.json; sourceTree = "<group>"; };
 		B6E6F01B275EFFBB0094B3DA /* QuoteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteRowView.swift; sourceTree = "<group>"; };
 		B6E6F01D275F05D20094B3DA /* QuoteCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollection.swift; sourceTree = "<group>"; };
 		B6E6F01F275F070B0094B3DA /* QuoteCollectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionRowView.swift; sourceTree = "<group>"; };
+		B6FE908D275FB33B0051F1B8 /* quoteCollection2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quoteCollection2.txt; sourceTree = "<group>"; };
+		B6FE908E275FB33C0051F1B8 /* quoteCollection3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quoteCollection3.txt; sourceTree = "<group>"; };
+		B6FE908F275FB33C0051F1B8 /* quoteCollection1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quoteCollection1.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,7 +177,9 @@
 		B6E6F018275EF82F0094B3DA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B6E6F019275EF8740094B3DA /* quoteData.json */,
+				B6FE908F275FB33C0051F1B8 /* quoteCollection1.txt */,
+				B6FE908D275FB33B0051F1B8 /* quoteCollection2.txt */,
+				B6FE908E275FB33C0051F1B8 /* quoteCollection3.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -283,7 +289,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6E6EFE8275EECE90094B3DA /* Preview Assets.xcassets in Resources */,
-				B6E6F01A275EF8740094B3DA /* quoteData.json in Resources */,
+				B6FE9091275FB33C0051F1B8 /* quoteCollection3.txt in Resources */,
+				B6FE9092275FB33C0051F1B8 /* quoteCollection1.txt in Resources */,
+				B6FE9090275FB33C0051F1B8 /* quoteCollection2.txt in Resources */,
 				B6E6EFE5275EECE90094B3DA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

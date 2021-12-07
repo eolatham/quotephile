@@ -7,26 +7,23 @@
 
 import Foundation
 
-var quoteCollections: [QuoteCollection] = load("quoteData.json")
+var QUOTE_COLLECTIONS: [QuoteCollection] = loadQuoteCollections()
 
-func load<T: Decodable>(_ filename: String) -> T {
-    let data: Data
-
-    guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
-    else {
-        fatalError("Couldn't find \(filename) in main bundle.")
+func loadQuoteCollections() -> [QuoteCollection] {
+    var quoteCollections: [QuoteCollection] = []
+    for i in [1, 2, 3] {
+        var quotes: [Quote] = []
+        if let url = Bundle.main.url(forResource: "quoteCollection\(i)", withExtension: "txt") {
+            do {
+                let data = try String(contentsOfFile: url.path, encoding: .utf8)
+                for line in data.components(separatedBy: .newlines) {
+                    quotes.append(Quote(text: line))
+                }
+            } catch {
+                fatalError("Failed to load quote collections:\n\(error)")
+            }
+        }
+        quoteCollections.append(QuoteCollection(name: "Quote Collection #\(i)", quotes: quotes))
     }
-
-    do {
-        data = try Data(contentsOf: file)
-    } catch {
-        fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
-    }
-
-    do {
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
-    } catch {
-        fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
-    }
+    return quoteCollections
 }
