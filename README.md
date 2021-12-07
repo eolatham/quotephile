@@ -6,4 +6,4 @@ Email: ericoliverlatham@gmail.com
 
 ## Description
 
-An iOS app for storing, organizing, and sharing text quotes
+An app compatible with Apple devices that makes it easy to store, organize, and share text quotes
