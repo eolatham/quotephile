@@ -1,4 +1,4 @@
-# <span>quote.me</span>
+# QuoteCollector
 
 Author: Eric Latham
 
