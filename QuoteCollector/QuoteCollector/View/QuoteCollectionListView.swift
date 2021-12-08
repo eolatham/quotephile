@@ -12,7 +12,7 @@ struct QuoteCollectionListView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \QuoteCollection.name, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \QuoteCollection.dateCreated, ascending: false)],
         animation: .default)
     private var quoteCollections: FetchedResults<QuoteCollection>
 
