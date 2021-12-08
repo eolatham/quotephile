@@ -24,6 +24,7 @@ struct QuoteCollectionListView: View {
                         QuoteCollectionView(
                             quoteCollection: quoteCollection,
                             quotes: Array(quoteCollection.quotes as? Set<Quote> ?? [])
+                                .sorted(by: {a, b in return a.dateCreated! > b.dateCreated!})
                         )
                     } label: {
                         QuoteCollectionRowView(quoteCollection: quoteCollection)
