@@ -19,7 +19,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            ContentView().environment(\.managedObjectContext, PersistenceManager.preview.container.viewContext)
         }
     }
 }

@@ -7,19 +7,20 @@
 
 import CoreData
 
-struct PersistenceController {
-    static let shared = PersistenceController()
+struct PersistenceManager {
+    static let shared = PersistenceManager()
 
-    static var preview: PersistenceController = {
-        let result = PersistenceController(inMemory: true)
+    static var preview: PersistenceManager = {
+        let result = PersistenceManager(inMemory: true)
         let viewContext = result.container.viewContext
         for i in 1..<6 {
-            var quoteCollection = QuoteCollection.create(context: viewContext, name: "Quote Collection #\(i)")
+            let quoteCollection = QuoteCollection.create(context: viewContext, name: "Quote Collection #\(i)")
             for j in 1..<11 {
                 var quote = Quote.create(
                     context: viewContext,
                     collection: quoteCollection,
-                    text: "Quote Collection #\(i) - Quote #\(j)"
+                    text: "Quote Collection #\(i) - Quote #\(j)",
+                    author: "Author"
                 )
             }
         }
