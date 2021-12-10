@@ -39,7 +39,7 @@ public class Quote: NSManagedObject {
         context: NSManagedObjectContext,
         collection: QuoteCollection,
         text: String,
-        author: String? = nil
+        author: String = ""
     ) -> Quote {
         let quote = Quote(context: context)
         quote.id = UUID()

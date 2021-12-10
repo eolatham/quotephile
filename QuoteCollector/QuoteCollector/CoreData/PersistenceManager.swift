@@ -19,8 +19,7 @@ struct PersistenceManager {
                 var quote = Quote.create(
                     context: viewContext,
                     collection: quoteCollection,
-                    text: "Quote Collection #\(i) - Quote #\(j)",
-                    author: "Author"
+                    text: "Quote Collection #\(i) - Quote #\(j)"
                 )
             }
         }
