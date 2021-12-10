@@ -11,7 +11,7 @@ import CoreData
 struct QuoteCollectionListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    var quoteCollections: FetchedResults<QuoteCollection>
+    var quoteCollections: [QuoteCollection]
 
     var body: some View {
         NavigationView {

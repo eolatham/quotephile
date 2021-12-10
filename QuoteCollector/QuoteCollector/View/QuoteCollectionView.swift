@@ -12,7 +12,7 @@ struct QuoteCollectionView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var quoteCollection: QuoteCollection
-    var quotes: FetchedResults<Quote>
+    var quotes: [Quote]
     
     var body: some View {
         List {

@@ -34,12 +34,11 @@ public class QuoteCollection: NSManagedObject {
         name: String? = nil,
         sortBy: QuoteCollectionSortByAttribute = QuoteCollectionSortByAttribute.dateCreated,
         ascending: Bool = false
-    ) -> FetchedResults<QuoteCollection> {
-        @FetchRequest(
-            sortDescriptors: [NSSortDescriptor(key: sortBy.rawValue, ascending: ascending)],
-            predicate: name == nil ? nil : NSPredicate(format: "name CONTAINS[c] %@", name!)
-        )
-        var quoteCollections: FetchedResults<QuoteCollection>
-        return quoteCollections
+    ) -> [QuoteCollection] {
+        let fetchRequest: NSFetchRequest<QuoteCollection> = QuoteCollection.fetchRequest()
+        fetchRequest.predicate = name == nil ? nil : NSPredicate(format: "name CONTAINS[c] %@", name!)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy.rawValue, ascending: ascending)]
+        do { return try context.fetch(fetchRequest) }
+        catch { return [] }
     }
 }

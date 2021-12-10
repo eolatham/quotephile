@@ -39,32 +39,26 @@ public class Quote: NSManagedObject {
     
     static func query(
         context: NSManagedObjectContext,
-        text: String? = nil,
-        author: String? = nil,
         collection: QuoteCollection? = nil,
+        author: String? = nil,
+        text: String? = nil,
         sortBy: QuoteSortByAttribute = QuoteSortByAttribute.dateCreated,
         ascending: Bool = false
-    ) -> FetchedResults<Quote> {
-        var predicateFormatParts: [String] = []
-        var predicateArgs: [Any] = []
-        if text != nil {
-            predicateFormatParts.append("text CONTAINS[c] %@")
-            predicateArgs.append(text!)
+    ) -> [Quote] {
+        var subpredicates: [NSPredicate] = []
+        if collection != nil {
+            subpredicates.append(NSPredicate(format: "collection = %@", collection!))
         }
         if author != nil {
-            predicateFormatParts.append("author CONTAINS[c] %@")
-            predicateArgs.append(author!)
+            subpredicates.append(NSPredicate(format: "author CONTAINS[c] %@", author!))
         }
-        if collection != nil {
-            predicateFormatParts.append("collection = %@")
-            predicateArgs.append(collection!)
+        if text != nil {
+            subpredicates.append(NSPredicate(format: "text CONTAINS[c] %@", text!))
         }
-        let predicateFormat: String = predicateFormatParts.joined(separator: " && ")
-        @FetchRequest(
-            sortDescriptors: [NSSortDescriptor(key: sortBy.rawValue, ascending: ascending)],
-            predicate: predicateFormat.isEmpty ? nil : NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
-        )
-        var quotes: FetchedResults<Quote>
-        return quotes
+        let fetchRequest: NSFetchRequest<Quote> = Quote.fetchRequest()
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: subpredicates)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy.rawValue, ascending: ascending)]
+        do { return try context.fetch(fetchRequest) }
+        catch { return [] }
     }
 }
