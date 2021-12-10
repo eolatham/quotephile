@@ -18,6 +18,7 @@ public class Quote: NSManagedObject {
         // Add space to avoid crash upon switching sort mode
         return Utility.dateToDayString(date:dateCreated!) + " "
     }
+    
     @objc public var dayChangedAscending: String {
         return Utility.dateToDayString(date:dateChanged!)
     }
@@ -25,12 +26,13 @@ public class Quote: NSManagedObject {
         // Add space to avoid crash upon switching sort mode
         return Utility.dateToDayString(date:dateChanged!) + " "
     }
+    
     @objc public var authorAscending: String {
-        return author ?? "None"
+        return author!.isEmpty ? "None" : author!
     }
     @objc public var authorDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return (author ?? "None") + " "
+        return (author!.isEmpty ? "None" : author!) + " "
     }
     
     public static func create(

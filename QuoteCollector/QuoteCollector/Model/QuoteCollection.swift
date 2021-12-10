@@ -18,6 +18,7 @@ public class QuoteCollection: NSManagedObject {
         // Add space to avoid crash upon switching sort mode
         return Utility.dateToDayString(date:dateCreated!) + " "
     }
+    
     @objc public var dayChangedAscending: String {
         return Utility.dateToDayString(date:dateChanged!)
     }
@@ -25,6 +26,7 @@ public class QuoteCollection: NSManagedObject {
         // Add space to avoid crash upon switching sort mode
         return Utility.dateToDayString(date:dateChanged!) + " "
     }
+    
     @objc public var nameAscending: String {
         return name!
     }
