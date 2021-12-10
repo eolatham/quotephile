@@ -113,11 +113,10 @@
 			isa = PBXGroup;
 			children = (
 				B645C4A9275FCDC100AE1810 /* Assets.xcassets */,
-				B645C4B0275FCDC100AE1810 /* QuoteCollector.xcdatamodeld */,
-				B645C4AE275FCDC100AE1810 /* Persistence.swift */,
 				B645C4A5275FCDC000AE1810 /* QuoteCollectorApp.swift */,
-				B645C4E5275FDF1D00AE1810 /* View */,
 				B645C4E4275FDEE300AE1810 /* Model */,
+				B645C4E5275FDF1D00AE1810 /* View */,
+				B690A0142762E6B50005DE05 /* Control */,
 				B645C4AB275FCDC100AE1810 /* Preview Content */,
 			);
 			path = QuoteCollector;
@@ -151,6 +150,7 @@
 		B645C4E4275FDEE300AE1810 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B645C4B0275FCDC100AE1810 /* QuoteCollector.xcdatamodeld */,
 				B645C4DC275FDEBC00AE1810 /* QuoteCollection+CoreDataClass.swift */,
 				B645C4DE275FDEBC00AE1810 /* Quote+CoreDataClass.swift */,
 			);
@@ -168,6 +168,14 @@
 				B645C4E6275FE59700AE1810 /* QuoteView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		B690A0142762E6B50005DE05 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				B645C4AE275FCDC100AE1810 /* Persistence.swift */,
+			);
+			path = Control;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

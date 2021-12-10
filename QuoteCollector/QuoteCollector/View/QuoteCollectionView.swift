@@ -10,8 +10,10 @@ import CoreData
 
 struct QuoteCollectionView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    
     var quoteCollection: QuoteCollection
-    var quotes: [Quote]
+    var quotes: FetchedResults<Quote>
+    
     var body: some View {
         List {
             ForEach(quotes) { quote in
@@ -42,8 +44,6 @@ struct QuoteCollectionView: View {
             do {
                 try viewContext.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
@@ -56,8 +56,6 @@ struct QuoteCollectionView: View {
             do {
                 try viewContext.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
