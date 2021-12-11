@@ -10,28 +10,6 @@ import CoreData
 struct PersistenceManager {
     static let shared = PersistenceManager()
 
-    static var preview: PersistenceManager = {
-        let result = PersistenceManager(inMemory: true)
-        let viewContext = result.container.viewContext
-        for i in 1..<6 {
-            let quoteCollection = QuoteCollection.create(context: viewContext, name: "Quote Collection #\(i)")
-            for j in 1..<11 {
-                var quote = Quote.create(
-                    context: viewContext,
-                    collection: quoteCollection,
-                    text: "Quote Collection #\(i) - Quote #\(j)"
-                )
-            }
-        }
-        do {
-            try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return result
-    }()
-
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
@@ -45,4 +23,28 @@ struct PersistenceManager {
             }
         })
     }
+    
+    static var preview: PersistenceManager = {
+        let manager = PersistenceManager(inMemory: true)
+        let context = manager.container.viewContext
+        let addQuoteCollectionViewModel = AddQuoteCollectionViewModel()
+        let addQuoteViewModel = AddQuoteViewModel()
+        for i in 1..<6 {
+            let quoteCollection = addQuoteCollectionViewModel.addQuoteCollection(
+                context: context,
+                values: QuoteCollectionValues(name: "Quote Collection #\(i)")
+            )
+            for j in 1..<11 {
+                let quote = addQuoteViewModel.addQuote(
+                    context: context,
+                    values: QuoteValues(
+                        collection: quoteCollection,
+                        text: "Quote Collection #\(i) - Quote #\(j)"
+                    )
+                )
+            }
+        }
+        Utility.updateContext(context: context)
+        return manager
+    }()
 }

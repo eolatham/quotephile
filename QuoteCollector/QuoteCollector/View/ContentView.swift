@@ -9,17 +9,13 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    
     var body: some View {
-        QuoteCollectionListView(quoteCollections: QuoteCollection.query(context: viewContext))
+        QuoteCollectionListView()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ContentView().environment(\.managedObjectContext, PersistenceManager.preview.container.viewContext)
-        }
+        ContentView()
     }
 }

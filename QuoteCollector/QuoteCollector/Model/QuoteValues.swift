@@ -5,9 +5,11 @@
 //  Created by Eric Latham on 12/10/21.
 //
 
-import Foundation
-
+/**
+ * User-editable values.
+ */
 struct QuoteValues {
+    let collection: QuoteCollection
     let text: String
-    let author: String
+    let author: String = ""
 }

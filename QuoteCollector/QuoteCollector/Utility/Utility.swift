@@ -5,10 +5,18 @@
 //  Created by Eric Latham on 12/10/21.
 //
 
-import Foundation
+import CoreData
 
-public class Utility {
-    public static func dateToDayString(date: Date) -> String {
+struct Utility {
+    static func dateToDayString(date: Date) -> String {
         return date.formatted(.dateTime.month(.wide).day().year())
+    }
+    
+    static func updateContext(context: NSManagedObjectContext) {
+        do {
+            try context.save()
+        } catch {
+            print("Save error: \(error)")
+        }
     }
 }

@@ -9,51 +9,26 @@
 import CoreData
 
 @objc(Quote)
-public class Quote: NSManagedObject {
-    
-    @objc public var dayCreatedAscending: String {
+class Quote: NSManagedObject {
+    @objc var dayCreatedAscending: String {
         return Utility.dateToDayString(date:dateCreated!)
     }
-    @objc public var dayCreatedDescending: String {
+    @objc var dayCreatedDescending: String {
         // Add space to avoid crash upon switching sort mode
         return Utility.dateToDayString(date:dateCreated!) + " "
     }
-    
-    @objc public var dayChangedAscending: String {
+    @objc var dayChangedAscending: String {
         return Utility.dateToDayString(date:dateChanged!)
     }
-    @objc public var dayChangedDescending: String {
+    @objc var dayChangedDescending: String {
         // Add space to avoid crash upon switching sort mode
         return Utility.dateToDayString(date:dateChanged!) + " "
     }
-    
-    @objc public var authorAscending: String {
+    @objc var authorAscending: String {
         return author!.isEmpty ? "None" : author!
     }
-    @objc public var authorDescending: String {
+    @objc var authorDescending: String {
         // Add space to avoid crash upon switching sort mode
         return (author!.isEmpty ? "None" : author!) + " "
-    }
-    
-    public static func create(
-        context: NSManagedObjectContext,
-        collection: QuoteCollection,
-        text: String,
-        author: String = ""
-    ) -> Quote {
-        let quote = Quote(context: context)
-        quote.id = UUID()
-        let now = Date.now
-        quote.dateCreated = now
-        quote.dateChanged = now
-        quote.collection = collection
-        quote.text = text
-        quote.author = author
-        do {
-            try context.save()
-        } catch {
-            print("Save error: \(error)")
-        }
-        return quote
     }
 }

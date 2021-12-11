@@ -1,68 +1,94 @@
 //
-//  ContentView.swift
+//  QuoteCollectionListView.swift
 //  QuoteCollector
 //
-//  Created by Eric Latham on 12/7/21.
+//  Created by Eric Latham on 12/10/21.
 //
 
 import SwiftUI
 import CoreData
 
 struct QuoteCollectionListView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.managedObjectContext) private var context
+
+    @State private var showAddView = false
+    @State private var selectedSort = QuoteCollectionSort.default
+    @State private var searchTerm = ""
     
-    var quoteCollections: [QuoteCollection]
+    let viewModel = QuoteCollectionListViewModel()
+
+    @SectionedFetchRequest(
+        sectionIdentifier: QuoteCollectionSort.default.section,
+        sortDescriptors: QuoteCollectionSort.default.descriptors,
+        animation: .default
+    )
+    private var quoteCollections: SectionedFetchResults<String, QuoteCollection>
+    
+    var searchQuery: Binding<String> {
+        Binding {
+            searchTerm
+        } set: { newValue in
+            searchTerm = newValue
+            if newValue.isEmpty {
+                quoteCollections.nsPredicate = nil
+            } else {
+                quoteCollections.nsPredicate = NSPredicate(format: "name CONTAINS[c] %@", newValue)
+            }
+        }
+    }
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(quoteCollections) { quoteCollection in
-                    NavigationLink {
-                        QuoteCollectionView(
-                            quoteCollection: quoteCollection,
-                            quotes: Quote.query(context: viewContext, collection: quoteCollection)
-                        )
-                    } label: {
-                        QuoteCollectionRowView(quoteCollection: quoteCollection)
+                ForEach(quoteCollections) { section in
+                    Section(header: Text(section.id)) {
+                        ForEach(section) { quoteCollection in
+                            NavigationLink {
+                                AddQuoteCollectionView(objectId: quoteCollection.objectID)
+                            } label: {
+                                QuoteCollectionRowView(quoteCollection: quoteCollection)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            withAnimation {
+                                viewModel.deleteQuoteCollection(
+                                    context: context,
+                                    section: section,
+                                    indexSet: indexSet
+                                )
+                            }
+                        }
                     }
                 }
-                .onDelete(perform: deleteQuoteCollections)
             }
+            .searchable(text: searchQuery)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addQuoteCollection) {
-                        Label("Add Quote Collection", systemImage: "plus")
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    SortQuoteCollectionsView(
+                        selectedSort: $selectedSort,
+                        sorts: QuoteCollectionSort.sorts
+                    )
+                        .onChange(of: selectedSort) { _ in
+                            quoteCollections.sortDescriptors = selectedSort.descriptors
+                            quoteCollections.sectionIdentifier = selectedSort.section
+                        }
+                    Button {
+                        showAddView = true
+                    } label: {
+                        Image(systemName: "plus.circle")
                     }
                 }
+            }
+            .sheet(isPresented: $showAddView) {
+                AddQuoteCollectionView()
             }
             .navigationTitle("Quote Collections")
         }
     }
+}
 
-    private func addQuoteCollection() {
-        withAnimation {
-            _ = QuoteCollection.create(context: viewContext, name: "Quote Collection")
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteQuoteCollections(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { quoteCollections[$0] }.forEach(viewContext.delete)
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
+struct QuoteCollectionListView_Previews: PreviewProvider {
+    static var previews: some View {
+        QuoteCollectionListView()
     }
 }
