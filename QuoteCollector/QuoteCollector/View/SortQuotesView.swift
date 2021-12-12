@@ -1,16 +1,16 @@
 //
-//  SelectSortView.swift
+//  SortQuotesView.swift
 //  QuoteCollector
 //
-//  Created by Eric Latham on 12/10/21.
+//  Created by Eric Latham on 12/12/21.
 //
 
 import SwiftUI
 
-struct SortQuoteCollectionsView: View {
-    @Binding var selectedSort: QuoteCollectionSort
+struct SortQuotesView: View {
+    @Binding var selectedSort: QuoteSort
 
-    let sorts: [QuoteCollectionSort]
+    let sorts: [QuoteSort]
     
     var body: some View {
         Menu {
@@ -26,5 +26,15 @@ struct SortQuoteCollectionsView: View {
             )
         }
         .pickerStyle(.inline)
+    }
+}
+
+struct SortQuotesView_Previews: PreviewProvider {
+    @State static var sort = QuoteSort.default
+    static var previews: some View {
+        SortQuotesView(
+            selectedSort: $sort,
+            sorts: QuoteSort.sorts
+        )
     }
 }

@@ -15,8 +15,8 @@ struct AddQuoteCollectionView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) var presentation
 
-    @State private var name = ""
-    @State private var nameError = false
+    @State private var name: String = ""
+    @State private var nameError: String? = nil
 
     var objectId: NSManagedObjectID?
     
@@ -32,18 +32,20 @@ struct AddQuoteCollectionView: View {
                             text: $name,
                             prompt: Text("Name")
                         )
-                        if nameError {
-                            Text("Name is required")
+                        if nameError != nil {
+                            Text(nameError!)
                                 .foregroundColor(.red)
                         }
                     }
                     Button {
-                        if name.isEmpty {
-                            nameError = name.isEmpty
-                        } else {
-                            let values = QuoteCollectionValues(name: name)
+                        if name.isEmpty { nameError = "Name is empty!" }
+                        else { nameError = nil }
+                        
+                        if nameError == nil {
                             _ = viewModel.addQuoteCollection(
-                                context: context, objectId: objectId, values: values
+                                context: context,
+                                objectId: objectId,
+                                values: QuoteCollectionValues(name: name)
                             )
                             presentation.wrappedValue.dismiss()
                         }
@@ -56,7 +58,7 @@ struct AddQuoteCollectionView: View {
                     .buttonStyle(.borderedProminent)
                     
                 }
-                .navigationTitle("\(objectId == nil ? "Add Quote Collection" : "Edit Quote Collection")")
+                .navigationTitle(objectId == nil ? "Add Quote Collection" : "Edit Quote Collection")
             }
             .onAppear {
                 if let quoteCollectionId = objectId,
@@ -66,15 +68,5 @@ struct AddQuoteCollectionView: View {
                 }
             }
         }
-    }
-}
-
-struct AddQuoteCollectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddQuoteCollectionView()
-            .environment(
-                \.managedObjectContext,
-                 PersistenceManager.preview.container.viewContext
-            )
     }
 }

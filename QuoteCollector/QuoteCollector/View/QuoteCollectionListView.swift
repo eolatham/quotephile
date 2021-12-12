@@ -44,9 +44,9 @@ struct QuoteCollectionListView: View {
                     Section(header: Text(section.id)) {
                         ForEach(section) { quoteCollection in
                             NavigationLink {
-                                AddQuoteCollectionView(objectId: quoteCollection.objectID)
+                                QuoteListView(quoteCollection: quoteCollection)
                             } label: {
-                                QuoteCollectionRowView(name: quoteCollection.name!)
+                                QuoteCollectionRowView(quoteCollection: quoteCollection)
                             }
                         }
                         .onDelete { indexSet in
@@ -84,15 +84,5 @@ struct QuoteCollectionListView: View {
             }
             .navigationTitle("Quote Collections")
         }
-    }
-}
-
-struct QuoteCollectionListView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuoteCollectionListView()
-            .environment(
-                \.managedObjectContext,
-                 PersistenceManager.preview.container.viewContext
-            )
     }
 }

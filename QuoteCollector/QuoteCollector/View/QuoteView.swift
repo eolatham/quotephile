@@ -8,18 +8,11 @@
 import SwiftUI
 
 struct QuoteView: View {
-    var text: String
-    var author: String
+    var quote: Quote
     var body: some View {
         VStack {
-            Text(text).font(.title)
-            Text(author).font(.headline)
+            Text(quote.text!).font(.title)
+            Text(quote.author!).font(.headline)
         }
-    }
-}
-
-struct QuoteView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuoteView(text: "Quote", author: "Author")
     }
 }

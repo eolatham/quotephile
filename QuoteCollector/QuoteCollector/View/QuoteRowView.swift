@@ -8,17 +8,11 @@
 import SwiftUI
 
 struct QuoteRowView: View {
-    var text: String
+    var quote: Quote
     var body: some View {
-        Text(text)
+        Text(quote.text!)
             .font(.headline)
             .lineLimit(1)
             .truncationMode(.tail)
-    }
-}
-
-struct QuoteRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuoteRowView(text: "Quote")
     }
 }

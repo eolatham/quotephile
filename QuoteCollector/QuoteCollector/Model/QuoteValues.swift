@@ -9,7 +9,7 @@
  * User-editable values.
  */
 struct QuoteValues {
-    let collection: QuoteCollection
-    let text: String
-    let author: String = ""
+    var collection: QuoteCollection
+    var text: String
+    var author: String = ""
 }

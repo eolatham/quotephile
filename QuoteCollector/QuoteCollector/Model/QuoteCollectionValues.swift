@@ -9,5 +9,5 @@
  * User-editable values.
  */
 struct QuoteCollectionValues {
-    let name: String
+    var name: String
 }
