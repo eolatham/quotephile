@@ -16,7 +16,8 @@ struct AddQuoteCollectionView: View {
     @Environment(\.presentationMode) var presentation
 
     @State private var name: String = ""
-    @State private var nameError: String? = nil
+    @State private var isError: Bool = false
+    @State private var nameErrorMsg: String? = nil
 
     var objectId: NSManagedObjectID?
     
@@ -26,39 +27,40 @@ struct AddQuoteCollectionView: View {
         NavigationView {
             VStack {
                 Form {
-                    VStack {
-                        TextField(
-                            "Name",
-                            text: $name,
-                            prompt: Text("Name")
+                    Section(header: Text("NAME")) {
+                        TextField("Name", text: $name).lineLimit(1)
+                    }
+                    Section {
+                        Button(
+                            action: {
+                                if name.isEmpty { nameErrorMsg = "Name is empty!" }
+                                else { nameErrorMsg = nil }
+                                
+                                isError = nameErrorMsg != nil
+                                
+                                if isError == false {
+                                    _ = viewModel.addQuoteCollection(
+                                        context: context,
+                                        objectId: objectId,
+                                        values: QuoteCollectionValues(name: name)
+                                    )
+                                    presentation.wrappedValue.dismiss()
+                                }
+                            },
+                            label: { Text("Save").font(.headline) }
                         )
-                        if nameError != nil {
-                            Text(nameError!)
-                                .foregroundColor(.red)
-                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .foregroundColor(.accentColor)
                     }
-                    Button {
-                        if name.isEmpty { nameError = "Name is empty!" }
-                        else { nameError = nil }
-                        
-                        if nameError == nil {
-                            _ = viewModel.addQuoteCollection(
-                                context: context,
-                                objectId: objectId,
-                                values: QuoteCollectionValues(name: name)
-                            )
-                            presentation.wrappedValue.dismiss()
-                        }
-                    } label: {
-                        Text("Save")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    
                 }
                 .navigationTitle(objectId == nil ? "Add Quote Collection" : "Edit Quote Collection")
+                .alert(isPresented: $isError) {
+                    Alert(
+                        title: Text("Error"),
+                        message: Text(nameErrorMsg!),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
             }
             .onAppear {
                 if let quoteCollectionId = objectId,

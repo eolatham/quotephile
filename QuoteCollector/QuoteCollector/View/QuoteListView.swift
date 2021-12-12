@@ -34,65 +34,69 @@ struct QuoteListView: View {
             if newValue.isEmpty {
                 quotes.nsPredicate = nil
             } else {
-                quotes.nsPredicate = NSPredicate(format: "name CONTAINS[cd] %@", newValue)
+                quotes.nsPredicate = NSCompoundPredicate(
+                    orPredicateWithSubpredicates: [
+                        NSPredicate(format: "text CONTAINS[cd] %@", newValue),
+                        NSPredicate(format: "author CONTAINS[cd] %@", newValue)
+                    ]
+                )
             }
         }
     }
 
     var body: some View {
-        VStack {
-            List {
-                ForEach(quotes) { section in
-                    Section(header: Text(section.id)) {
-                        ForEach(section) { quote in
-                            NavigationLink {
-                                QuoteView(quote: quote)
-                            } label: {
-                                QuoteRowView(quote: quote)
-                            }
+        List {
+            ForEach(quotes) { section in
+                Section(header: Text(section.id)) {
+                    ForEach(section) { quote in
+                        NavigationLink {
+                            QuoteView(quote: quote)
+                        } label: {
+                            QuoteRowView(quote: quote)
                         }
-                        .onDelete { indexSet in
-                            withAnimation {
-                                viewModel.deleteQuote(
-                                    context: context,
-                                    section: section,
-                                    indexSet: indexSet
-                                )
-                            }
+                    }
+                    .onDelete { indexSet in
+                        withAnimation {
+                            viewModel.deleteQuote(
+                                context: context,
+                                section: section,
+                                indexSet: indexSet
+                            )
                         }
                     }
                 }
             }
-            .searchable(text: searchQuery)
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    SortQuotesView(
-                        selectedSort: $selectedSort,
-                        sorts: QuoteSort.sorts
-                    )
-                        .onChange(of: selectedSort) { _ in
-                            quotes.sortDescriptors = selectedSort.descriptors
-                            quotes.sectionIdentifier = selectedSort.section
-                        }
-                    Button {
-                        showAddQuoteView = true
-                    } label: {
-                        Image(systemName: "plus.circle")
-                    }
-                    Button {
-                        showEditCollectionView = true
-                    } label: {
-                        Image(systemName: "pencil.circle")
-                    }
-                }
-            }
-            .sheet(isPresented: $showAddQuoteView) {
-                AddQuoteView(quoteCollection: quoteCollection)
-            }
-            .sheet(isPresented: $showEditCollectionView) {
-                AddQuoteCollectionView(objectId: quoteCollection.objectID)
-            }
-            .navigationTitle(quoteCollection.name!)
         }
+        .searchable(text: searchQuery)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                SortQuotesView(
+                    selectedSort: $selectedSort,
+                    sorts: QuoteSort.sorts
+                )
+                    .onChange(of: selectedSort) { _ in
+                        quotes.sortDescriptors = selectedSort.descriptors
+                        quotes.sectionIdentifier = selectedSort.section
+                    }
+                Button {
+                    showAddQuoteView = true
+                } label: {
+                    Image(systemName: "plus.circle")
+                }
+                Button {
+                    showEditCollectionView = true
+                } label: {
+                    Image(systemName: "pencil.circle")
+                }
+            }
+        }
+        .sheet(isPresented: $showAddQuoteView) {
+            AddQuoteView(quoteCollection: quoteCollection)
+        }
+        .sheet(isPresented: $showEditCollectionView) {
+            AddQuoteCollectionView(objectId: quoteCollection.objectID)
+        }
+        .listStyle(GroupedListStyle())
+        .navigationTitle(quoteCollection.name!)
     }
 }

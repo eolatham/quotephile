@@ -82,6 +82,7 @@ struct QuoteCollectionListView: View {
             .sheet(isPresented: $showAddCollectionView) {
                 AddQuoteCollectionView()
             }
+            .listStyle(GroupedListStyle())
             .navigationTitle("Quote Collections")
         }
     }

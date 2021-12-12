@@ -11,7 +11,8 @@ struct QuoteView: View {
     var quote: Quote
     var body: some View {
         VStack {
-            Text(quote.text!).font(.title)
+            Text(quote.text!).font(.title).multilineTextAlignment(.center)
+            Divider()
             Text(quote.author!).font(.headline)
         }
     }

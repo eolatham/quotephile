@@ -17,8 +17,9 @@ struct AddQuoteView: View {
 
     @State private var text: String = ""
     @State private var author: String = ""
-    @State private var textError: String? = nil
-    @State private var authorError: String? = nil
+    @State private var isError: Bool = false
+    @State private var textErrorMsg: String? = nil
+    @State private var authorErrorMsg: String? = nil
     
     var quoteCollection: QuoteCollection
     var objectId: NSManagedObjectID?
@@ -29,54 +30,51 @@ struct AddQuoteView: View {
         NavigationView {
             VStack {
                 Form {
-                    VStack {
-                        TextField(
-                            "Text",
-                            text: $text,
-                            prompt: Text("Text")
-                        )
-                        if textError != nil {
-                            Text(textError!).foregroundColor(.red)
-                        }
-                        TextField(
-                            "Author",
-                            text: $author,
-                            prompt: Text("Author")
-                        )
-                        if authorError != nil {
-                            Text(authorError!).foregroundColor(.red)
-                        }
+                    Section(header: Text("TEXT")) {
+                        TextEditor(text: $text)
                     }
-                    Button {
-                        if text.count < 1 { textError = "Text is empty!" }
-                        else if text.count > 10000 { textError = "Text is too long!" }
-                        else { textError = nil }
-                        
-                        if author.count > 1000 { authorError = "Author is too long!" }
-                        else { authorError = nil }
-                        
-                        if textError == nil && authorError == nil {
-                            _ = viewModel.addQuote(
-                                context: context,
-                                objectId: objectId,
-                                values: QuoteValues(
-                                    collection: quoteCollection,
-                                    text: text,
-                                    author: author
-                                )
-                            )
-                            presentation.wrappedValue.dismiss()
-                        }
-                    } label: {
-                        Text("Save")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
+                    Section(header: Text("AUTHOR")) {
+                        TextField("Author", text: $author).lineLimit(1)
                     }
-                    .buttonStyle(.borderedProminent)
-                    
+                    Section {
+                        Button(
+                            action: {
+                                if text.count < 1 { textErrorMsg = "Text is empty!" }
+                                else if text.count > 10000 { textErrorMsg = "Text is too long!" }
+                                else { textErrorMsg = nil }
+                                
+                                if author.count > 1000 { authorErrorMsg = "Author is too long!" }
+                                else { authorErrorMsg = nil }
+                                
+                                isError = textErrorMsg != nil || authorErrorMsg != nil
+                            
+                                if isError == false {
+                                    _ = viewModel.addQuote(
+                                        context: context,
+                                        objectId: objectId,
+                                        values: QuoteValues(
+                                            collection: quoteCollection,
+                                            text: text,
+                                            author: author
+                                        )
+                                    )
+                                    presentation.wrappedValue.dismiss()
+                                }
+                            },
+                            label: { Text("Save").font(.headline) }
+                        )
+                        .buttonStyle(PlainButtonStyle())
+                        .foregroundColor(.accentColor)
+                    }
                 }
                 .navigationTitle(objectId == nil ? "Add Quote" : "Edit Quote")
+                .alert(isPresented: $isError) {
+                    Alert(
+                        title: Text("Error"),
+                        message: Text(textErrorMsg != nil ? textErrorMsg! : authorErrorMsg!),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
             }
             .onAppear {
                 if let quoteId = objectId,
