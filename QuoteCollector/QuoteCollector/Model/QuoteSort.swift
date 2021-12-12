@@ -16,35 +16,41 @@ struct QuoteSort: Hashable, Identifiable {
   static let sorts: [QuoteSort] = [
     QuoteSort(
         id: 0,
-        name: "Date Created ↓",
-        descriptors: [SortDescriptor(\Quote.dateCreated, order: .reverse)],
-        section: \Quote.dayCreatedDescending),
-    QuoteSort(
-        id: 1,
-        name: "Date Created ↑",
-        descriptors: [SortDescriptor(\Quote.dateCreated, order: .forward)],
-        section: \Quote.dayCreatedAscending),
-    QuoteSort(
-        id: 2,
-        name: "Date Changed ↓",
-        descriptors: [SortDescriptor(\Quote.dateChanged, order: .reverse)],
-        section: \Quote.dayChangedDescending),
-    QuoteSort(
-        id: 3,
-        name: "Date Changed ↑",
-        descriptors: [SortDescriptor(\Quote.dateChanged, order: .forward)],
-        section: \Quote.dayChangedAscending),
-    QuoteSort(
-        id: 4,
-        name: "Author ↓",
-        descriptors: [SortDescriptor(\Quote.author, order: .reverse)],
-        section: \Quote.authorDescending),
-    QuoteSort(
-        id: 5,
         name: "Author ↑",
         descriptors: [SortDescriptor(\Quote.author, order: .forward)],
-        section: \Quote.authorAscending)
+        section: \Quote.authorAscending
+    ),
+    QuoteSort(
+        id: 1,
+        name: "Author ↓",
+        descriptors: [SortDescriptor(\Quote.author, order: .reverse)],
+        section: \Quote.authorDescending
+    ),
+    QuoteSort(
+        id: 2,
+        name: "Date Created ↑",
+        descriptors: [SortDescriptor(\Quote.dateCreated, order: .forward)],
+        section: \Quote.dayCreatedAscending
+    ),
+    QuoteSort(
+        id: 3,
+        name: "Date Created ↓",
+        descriptors: [SortDescriptor(\Quote.dateCreated, order: .reverse)],
+        section: \Quote.dayCreatedDescending
+    ),
+    QuoteSort(
+        id: 4,
+        name: "Date Changed ↑",
+        descriptors: [SortDescriptor(\Quote.dateChanged, order: .forward)],
+        section: \Quote.dayChangedAscending
+    ),
+    QuoteSort(
+        id: 5,
+        name: "Date Changed ↓",
+        descriptors: [SortDescriptor(\Quote.dateChanged, order: .reverse)],
+        section: \Quote.dayChangedDescending
+    )
   ]
 
-  static var `default`: QuoteSort { sorts[0] }
+  static var `default`: QuoteSort { sorts[3] }
 }

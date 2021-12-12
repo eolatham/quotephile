@@ -24,11 +24,11 @@ class QuoteCollection: NSManagedObject {
         // Add space to avoid crash upon switching sort mode
         return Utility.dateToDayString(date:dateChanged!) + " "
     }
-    @objc var nameAscending: String {
-        return name!
+    @objc var nameFirstCharacterAscending: String {
+        return name!.first!.uppercased()
     }
-    @objc var nameDescending: String {
+    @objc var nameFirstCharacterDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return name! + " "
+        return name!.first!.uppercased() + " "
     }
 }

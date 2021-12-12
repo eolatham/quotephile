@@ -25,10 +25,10 @@ class Quote: NSManagedObject {
         return Utility.dateToDayString(date:dateChanged!) + " "
     }
     @objc var authorAscending: String {
-        return author!.isEmpty ? "None" : author!
+        return author!.isEmpty ? "None" : author!.uppercased()
     }
     @objc var authorDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return (author!.isEmpty ? "None" : author!) + " "
+        return (author!.isEmpty ? "None" : author!.uppercased()) + " "
     }
 }
