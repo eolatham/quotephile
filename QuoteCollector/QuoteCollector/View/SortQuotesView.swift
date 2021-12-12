@@ -15,7 +15,7 @@ struct SortQuotesView: View {
     var body: some View {
         Menu {
             Picker("Sort By", selection: $selectedSort) {
-                ForEach(sorts) { sort in
+                ForEach(sorts, id: \.self) { sort in
                     Text(sort.name)
                 }
             }
