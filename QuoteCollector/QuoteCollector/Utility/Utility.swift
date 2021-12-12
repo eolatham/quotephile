@@ -8,8 +8,8 @@
 import CoreData
 
 struct Utility {
-    static func dateToDayString(date: Date) -> String {
-        return date.formatted(.dateTime.month(.wide).day().year())
+    static func dateToMonthString(date: Date) -> String {
+        return date.formatted(.dateTime.month(.wide).year())
     }
     
     static func updateContext(context: NSManagedObjectContext) {

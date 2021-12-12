@@ -33,7 +33,7 @@ struct QuoteCollectionSort: Hashable, Identifiable {
             SortDescriptor(\QuoteCollection.dateCreated, order: .forward),
             SortDescriptor(\QuoteCollection.name, order: .forward)
         ],
-        section: \QuoteCollection.dayCreatedAscending
+        section: \QuoteCollection.monthCreatedAscending
     ),
     QuoteCollectionSort(
         id: 3,
@@ -42,7 +42,7 @@ struct QuoteCollectionSort: Hashable, Identifiable {
             SortDescriptor(\QuoteCollection.dateCreated, order: .reverse),
             SortDescriptor(\QuoteCollection.name, order: .forward)
         ],
-        section: \QuoteCollection.dayCreatedDescending
+        section: \QuoteCollection.monthCreatedDescending
     ),
     QuoteCollectionSort(
         id: 4,
@@ -51,7 +51,7 @@ struct QuoteCollectionSort: Hashable, Identifiable {
             SortDescriptor(\QuoteCollection.dateChanged, order: .forward),
             SortDescriptor(\QuoteCollection.name, order: .forward)
         ],
-        section: \QuoteCollection.dayChangedAscending
+        section: \QuoteCollection.monthChangedAscending
     ),
     QuoteCollectionSort(
         id: 5,
@@ -60,7 +60,7 @@ struct QuoteCollectionSort: Hashable, Identifiable {
             SortDescriptor(\QuoteCollection.dateChanged, order: .reverse),
             SortDescriptor(\QuoteCollection.name, order: .forward)
         ],
-        section: \QuoteCollection.dayChangedDescending
+        section: \QuoteCollection.monthChangedDescending
     )
   ]
 

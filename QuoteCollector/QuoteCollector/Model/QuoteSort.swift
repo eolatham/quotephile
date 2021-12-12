@@ -30,25 +30,25 @@ struct QuoteSort: Hashable, Identifiable {
         id: 2,
         name: "Date Created ↑",
         descriptors: [SortDescriptor(\Quote.dateCreated, order: .forward)],
-        section: \Quote.dayCreatedAscending
+        section: \Quote.monthCreatedAscending
     ),
     QuoteSort(
         id: 3,
         name: "Date Created ↓",
         descriptors: [SortDescriptor(\Quote.dateCreated, order: .reverse)],
-        section: \Quote.dayCreatedDescending
+        section: \Quote.monthCreatedDescending
     ),
     QuoteSort(
         id: 4,
         name: "Date Changed ↑",
         descriptors: [SortDescriptor(\Quote.dateChanged, order: .forward)],
-        section: \Quote.dayChangedAscending
+        section: \Quote.monthChangedAscending
     ),
     QuoteSort(
         id: 5,
         name: "Date Changed ↓",
         descriptors: [SortDescriptor(\Quote.dateChanged, order: .reverse)],
-        section: \Quote.dayChangedDescending
+        section: \Quote.monthChangedDescending
     )
   ]
 
