@@ -28,7 +28,9 @@ struct AddQuoteCollectionView: View {
             VStack {
                 Form {
                     Section(header: Text("NAME")) {
-                        TextField("Name", text: $name).lineLimit(1)
+                        VStack {
+                            TextField("Name", text: $name).lineLimit(1)
+                        }
                     }
                     Section {
                         Button(

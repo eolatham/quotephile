@@ -31,10 +31,14 @@ struct AddQuoteView: View {
             VStack {
                 Form {
                     Section(header: Text("TEXT")) {
-                        TextEditor(text: $text)
+                        VStack {
+                            TextEditor(text: $text)
+                        }
                     }
                     Section(header: Text("AUTHOR")) {
-                        TextField("Author", text: $author).lineLimit(1)
+                        VStack {
+                            TextField("Author", text: $author).lineLimit(1)
+                        }
                     }
                     Section {
                         Button(
