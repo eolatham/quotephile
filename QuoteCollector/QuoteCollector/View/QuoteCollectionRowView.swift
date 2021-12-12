@@ -20,9 +20,5 @@ struct QuoteCollectionRowView: View {
 struct QuoteCollectionRowView_Previews: PreviewProvider {
     static var previews: some View {
         QuoteCollectionRowView(name: "Quote Collection")
-            .environment(
-                \.managedObjectContext,
-                 PersistenceManager.preview.container.viewContext
-            )
     }
 }
