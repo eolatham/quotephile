@@ -9,9 +9,10 @@ import SwiftUI
 
 struct QuoteListView: View {
     @Environment(\.managedObjectContext) private var context
-
-    @State private var showAddView = false
+    
     @State private var selectedSort = QuoteSort.default
+    @State private var showAddQuoteView = false
+    @State private var showEditCollectionView = false
     @State private var searchTerm = ""
     
     var quoteCollection: QuoteCollection
@@ -39,49 +40,59 @@ struct QuoteListView: View {
     }
 
     var body: some View {
-        List {
-            ForEach(quotes) { section in
-                Section(header: Text(section.id)) {
-                    ForEach(section) { quote in
-                        NavigationLink {
-                            QuoteView(quote: quote)
-                        } label: {
-                            QuoteRowView(quote: quote)
+        VStack {
+            List {
+                ForEach(quotes) { section in
+                    Section(header: Text(section.id)) {
+                        ForEach(section) { quote in
+                            NavigationLink {
+                                QuoteView(quote: quote)
+                            } label: {
+                                QuoteRowView(quote: quote)
+                            }
                         }
-                    }
-                    .onDelete { indexSet in
-                        withAnimation {
-                            viewModel.deleteQuote(
-                                context: context,
-                                section: section,
-                                indexSet: indexSet
-                            )
+                        .onDelete { indexSet in
+                            withAnimation {
+                                viewModel.deleteQuote(
+                                    context: context,
+                                    section: section,
+                                    indexSet: indexSet
+                                )
+                            }
                         }
                     }
                 }
             }
-        }
-        .searchable(text: searchQuery)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                SortQuotesView(
-                    selectedSort: $selectedSort,
-                    sorts: QuoteSort.sorts
-                )
-                    .onChange(of: selectedSort) { _ in
-                        quotes.sortDescriptors = selectedSort.descriptors
-                        quotes.sectionIdentifier = selectedSort.section
+            .searchable(text: searchQuery)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    SortQuotesView(
+                        selectedSort: $selectedSort,
+                        sorts: QuoteSort.sorts
+                    )
+                        .onChange(of: selectedSort) { _ in
+                            quotes.sortDescriptors = selectedSort.descriptors
+                            quotes.sectionIdentifier = selectedSort.section
+                        }
+                    Button {
+                        showAddQuoteView = true
+                    } label: {
+                        Image(systemName: "plus.circle")
                     }
-                Button {
-                    showAddView = true
-                } label: {
-                    Image(systemName: "plus.circle")
+                    Button {
+                        showEditCollectionView = true
+                    } label: {
+                        Image(systemName: "pencil.circle")
+                    }
                 }
             }
+            .sheet(isPresented: $showAddQuoteView) {
+                AddQuoteView(quoteCollection: quoteCollection)
+            }
+            .sheet(isPresented: $showEditCollectionView) {
+                AddQuoteCollectionView(objectId: quoteCollection.objectID)
+            }
+            .navigationTitle(quoteCollection.name!)
         }
-        .sheet(isPresented: $showAddView) {
-            AddQuoteView(quoteCollection: quoteCollection)
-        }
-        .navigationTitle("Quotes")
     }
 }

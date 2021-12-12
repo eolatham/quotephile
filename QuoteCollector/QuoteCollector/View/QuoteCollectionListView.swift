@@ -11,8 +11,8 @@ import CoreData
 struct QuoteCollectionListView: View {
     @Environment(\.managedObjectContext) private var context
 
-    @State private var showAddView = false
     @State private var selectedSort = QuoteCollectionSort.default
+    @State private var showAddCollectionView = false
     @State private var searchTerm = ""
     
     let viewModel = QuoteCollectionListViewModel()
@@ -73,13 +73,13 @@ struct QuoteCollectionListView: View {
                             quoteCollections.sectionIdentifier = selectedSort.section
                         }
                     Button {
-                        showAddView = true
+                        showAddCollectionView = true
                     } label: {
                         Image(systemName: "plus.circle")
                     }
                 }
             }
-            .sheet(isPresented: $showAddView) {
+            .sheet(isPresented: $showAddCollectionView) {
                 AddQuoteCollectionView()
             }
             .navigationTitle("Quote Collections")

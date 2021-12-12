@@ -20,21 +20,8 @@ struct SortQuotesView: View {
                 }
             }
         } label: {
-            Label(
-                "Sort",
-                systemImage: "line.horizontal.3.decrease.circle"
-            )
+            Label("Sort", systemImage: "arrow.up.arrow.down.circle")
         }
         .pickerStyle(.inline)
-    }
-}
-
-struct SortQuotesView_Previews: PreviewProvider {
-    @State static var sort = QuoteSort.default
-    static var previews: some View {
-        SortQuotesView(
-            selectedSort: $sort,
-            sorts: QuoteSort.sorts
-        )
     }
 }

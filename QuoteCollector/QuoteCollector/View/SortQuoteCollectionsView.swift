@@ -20,10 +20,7 @@ struct SortQuoteCollectionsView: View {
                 }
             }
         } label: {
-            Label(
-                "Sort",
-                systemImage: "line.horizontal.3.decrease.circle"
-            )
+            Label("Sort", systemImage: "arrow.up.arrow.down.circle")
         }
         .pickerStyle(.inline)
     }
