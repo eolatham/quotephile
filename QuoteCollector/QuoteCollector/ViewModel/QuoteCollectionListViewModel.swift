@@ -1,5 +1,5 @@
 //
-//  ListViewModel.swift
+//  QuoteCollectionListViewModel.swift
 //  QuoteCollector
 //
 //  Created by Eric Latham on 12/10/21.
