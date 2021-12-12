@@ -35,6 +35,9 @@ struct SortQuoteCollectionsView_Previews: PreviewProvider {
         SortQuoteCollectionsView(
             selectedSort: $sort,
             sorts: QuoteCollectionSort.sorts
+        ).environment(
+            \.managedObjectContext,
+            PersistenceManager.preview.container.viewContext
         )
     }
 }

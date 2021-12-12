@@ -35,7 +35,6 @@ struct AddQuoteViewModel {
             quote = fetchedQuote
         } else {
             quote = Quote(context: context)
-            quote.id = UUID()
             quote.dateCreated = now
         }
         quote.dateChanged = now

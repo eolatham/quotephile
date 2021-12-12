@@ -26,17 +26,15 @@ struct AddQuoteCollectionView: View {
         NavigationView {
             VStack {
                 Form {
-                    Section("Quote Collection Info") {
-                        VStack {
-                            TextField(
-                                "Name",
-                                text: $name,
-                                prompt: Text("Name")
-                            )
-                            if nameError {
-                                Text("Name is required")
-                                    .foregroundColor(.red)
-                            }
+                    VStack {
+                        TextField(
+                            "Name",
+                            text: $name,
+                            prompt: Text("Name")
+                        )
+                        if nameError {
+                            Text("Name is required")
+                                .foregroundColor(.red)
                         }
                     }
                     Button {
@@ -50,18 +48,15 @@ struct AddQuoteCollectionView: View {
                             presentation.wrappedValue.dismiss()
                         }
                     } label: {
-                        Text(objectId == nil ? "Add" : "Edit")
-                            .foregroundColor(.white)
+                        Text("Save")
                             .font(.headline)
-                            .frame(maxWidth: 300)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
                     }
-                    .tint(Color("rw-green"))
                     .buttonStyle(.borderedProminent)
-                    .buttonBorderShape(.roundedRectangle(radius: 5))
-                    .controlSize(.large)
+                    
                 }
                 .navigationTitle("\(objectId == nil ? "Add Quote Collection" : "Edit Quote Collection")")
-                Spacer()
             }
             .onAppear {
                 if let quoteCollectionId = objectId,
@@ -77,5 +72,9 @@ struct AddQuoteCollectionView: View {
 struct AddQuoteCollectionView_Previews: PreviewProvider {
     static var previews: some View {
         AddQuoteCollectionView()
+            .environment(
+                \.managedObjectContext,
+                 PersistenceManager.preview.container.viewContext
+            )
     }
 }

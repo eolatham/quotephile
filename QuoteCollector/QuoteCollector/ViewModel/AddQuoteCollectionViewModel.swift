@@ -35,7 +35,6 @@ struct AddQuoteCollectionViewModel {
             quoteCollection = fetchedQuoteCollection
         } else {
             quoteCollection = QuoteCollection(context: context)
-            quoteCollection.id = UUID()
             quoteCollection.dateCreated = now
         }
         quoteCollection.dateChanged = now

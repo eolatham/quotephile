@@ -32,7 +32,7 @@ struct QuoteCollectionListView: View {
             if newValue.isEmpty {
                 quoteCollections.nsPredicate = nil
             } else {
-                quoteCollections.nsPredicate = NSPredicate(format: "name CONTAINS[c] %@", newValue)
+                quoteCollections.nsPredicate = NSPredicate(format: "name CONTAINS[cd] %@", newValue)
             }
         }
     }
@@ -46,7 +46,7 @@ struct QuoteCollectionListView: View {
                             NavigationLink {
                                 AddQuoteCollectionView(objectId: quoteCollection.objectID)
                             } label: {
-                                QuoteCollectionRowView(quoteCollection: quoteCollection)
+                                QuoteCollectionRowView(name: quoteCollection.name!)
                             }
                         }
                         .onDelete { indexSet in
@@ -90,5 +90,9 @@ struct QuoteCollectionListView: View {
 struct QuoteCollectionListView_Previews: PreviewProvider {
     static var previews: some View {
         QuoteCollectionListView()
+            .environment(
+                \.managedObjectContext,
+                 PersistenceManager.preview.container.viewContext
+            )
     }
 }

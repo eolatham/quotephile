@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct QuoteCollectionRowView: View {
-    var quoteCollection: QuoteCollection
+    var name: String
     var body: some View {
-        Text(quoteCollection.name!)
+        Text(name)
             .font(.headline)
             .lineLimit(1)
             .truncationMode(.tail)
+    }
+}
+
+struct QuoteCollectionRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        QuoteCollectionRowView(name: "Quote Collection")
+            .environment(
+                \.managedObjectContext,
+                 PersistenceManager.preview.container.viewContext
+            )
     }
 }
