@@ -12,7 +12,7 @@ struct QuoteListView: View {
     
     let viewModel = QuoteListViewModel()
     
-    var quoteCollection: QuoteCollection
+    @ObservedObject var quoteCollection: QuoteCollection
     
     @State private var selectedSort = QuoteSort.default
     @State private var showAddQuoteView = false

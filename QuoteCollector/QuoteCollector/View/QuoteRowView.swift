@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct QuoteRowView: View {
-    var quote: Quote
+    @ObservedObject var quote: Quote
     var body: some View {
         VStack {
             Text(quote.text!)

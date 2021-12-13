@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct QuoteCollectionRowView: View {
-    var quoteCollection: QuoteCollection
+    @ObservedObject var quoteCollection: QuoteCollection
     var body: some View {
         Text(quoteCollection.name!)
             .font(.headline)
