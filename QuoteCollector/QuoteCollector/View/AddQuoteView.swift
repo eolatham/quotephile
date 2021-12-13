@@ -14,17 +14,17 @@ import CoreData
 struct AddQuoteView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) var presentation
+    
+    let viewModel = AddQuoteViewModel()
+    
+    var quoteCollection: QuoteCollection
+    var objectId: NSManagedObjectID?
 
     @State private var text: String = ""
     @State private var author: String = ""
     @State private var isError: Bool = false
     @State private var textErrorMsg: String? = nil
     @State private var authorErrorMsg: String? = nil
-    
-    var quoteCollection: QuoteCollection
-    var objectId: NSManagedObjectID?
-    
-    let viewModel = AddQuoteViewModel()
 
     var body: some View {
         NavigationView {
@@ -37,7 +37,7 @@ struct AddQuoteView: View {
                     }
                     Section(header: Text("AUTHOR")) {
                         VStack {
-                            TextField("Author", text: $author).lineLimit(1)
+                            TextField("None", text: $author).lineLimit(1)
                         }
                     }
                     Section {

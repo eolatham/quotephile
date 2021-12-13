@@ -10,21 +10,26 @@ import SwiftUI
 struct QuoteListView: View {
     @Environment(\.managedObjectContext) private var context
     
+    let viewModel = QuoteListViewModel()
+    
+    var quoteCollection: QuoteCollection
+    
     @State private var selectedSort = QuoteSort.default
     @State private var showAddQuoteView = false
     @State private var showEditCollectionView = false
     @State private var searchTerm = ""
-    
-    var quoteCollection: QuoteCollection
-    
-    let viewModel = QuoteListViewModel()
 
-    @SectionedFetchRequest(
-        sectionIdentifier: QuoteSort.default.section,
-        sortDescriptors: QuoteSort.default.descriptors,
-        animation: .default
-    )
-    private var quotes: SectionedFetchResults<String, Quote>
+    @SectionedFetchRequest private var quotes: SectionedFetchResults<String, Quote>
+    
+    init(quoteCollection: QuoteCollection) {
+        self.quoteCollection = quoteCollection
+        _quotes = SectionedFetchRequest<String, Quote>(
+            sectionIdentifier: QuoteSort.default.section,
+            sortDescriptors: QuoteSort.default.descriptors,
+            predicate: NSPredicate(format: "collection = %@", quoteCollection),
+            animation: .default
+        )
+    }
     
     var searchQuery: Binding<String> {
         Binding {
@@ -32,12 +37,17 @@ struct QuoteListView: View {
         } set: { newValue in
             searchTerm = newValue
             if newValue.isEmpty {
-                quotes.nsPredicate = nil
+                quotes.nsPredicate = NSPredicate(format: "collection = %@", quoteCollection)
             } else {
                 quotes.nsPredicate = NSCompoundPredicate(
-                    orPredicateWithSubpredicates: [
-                        NSPredicate(format: "text CONTAINS[cd] %@", newValue),
-                        NSPredicate(format: "author CONTAINS[cd] %@", newValue)
+                    andPredicateWithSubpredicates: [
+                        NSPredicate(format: "collection = %@", quoteCollection),
+                        NSCompoundPredicate(
+                            orPredicateWithSubpredicates: [
+                                NSPredicate(format: "text CONTAINS[cd] %@", newValue),
+                                NSPredicate(format: "author CONTAINS[cd] %@", newValue)
+                            ]
+                        )
                     ]
                 )
             }

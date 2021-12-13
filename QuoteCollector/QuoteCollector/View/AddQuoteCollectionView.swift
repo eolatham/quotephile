@@ -14,22 +14,22 @@ import CoreData
 struct AddQuoteCollectionView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) var presentation
-
+    
+    let viewModel = AddQuoteCollectionViewModel()
+    
+    var objectId: NSManagedObjectID?
+    
     @State private var name: String = ""
     @State private var isError: Bool = false
     @State private var nameErrorMsg: String? = nil
-
-    var objectId: NSManagedObjectID?
     
-    let viewModel = AddQuoteCollectionViewModel()
-
     var body: some View {
         NavigationView {
             VStack {
                 Form {
                     Section(header: Text("NAME")) {
                         VStack {
-                            TextField("Name", text: $name).lineLimit(1)
+                            TextField("", text: $name).lineLimit(1)
                         }
                     }
                     Section {

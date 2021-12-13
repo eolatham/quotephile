@@ -10,12 +10,12 @@ import CoreData
 
 struct QuoteCollectionListView: View {
     @Environment(\.managedObjectContext) private var context
+    
+    let viewModel = QuoteCollectionListViewModel()
 
     @State private var selectedSort = QuoteCollectionSort.default
     @State private var showAddCollectionView = false
     @State private var searchTerm = ""
-    
-    let viewModel = QuoteCollectionListViewModel()
 
     @SectionedFetchRequest(
         sectionIdentifier: QuoteCollectionSort.default.section,
