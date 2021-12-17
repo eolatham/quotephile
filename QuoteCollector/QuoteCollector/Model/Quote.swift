@@ -10,7 +10,12 @@ import CoreData
 
 @objc(Quote)
 class Quote: NSManagedObject {
-    @objc var exists: Bool { self.text != nil }
+    @objc var exists: Bool { text != nil }
+    @objc var author: String {
+        [authorFirstName!, authorLastName!]
+            .joined(separator: " ")
+            .trimmingCharacters(in: .whitespaces)
+    }
     @objc var monthCreatedAscending: String {
         return Utility.dateToMonthString(date:dateCreated!)
     }
@@ -25,11 +30,18 @@ class Quote: NSManagedObject {
         // Add space to avoid crash upon switching sort mode
         return Utility.dateToMonthString(date:dateChanged!) + " "
     }
-    @objc var authorAscending: String {
-        return author!.isEmpty ? "None" : author!.uppercased()
+    @objc var authorFirstNameAscending: String {
+        return authorFirstName!.isEmpty ? "ANONYMOUS" : authorFirstName!.uppercased()
     }
-    @objc var authorDescending: String {
+    @objc var authorFirstNameDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return (author!.isEmpty ? "None" : author!.uppercased()) + " "
+        return (authorFirstName!.isEmpty ? "ANONYMOUS" : authorFirstName!.uppercased()) + " "
+    }
+    @objc var authorLastNameAscending: String {
+        return authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()
+    }
+    @objc var authorLastNameDescending: String {
+        // Add space to avoid crash upon switching sort mode
+        return (authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()) + " "
     }
 }

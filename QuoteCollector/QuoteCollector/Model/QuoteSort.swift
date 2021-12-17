@@ -16,41 +16,53 @@ struct QuoteSort: Hashable, Identifiable {
   static let sorts: [QuoteSort] = [
     QuoteSort(
         id: 0,
-        name: "Author ↑",
-        descriptors: [SortDescriptor(\Quote.author, order: .forward)],
-        section: \Quote.authorAscending
+        name: "Author First Name ↑",
+        descriptors: [SortDescriptor(\Quote.authorFirstName, order: .forward)],
+        section: \Quote.authorFirstNameAscending
     ),
     QuoteSort(
         id: 1,
-        name: "Author ↓",
-        descriptors: [SortDescriptor(\Quote.author, order: .reverse)],
-        section: \Quote.authorDescending
+        name: "Author First Name ↓",
+        descriptors: [SortDescriptor(\Quote.authorFirstName, order: .reverse)],
+        section: \Quote.authorFirstNameDescending
     ),
     QuoteSort(
         id: 2,
+        name: "Author Last Name ↑",
+        descriptors: [SortDescriptor(\Quote.authorLastName, order: .forward)],
+        section: \Quote.authorLastNameAscending
+    ),
+    QuoteSort(
+        id: 3,
+        name: "Author Last Name ↓",
+        descriptors: [SortDescriptor(\Quote.authorLastName, order: .reverse)],
+        section: \Quote.authorLastNameDescending
+    ),
+    QuoteSort(
+        id: 4,
         name: "Date Created ↑",
         descriptors: [SortDescriptor(\Quote.dateCreated, order: .forward)],
         section: \Quote.monthCreatedAscending
     ),
     QuoteSort(
-        id: 3,
+        id: 5,
         name: "Date Created ↓",
         descriptors: [SortDescriptor(\Quote.dateCreated, order: .reverse)],
         section: \Quote.monthCreatedDescending
     ),
     QuoteSort(
-        id: 4,
+        id: 6,
         name: "Date Changed ↑",
         descriptors: [SortDescriptor(\Quote.dateChanged, order: .forward)],
         section: \Quote.monthChangedAscending
     ),
     QuoteSort(
-        id: 5,
+        id: 7,
         name: "Date Changed ↓",
         descriptors: [SortDescriptor(\Quote.dateChanged, order: .reverse)],
         section: \Quote.monthChangedDescending
     )
   ]
 
-  static var `default`: QuoteSort { sorts[3] }
+  static var `default`: QuoteSort { sorts[5] }
 }

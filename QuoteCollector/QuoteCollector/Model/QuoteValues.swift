@@ -11,5 +11,6 @@
 struct QuoteValues {
     var collection: QuoteCollection
     var text: String
-    var author: String = ""
+    var authorFirstName: String = ""
+    var authorLastName: String = ""
 }

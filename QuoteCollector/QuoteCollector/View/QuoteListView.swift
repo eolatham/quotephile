@@ -47,7 +47,8 @@ struct QuoteListView: View {
                         NSCompoundPredicate(
                             orPredicateWithSubpredicates: [
                                 NSPredicate(format: "text CONTAINS[cd] %@", newValue),
-                                NSPredicate(format: "author CONTAINS[cd] %@", newValue)
+                                NSPredicate(format: "authorFirstName CONTAINS[cd] %@", newValue),
+                                NSPredicate(format: "authorLastName CONTAINS[cd] %@", newValue)
                             ]
                         )
                     ]

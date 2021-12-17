@@ -40,7 +40,8 @@ struct AddQuoteViewModel {
         quote.dateChanged = now
         quote.collection = values.collection
         quote.text = values.text
-        quote.author = values.author
+        quote.authorFirstName = values.authorFirstName
+        quote.authorLastName = values.authorLastName
         Utility.updateContext(context: context)
         return quote
     }

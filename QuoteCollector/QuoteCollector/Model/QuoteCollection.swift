@@ -10,7 +10,7 @@ import CoreData
 
 @objc(QuoteCollection)
 class QuoteCollection: NSManagedObject {
-    @objc var exists: Bool { self.name != nil }
+    @objc var exists: Bool { name != nil }
     @objc var monthCreatedAscending: String {
         return Utility.dateToMonthString(date:dateCreated!)
     }

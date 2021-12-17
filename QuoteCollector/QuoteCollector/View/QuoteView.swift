@@ -15,7 +15,7 @@ struct QuoteView: View {
                 Text(quote.text!)
                     .font(.title)
                     .multilineTextAlignment(.center)
-                Text(quote.author!)
+                Text(quote.author)
                     .font(.body)
             }.padding()
         }

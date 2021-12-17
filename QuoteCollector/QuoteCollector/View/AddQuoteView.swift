@@ -21,10 +21,12 @@ struct AddQuoteView: View {
     var objectId: NSManagedObjectID?
 
     @State private var text: String = ""
-    @State private var author: String = ""
+    @State private var authorFirstName: String = ""
+    @State private var authorLastName: String = ""
     @State private var isError: Bool = false
     @State private var textErrorMsg: String? = nil
-    @State private var authorErrorMsg: String? = nil
+    @State private var authorFirstNameErrorMsg: String? = nil
+    @State private var authorLastNameErrorMsg: String? = nil
 
     var body: some View {
         NavigationView {
@@ -37,7 +39,10 @@ struct AddQuoteView: View {
                     }
                     Section(header: Text("AUTHOR")) {
                         VStack {
-                            TextField("None", text: $author).lineLimit(1)
+                            TextField("First Name (optional)", text: $authorFirstName)
+                                .lineLimit(1)
+                            TextField("Last Name (optional)", text: $authorLastName)
+                                .lineLimit(1)
                         }
                     }
                     Section {
@@ -47,10 +52,19 @@ struct AddQuoteView: View {
                                 else if text.count > 10000 { textErrorMsg = "Text is too long!" }
                                 else { textErrorMsg = nil }
                                 
-                                if author.count > 1000 { authorErrorMsg = "Author is too long!" }
-                                else { authorErrorMsg = nil }
+                                if authorFirstName.count > 500 {
+                                    authorFirstNameErrorMsg = "Author first name is too long!"
+                                }
+                                else { authorFirstNameErrorMsg = nil }
                                 
-                                isError = textErrorMsg != nil || authorErrorMsg != nil
+                                if authorLastName.count > 500 {
+                                    authorLastNameErrorMsg = "Author last name is too long!"
+                                }
+                                else { authorLastNameErrorMsg = nil }
+                                
+                                isError = textErrorMsg != nil ||
+                                          authorFirstNameErrorMsg != nil ||
+                                          authorLastNameErrorMsg != nil
                             
                                 if isError == false {
                                     _ = viewModel.addQuote(
@@ -59,7 +73,8 @@ struct AddQuoteView: View {
                                         values: QuoteValues(
                                             collection: quoteCollection,
                                             text: text,
-                                            author: author
+                                            authorFirstName: authorFirstName,
+                                            authorLastName: authorLastName
                                         )
                                     )
                                     presentation.wrappedValue.dismiss()
@@ -75,7 +90,13 @@ struct AddQuoteView: View {
                 .alert(isPresented: $isError) {
                     Alert(
                         title: Text("Error"),
-                        message: Text(textErrorMsg != nil ? textErrorMsg! : authorErrorMsg!),
+                        message: Text(
+                            textErrorMsg != nil
+                                ? textErrorMsg!
+                                : authorFirstNameErrorMsg != nil
+                                    ? authorFirstNameErrorMsg!
+                                    : authorLastNameErrorMsg!
+                        ),
                         dismissButton: .default(Text("OK"))
                     )
                 }
@@ -85,7 +106,8 @@ struct AddQuoteView: View {
                    let quote = viewModel.fetchQuote(context: context, objectId: quoteId)
                 {
                     text = quote.text!
-                    author = quote.author!
+                    authorFirstName = quote.authorFirstName!
+                    authorLastName = quote.authorLastName!
                 }
             }
         }

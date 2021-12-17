@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="1.0">
     <entity name="Quote" representedClassName="Quote" syncable="YES" codeGenerationType="category" coreSpotlightDisplayNameExpression="Quote">
-        <attribute name="author" attributeType="String" minValueString="0" maxValueString="1000" defaultValueString="" spotlightIndexingEnabled="YES"/>
+        <attribute name="authorFirstName" attributeType="String" minValueString="0" maxValueString="500" defaultValueString="" spotlightIndexingEnabled="YES"/>
+        <attribute name="authorLastName" attributeType="String" minValueString="0" maxValueString="500" defaultValueString="" spotlightIndexingEnabled="YES"/>
         <attribute name="dateChanged" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="text" attributeType="String" minValueString="1" maxValueString="10000" spotlightIndexingEnabled="YES"/>
@@ -14,7 +15,7 @@
         <relationship name="quotes" toMany="YES" deletionRule="Cascade" destinationEntity="Quote" inverseName="collection" inverseEntity="Quote"/>
     </entity>
     <elements>
-        <element name="Quote" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="Quote" positionX="-63" positionY="-18" width="128" height="119"/>
         <element name="QuoteCollection" positionX="-54" positionY="-9" width="128" height="89"/>
     </elements>
 </model>
