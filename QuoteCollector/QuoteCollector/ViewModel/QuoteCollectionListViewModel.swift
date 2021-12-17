@@ -9,12 +9,11 @@ import CoreData
 import SwiftUI
 
 struct QuoteCollectionListViewModel {
-    func deleteQuoteCollection(
+    func deleteQuoteCollections(
         context: NSManagedObjectContext,
-        section: SectionedFetchResults<String, QuoteCollection>.Element,
-        indexSet: IndexSet
+        quoteCollections: [QuoteCollection]
     ) {
-        indexSet.map { section[$0] }.forEach(context.delete)
+        quoteCollections.forEach(context.delete)
         Utility.updateContext(context: context)
     }
 }

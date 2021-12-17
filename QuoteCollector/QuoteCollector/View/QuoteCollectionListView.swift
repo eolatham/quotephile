@@ -14,6 +14,8 @@ struct QuoteCollectionListView: View {
     let viewModel = QuoteCollectionListViewModel()
 
     @State private var selectedSort = QuoteCollectionSort.default
+    @State private var toDelete: [QuoteCollection] = []
+    @State private var showDeleteAlert: Bool = false
     @State private var showAddCollectionView = false
     @State private var searchTerm = ""
 
@@ -50,13 +52,8 @@ struct QuoteCollectionListView: View {
                             }
                         }
                         .onDelete { indexSet in
-                            withAnimation {
-                                viewModel.deleteQuoteCollection(
-                                    context: context,
-                                    section: section,
-                                    indexSet: indexSet
-                                )
-                            }
+                            self.toDelete = indexSet.map { section[$0] }
+                            self.showDeleteAlert = true
                         }
                     }
                 }
@@ -81,6 +78,28 @@ struct QuoteCollectionListView: View {
             }
             .sheet(isPresented: $showAddCollectionView) {
                 AddQuoteCollectionView()
+            }
+            .alert(isPresented: $showDeleteAlert) {
+                Alert(
+                    title: Text("Are you sure?"),
+                    message: Text(
+                        "Deleting this quote collection will " +
+                        "also delete all of its quotes. " +
+                        "This action cannot be undone!"
+                    ),
+                    primaryButton: .destructive(Text("Yes, delete")) {
+                        withAnimation {
+                            viewModel.deleteQuoteCollections(
+                                context: context,
+                                quoteCollections: toDelete
+                            )
+                            self.toDelete = []
+                        }
+                    },
+                    secondaryButton: .cancel(Text("No, cancel")) {
+                        self.toDelete = []
+                    }
+                )
             }
             .listStyle(GroupedListStyle())
             .navigationTitle("Quote Collections")

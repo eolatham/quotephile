@@ -15,6 +15,8 @@ struct QuoteListView: View {
     @ObservedObject var quoteCollection: QuoteCollection
     
     @State private var selectedSort = QuoteSort.default
+    @State private var toDelete: [Quote] = []
+    @State private var showDeleteAlert: Bool = false
     @State private var showAddQuoteView = false
     @State private var showEditCollectionView = false
     @State private var searchTerm = ""
@@ -55,58 +57,77 @@ struct QuoteListView: View {
     }
 
     var body: some View {
-        List {
-            ForEach(quotes) { section in
-                Section(header: Text(section.id)) {
-                    ForEach(section) { quote in
-                        NavigationLink {
-                            QuoteView(quote: quote)
-                        } label: {
-                            QuoteRowView(quote: quote)
+        if quoteCollection.exists {
+            List {
+                ForEach(quotes) { section in
+                    Section(header: Text(section.id)) {
+                        ForEach(section) { quote in
+                            NavigationLink {
+                                QuoteView(quote: quote)
+                            } label: {
+                                QuoteRowView(quote: quote)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            self.toDelete = indexSet.map { section[$0] }
+                            self.showDeleteAlert = true
                         }
                     }
-                    .onDelete { indexSet in
+                }
+            }
+            .searchable(text: searchQuery)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    SortQuotesView(
+                        selectedSort: $selectedSort,
+                        sorts: QuoteSort.sorts
+                    )
+                        .onChange(of: selectedSort) { _ in
+                            quotes.sortDescriptors = selectedSort.descriptors
+                            quotes.sectionIdentifier = selectedSort.section
+                        }
+                    Button {
+                        showAddQuoteView = true
+                    } label: {
+                        Image(systemName: "plus.circle")
+                    }
+                    Button {
+                        showEditCollectionView = true
+                    } label: {
+                        Image(systemName: "pencil.circle")
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddQuoteView) {
+                AddQuoteView(quoteCollection: quoteCollection)
+            }
+            .sheet(isPresented: $showEditCollectionView) {
+                AddQuoteCollectionView(objectId: quoteCollection.objectID)
+            }
+            .alert(isPresented: $showDeleteAlert) {
+                Alert(
+                    title: Text("Are you sure?"),
+                    message: Text(
+                        "Are you sure you want to delete this quote? " +
+                        "This action cannot be undone!"
+                    ),
+                    primaryButton: .destructive(Text("Yes, delete")) {
                         withAnimation {
-                            viewModel.deleteQuote(
+                            viewModel.deleteQuotes(
                                 context: context,
-                                section: section,
-                                indexSet: indexSet
+                                quotes: toDelete
                             )
+                            self.toDelete = []
                         }
+                    },
+                    secondaryButton: .cancel(Text("No, cancel")) {
+                        self.toDelete = []
                     }
-                }
-            }
-        }
-        .searchable(text: searchQuery)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                SortQuotesView(
-                    selectedSort: $selectedSort,
-                    sorts: QuoteSort.sorts
                 )
-                    .onChange(of: selectedSort) { _ in
-                        quotes.sortDescriptors = selectedSort.descriptors
-                        quotes.sectionIdentifier = selectedSort.section
-                    }
-                Button {
-                    showAddQuoteView = true
-                } label: {
-                    Image(systemName: "plus.circle")
-                }
-                Button {
-                    showEditCollectionView = true
-                } label: {
-                    Image(systemName: "pencil.circle")
-                }
             }
+            .listStyle(GroupedListStyle())
+            .navigationTitle(quoteCollection.name!)
         }
-        .sheet(isPresented: $showAddQuoteView) {
-            AddQuoteView(quoteCollection: quoteCollection)
-        }
-        .sheet(isPresented: $showEditCollectionView) {
-            AddQuoteCollectionView(objectId: quoteCollection.objectID)
-        }
-        .listStyle(GroupedListStyle())
-        .navigationTitle(quoteCollection.name!)
+        else { EmptyView() }
     }
 }

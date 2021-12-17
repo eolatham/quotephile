@@ -1,7 +1,6 @@
 # TODO
 
 - Add launch screen (see [here](https://betterprogramming.pub/launch-screen-with-swiftui-bd2958771f3b))
-- Implement error handling when the user tries to delete a non-empty `QuoteCollection`
 - Add ability to sort `Quotes` specifically by author's last name
 - Add ability to search and sort `Quotes` by tags
 - Add ability to search for quotes in any `QuoteCollection`

@@ -10,17 +10,20 @@ import SwiftUI
 struct QuoteRowView: View {
     @ObservedObject var quote: Quote
     var body: some View {
-        VStack {
-            Text(quote.text!)
-                .font(.body)
-                .lineLimit(2)
-                .truncationMode(.tail)
-            if quote.author!.count > 0 {
-                Text(quote.author!)
-                    .font(.caption)
-                    .lineLimit(1)
+        if quote.exists {
+            VStack {
+                Text(quote.text!)
+                    .font(.body)
+                    .lineLimit(2)
                     .truncationMode(.tail)
+                if quote.author!.count > 0 {
+                    Text(quote.author!)
+                        .font(.caption)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                }
             }
         }
+        else { EmptyView() }
     }
 }
