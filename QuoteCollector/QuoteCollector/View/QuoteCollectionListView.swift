@@ -42,6 +42,13 @@ struct QuoteCollectionListView: View {
     var body: some View {
         NavigationView {
             List {
+                // All Quotes collection
+                NavigationLink {
+                    QuoteListView()
+                } label: {
+                    Text("All Quotes").font(.headline)
+                }
+                // Custom collections
                 ForEach(quoteCollections) { section in
                     Section(header: Text(section.id)) {
                         ForEach(section) { quoteCollection in
