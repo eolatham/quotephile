@@ -12,7 +12,6 @@ struct QuoteCollectionRowView: View {
     var body: some View {
         if quoteCollection.exists {
             Text(quoteCollection.name!)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 .font(.headline)
                 .lineLimit(1)
                 .truncationMode(.tail)
