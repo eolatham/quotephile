@@ -10,11 +10,13 @@ import CoreData
 
 @objc(Quote)
 class Quote: NSManagedObject {
-    @objc var exists: Bool { text != nil }
+    @objc var exists: Bool { return text != nil }
     @objc var author: String {
-        [authorFirstName!, authorLastName!]
+        let name = [authorFirstName!, authorLastName!]
             .joined(separator: " ")
             .trimmingCharacters(in: .whitespaces)
+        if name.isEmpty { return "Anonymous" }
+        return name
     }
     @objc var monthCreatedAscending: String {
         return Utility.dateToMonthString(date:dateCreated!)
@@ -43,5 +45,18 @@ class Quote: NSManagedObject {
     @objc var authorLastNameDescending: String {
         // Add space to avoid crash upon switching sort mode
         return (authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()) + " "
+    }
+
+    func stringify(
+        includeQuotationMarks: Bool = true,
+        includeAuthor: Bool = true,
+        authorOnSeparateLine: Bool = false
+    ) -> String {
+        var s: String = text!
+        if includeQuotationMarks { s = "“" + s + "”" }
+        if includeAuthor {
+            s = s + (authorOnSeparateLine ? "\n" : " ") + "—" + author
+        }
+        return s
     }
 }

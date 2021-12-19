@@ -12,6 +12,7 @@ struct QuoteView: View {
     @ObservedObject var quote: Quote
 
     @State private var showEditQuoteView = false
+    @State private var showCopyQuoteView = false
 
     var body: some View {
         if quote.exists {
@@ -28,7 +29,12 @@ struct QuoteView: View {
                     Button {
                         showEditQuoteView = true
                     } label: {
-                        Image(systemName: "pencil.circle")
+                        Image(systemName: "pencil")
+                    }
+                    Button {
+                        showCopyQuoteView = true
+                    } label: {
+                        Image(systemName: "doc.on.doc")
                     }
                 }
             }
@@ -37,6 +43,9 @@ struct QuoteView: View {
                     quoteCollection: quote.collection!,
                     objectId: quote.objectID
                 )
+            }
+            .sheet(isPresented: $showCopyQuoteView) {
+                CopyQuoteView(quote: quote)
             }
         }
         else { EmptyView() }

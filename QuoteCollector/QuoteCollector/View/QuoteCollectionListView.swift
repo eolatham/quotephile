@@ -16,8 +16,8 @@ struct QuoteCollectionListView: View {
     @State private var selectedSort = QuoteCollectionSort.default
     @State private var toDelete: [QuoteCollection] = []
     @State private var showDeleteAlert: Bool = false
-    @State private var showAddCollectionView = false
-    @State private var searchTerm = ""
+    @State private var showAddCollectionView: Bool = false
+    @State private var searchTerm: String = ""
 
     @SectionedFetchRequest(
         sectionIdentifier: QuoteCollectionSort.default.section,
@@ -79,7 +79,7 @@ struct QuoteCollectionListView: View {
                     Button {
                         showAddCollectionView = true
                     } label: {
-                        Image(systemName: "plus.circle")
+                        Image(systemName: "plus")
                     }
                 }
             }
