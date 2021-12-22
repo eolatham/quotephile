@@ -6,5 +6,4 @@
   - Overwrite tags
   - Add specific tags
   - Remove specific tags
-- Add ability to search and sort quotes by tags
 - Add ability to bulk-import quotes into a quote collection from the clipboard or from a text file
