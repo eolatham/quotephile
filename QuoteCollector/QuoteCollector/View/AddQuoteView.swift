@@ -132,6 +132,7 @@ struct AddQuoteView: View {
                     text = quote.text!
                     authorFirstName = quote.authorFirstName!
                     authorLastName = quote.authorLastName!
+                    tags = quote.tags!
                 }
             }
         }

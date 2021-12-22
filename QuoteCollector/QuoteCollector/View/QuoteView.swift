@@ -38,21 +38,24 @@ struct QuoteView: View {
     }
 
     func copyTextFont() -> Font {
-        if copyText.count < 150 { return .title }
-        if copyText.count < 300 { return .title2 }
-        if copyText.count < 450 { return .title3 }
+        if copyText.count < 100 { return .title }
+        if copyText.count < 200 { return .title2 }
+        if copyText.count < 300 { return .title3 }
         return .body
     }
 
     var body: some View {
         Form {
             Section(header: Text("QUOTE")) {
-                ScrollView(.vertical) {
-                    Text(copyText)
-                        .font(copyTextFont())
-                        .multilineTextAlignment(.center)
-                        .textSelection(.enabled)
-                        .padding()
+                Text(copyText)
+                    .font(copyTextFont())
+                    .multilineTextAlignment(.center)
+                    .textSelection(.enabled)
+                    .padding()
+                HStack {
+                    Spacer()
+                    Text("Tap and hold quote to copy or share!").font(.caption)
+                    Spacer()
                 }
             }
             Section(header: Text("STYLE")) {
@@ -65,10 +68,11 @@ struct QuoteView: View {
                         .onChange(of: authorOnSeparateLine) { newValue in refresh() }
                 }
             }
-            Section(header: Text("TAGS")) {
-                ScrollView(.horizontal) {
-                    Text(quote.tags!)
-                        .textSelection(.enabled)
+            if quote.tags!.count > 0 {
+                Section(header: Text("TAGS")) {
+                    ScrollView(.horizontal) {
+                        Text(quote.tags!).textSelection(.enabled)
+                    }
                 }
             }
         }
