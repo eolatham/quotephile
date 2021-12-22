@@ -51,12 +51,12 @@ struct QuoteView: View {
                     .font(copyTextFont())
                     .multilineTextAlignment(.center)
                     .textSelection(.enabled)
+                    .frame(maxWidth: .infinity)
                     .padding()
-                HStack {
-                    Spacer()
-                    Text("Tap and hold quote to copy or share!").font(.caption)
-                    Spacer()
-                }
+                Text("Tap and hold quote to copy or share!")
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
             }
             Section(header: Text("STYLE")) {
                 Toggle(isOn: $includeQuotationMarks) { Text("Include quotation marks") }
@@ -76,6 +76,7 @@ struct QuoteView: View {
                 }
             }
         }
+        .navigationTitle("View Quote")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button {

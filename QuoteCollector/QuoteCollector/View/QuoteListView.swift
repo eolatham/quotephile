@@ -14,6 +14,7 @@ struct QuoteListView: View {
     
     var quoteCollection: QuoteCollection? = nil
     
+    @State private var selectedQuotes: UUID?
     @State private var selectedSort = QuoteSort.default
     @State private var toDelete: [Quote] = []
     @State private var showDeleteAlert: Bool = false
@@ -89,7 +90,7 @@ struct QuoteListView: View {
     }
 
     var body: some View {
-        List {
+        List(selection: $selectedQuotes) {
             ForEach(quotes) { section in
                 Section(header: Text(section.id)) {
                     ForEach(section) { quote in
