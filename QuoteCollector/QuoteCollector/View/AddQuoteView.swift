@@ -87,6 +87,13 @@ struct AddQuoteView: View {
                     }
                 }
                 .navigationTitle(objectId == nil ? "Add Quote" : "Edit Quote")
+                .toolbar(
+                    content: {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") { presentation.wrappedValue.dismiss() }
+                        }
+                    }
+                )
                 .alert(isPresented: $isError) {
                     Alert(
                         title: Text("Error"),
