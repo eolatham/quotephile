@@ -23,10 +23,12 @@ struct AddQuoteView: View {
     @State private var text: String = ""
     @State private var authorFirstName: String = ""
     @State private var authorLastName: String = ""
+    @State private var tags: String = ""
     @State private var isError: Bool = false
     @State private var textErrorMsg: String? = nil
     @State private var authorFirstNameErrorMsg: String? = nil
     @State private var authorLastNameErrorMsg: String? = nil
+    @State private var tagsErrorMsg: String? = nil
 
     var body: some View {
         NavigationView {
@@ -43,6 +45,11 @@ struct AddQuoteView: View {
                                 .lineLimit(1)
                             TextField("Last Name (optional)", text: $authorLastName)
                                 .lineLimit(1)
+                        }
+                    }
+                    Section(header: Text("TAGS")) {
+                        VStack {
+                            TextField("Tags (comma-separated)", text: $tags)
                         }
                     }
                     Section {
@@ -62,9 +69,15 @@ struct AddQuoteView: View {
                                 }
                                 else { authorLastNameErrorMsg = nil }
                                 
+                                if tags.count > 1000 {
+                                    tagsErrorMsg = "Tags are too long!"
+                                }
+                                else { tagsErrorMsg = nil }
+
                                 isError = textErrorMsg != nil ||
                                           authorFirstNameErrorMsg != nil ||
-                                          authorLastNameErrorMsg != nil
+                                          authorLastNameErrorMsg != nil ||
+                                          tagsErrorMsg != nil
                             
                                 if isError == false {
                                     _ = viewModel.addQuote(
@@ -74,7 +87,8 @@ struct AddQuoteView: View {
                                             collection: quoteCollection,
                                             text: text,
                                             authorFirstName: authorFirstName,
-                                            authorLastName: authorLastName
+                                            authorLastName: authorLastName,
+                                            tags: tags
                                         )
                                     )
                                     presentation.wrappedValue.dismiss()
@@ -98,11 +112,14 @@ struct AddQuoteView: View {
                     Alert(
                         title: Text("Error"),
                         message: Text(
-                            textErrorMsg != nil
-                                ? textErrorMsg!
-                                : authorFirstNameErrorMsg != nil
-                                    ? authorFirstNameErrorMsg!
-                                    : authorLastNameErrorMsg!
+                            Utility.join(
+                                strings: [
+                                    textErrorMsg,
+                                    authorFirstNameErrorMsg,
+                                    authorLastNameErrorMsg,
+                                    tagsErrorMsg
+                                ]
+                            )
                         ),
                         dismissButton: .default(Text("OK"))
                     )

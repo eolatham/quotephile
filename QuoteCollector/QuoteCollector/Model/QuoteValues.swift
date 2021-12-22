@@ -13,4 +13,5 @@ struct QuoteValues {
     var text: String
     var authorFirstName: String = ""
     var authorLastName: String = ""
+    var tags: String = ""
 }

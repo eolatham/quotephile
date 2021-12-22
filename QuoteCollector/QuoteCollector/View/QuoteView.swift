@@ -45,15 +45,17 @@ struct QuoteView: View {
     }
 
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
-            ScrollView(.vertical) {
-                Text(copyText)
-                    .font(copyTextFont())
-                    .multilineTextAlignment(.center)
-                    .textSelection(.enabled)
-                    .padding()
+        Form {
+            Section(header: Text("QUOTE")) {
+                ScrollView(.vertical) {
+                    Text(copyText)
+                        .font(copyTextFont())
+                        .multilineTextAlignment(.center)
+                        .textSelection(.enabled)
+                        .padding()
+                }
             }
-            Form {
+            Section(header: Text("STYLE")) {
                 Toggle(isOn: $includeQuotationMarks) { Text("Include quotation marks") }
                     .onChange(of: includeQuotationMarks) { newValue in refresh() }
                 Toggle(isOn: $includeAuthor) { Text("Include author") }
@@ -61,6 +63,12 @@ struct QuoteView: View {
                 if includeAuthor {
                     Toggle(isOn: $authorOnSeparateLine) { Text("Author on separate line") }
                         .onChange(of: authorOnSeparateLine) { newValue in refresh() }
+                }
+            }
+            Section(header: Text("TAGS")) {
+                ScrollView(.horizontal) {
+                    Text(quote.tags!)
+                        .textSelection(.enabled)
                 }
             }
         }

@@ -42,6 +42,7 @@ struct AddQuoteViewModel {
         quote.text = values.text
         quote.authorFirstName = values.authorFirstName
         quote.authorLastName = values.authorLastName
+        quote.tags = values.tags
         Utility.updateContext(context: context)
         return quote
     }
