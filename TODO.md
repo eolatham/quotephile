@@ -6,6 +6,8 @@
   - "Edit" button that appears in selection mode and triggers sheet allowing:
     - Overwrite author
     - Overwrite tags
+    - Add tags
+    - Remove tags
   - "Delete" button that appears in selection mode and triggers sheet allowing:
     - Delete quotes
 - Add ability to bulk-import quotes into a quote collection from the clipboard or from a text file
