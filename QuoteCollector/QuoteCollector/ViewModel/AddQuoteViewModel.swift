@@ -42,11 +42,25 @@ struct AddQuoteViewModel {
         quote.text = values.text
         quote.authorFirstName = values.authorFirstName
         quote.authorLastName = values.authorLastName
-        quote.tags = values.tags
+        quote.tags = formatTags(tags: values.tags)
         quote.displayQuotationMarks = values.displayQuotationMarks
         quote.displayAuthor = values.displayAuthor
         quote.displayAuthorOnNewLine = values.displayAuthorOnNewLine
         Utility.updateContext(context: context)
         return quote
+    }
+
+    /**
+     * Transforms the given unformatted comma-separated list of tags into a
+     * comma-separated and alphabetically-sorted list of unique and capitalized tags.
+     */
+    func formatTags(tags: String) -> String {
+        return Set(
+            tags
+            .split(separator: ",")
+            .map({ tag in return tag.trimmingCharacters(in: .whitespacesAndNewlines).capitalized })
+        )
+        .sorted()
+        .joined(separator: ", ")
     }
 }
