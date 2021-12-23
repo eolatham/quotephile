@@ -12,9 +12,6 @@
 		B645C4AA275FCDC100AE1810 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B645C4A9275FCDC100AE1810 /* Assets.xcassets */; };
 		B645C4AD275FCDC100AE1810 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B645C4AC275FCDC100AE1810 /* Preview Assets.xcassets */; };
 		B645C4AF275FCDC100AE1810 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4AE275FCDC100AE1810 /* PersistenceManager.swift */; };
-		B645C4BC275FCDC200AE1810 /* QuoteCollectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4BB275FCDC200AE1810 /* QuoteCollectorTests.swift */; };
-		B645C4C6275FCDC200AE1810 /* QuoteCollectorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4C5275FCDC200AE1810 /* QuoteCollectorUITests.swift */; };
-		B645C4C8275FCDC200AE1810 /* QuoteCollectorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4C7275FCDC200AE1810 /* QuoteCollectorUITestsLaunchTests.swift */; };
 		B645C4E0275FDEBC00AE1810 /* QuoteCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4DC275FDEBC00AE1810 /* QuoteCollection.swift */; };
 		B645C4E2275FDEBC00AE1810 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4DE275FDEBC00AE1810 /* Quote.swift */; };
 		B645C4ED275FEA0700AE1810 /* QuoteCollectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4EC275FEA0700AE1810 /* QuoteCollectionRowView.swift */; };
@@ -64,10 +61,7 @@
 		B645C4AC275FCDC100AE1810 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B645C4AE275FCDC100AE1810 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		B645C4B7275FCDC100AE1810 /* QuoteCollectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuoteCollectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B645C4BB275FCDC200AE1810 /* QuoteCollectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectorTests.swift; sourceTree = "<group>"; };
 		B645C4C1275FCDC200AE1810 /* QuoteCollectorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuoteCollectorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B645C4C5275FCDC200AE1810 /* QuoteCollectorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectorUITests.swift; sourceTree = "<group>"; };
-		B645C4C7275FCDC200AE1810 /* QuoteCollectorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectorUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B645C4DC275FDEBC00AE1810 /* QuoteCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollection.swift; sourceTree = "<group>"; };
 		B645C4DE275FDEBC00AE1810 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		B645C4EC275FEA0700AE1810 /* QuoteCollectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionRowView.swift; sourceTree = "<group>"; };
@@ -120,8 +114,6 @@
 			isa = PBXGroup;
 			children = (
 				B645C4A4275FCDC000AE1810 /* QuoteCollector */,
-				B645C4BA275FCDC100AE1810 /* QuoteCollectorTests */,
-				B645C4C4275FCDC200AE1810 /* QuoteCollectorUITests */,
 				B645C4A3275FCDC000AE1810 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -158,23 +150,6 @@
 				B645C4AC275FCDC100AE1810 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		B645C4BA275FCDC100AE1810 /* QuoteCollectorTests */ = {
-			isa = PBXGroup;
-			children = (
-				B645C4BB275FCDC200AE1810 /* QuoteCollectorTests.swift */,
-			);
-			path = QuoteCollectorTests;
-			sourceTree = "<group>";
-		};
-		B645C4C4275FCDC200AE1810 /* QuoteCollectorUITests */ = {
-			isa = PBXGroup;
-			children = (
-				B645C4C5275FCDC200AE1810 /* QuoteCollectorUITests.swift */,
-				B645C4C7275FCDC200AE1810 /* QuoteCollectorUITestsLaunchTests.swift */,
-			);
-			path = QuoteCollectorUITests;
 			sourceTree = "<group>";
 		};
 		B645C4E4275FDEE300AE1810 /* Model */ = {
@@ -412,7 +387,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B645C4BC275FCDC200AE1810 /* QuoteCollectorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,8 +394,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B645C4C6275FCDC200AE1810 /* QuoteCollectorUITests.swift in Sources */,
-				B645C4C8275FCDC200AE1810 /* QuoteCollectorUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

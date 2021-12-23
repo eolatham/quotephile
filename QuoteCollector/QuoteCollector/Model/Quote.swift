@@ -11,6 +11,16 @@ import CoreData
 @objc(Quote)
 class Quote: NSManagedObject {
     @objc var exists: Bool { return text != nil }
+    @objc var length: Int { return text!.count }
+    @objc var rawText: String { return text! }
+    @objc var displayText: String {
+        var s: String = text!
+        if displayQuotationMarks { s = "“" + s + "”" }
+        if displayAuthor {
+            s = s + (displayAuthorOnNewLine ? "\n" : " ") + "—" + author
+        }
+        return s
+    }
     @objc var author: String {
         let name = [authorFirstName!, authorLastName!]
             .joined(separator: " ")
@@ -45,18 +55,5 @@ class Quote: NSManagedObject {
     @objc var authorLastNameDescending: String {
         // Add space to avoid crash upon switching sort mode
         return (authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()) + " "
-    }
-
-    func stringify(
-        includeQuotationMarks: Bool = true,
-        includeAuthor: Bool = true,
-        authorOnSeparateLine: Bool = false
-    ) -> String {
-        var s: String = text!
-        if includeQuotationMarks { s = "“" + s + "”" }
-        if includeAuthor {
-            s = s + (authorOnSeparateLine ? "\n" : " ") + "—" + author
-        }
-        return s
     }
 }

@@ -14,4 +14,7 @@ struct QuoteValues {
     var authorFirstName: String = ""
     var authorLastName: String = ""
     var tags: String = ""
+    var displayQuotationMarks: Bool = true
+    var displayAuthor: Bool = true
+    var displayAuthorOnNewLine: Bool = true
 }

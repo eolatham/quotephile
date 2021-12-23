@@ -5,6 +5,9 @@
         <attribute name="authorLastName" attributeType="String" minValueString="0" maxValueString="500" defaultValueString="" spotlightIndexingEnabled="YES"/>
         <attribute name="dateChanged" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="displayAuthor" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="displayAuthorOnNewLine" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="displayQuotationMarks" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="tags" attributeType="String" minValueString="0" maxValueString="1000" defaultValueString="" spotlightIndexingEnabled="YES"/>
         <attribute name="text" attributeType="String" minValueString="1" maxValueString="10000" spotlightIndexingEnabled="YES"/>
         <relationship name="collection" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteCollection" inverseName="quotes" inverseEntity="QuoteCollection"/>
@@ -16,7 +19,7 @@
         <relationship name="quotes" toMany="YES" deletionRule="Cascade" destinationEntity="Quote" inverseName="collection" inverseEntity="Quote"/>
     </entity>
     <elements>
-        <element name="Quote" positionX="-63" positionY="-18" width="128" height="134"/>
+        <element name="Quote" positionX="-63" positionY="-18" width="128" height="179"/>
         <element name="QuoteCollection" positionX="-54" positionY="-9" width="128" height="89"/>
     </elements>
 </model>

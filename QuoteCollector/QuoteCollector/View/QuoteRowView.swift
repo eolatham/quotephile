@@ -12,7 +12,7 @@ struct QuoteRowView: View {
     var body: some View {
         if quote.exists {
             VStack(alignment: .leading) {
-                Text(quote.text!)
+                Text(quote.rawText)
                     .font(.body)
                     .lineLimit(2)
                     .truncationMode(.tail)

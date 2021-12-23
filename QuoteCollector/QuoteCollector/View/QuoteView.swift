@@ -8,47 +8,36 @@
 import SwiftUI
 
 struct QuoteView: View {
+    @Environment(\.managedObjectContext) private var context
+
     @ObservedObject var quote: Quote
 
+    @State private var displayQuotationMarks: Bool
+    @State private var displayAuthor: Bool
+    @State private var displayAuthorOnNewLine: Bool
     @State private var showEditQuoteView: Bool
-    @State private var includeQuotationMarks: Bool
-    @State private var includeAuthor: Bool
-    @State private var authorOnSeparateLine: Bool
-    @State private var copyText: String
 
     init(quote: Quote) {
         self.quote = quote
+        self.displayQuotationMarks = quote.displayQuotationMarks
+        self.displayAuthor = quote.displayAuthor
+        self.displayAuthorOnNewLine = quote.displayAuthorOnNewLine
         self.showEditQuoteView = false
-        self.includeQuotationMarks = true
-        self.includeAuthor = true
-        self.authorOnSeparateLine = false
-        self.copyText = quote.stringify(
-            includeQuotationMarks: true,
-            includeAuthor: true,
-            authorOnSeparateLine: false
-        )
     }
 
-    func refresh() {
-        copyText = quote.stringify(
-            includeQuotationMarks: includeQuotationMarks,
-            includeAuthor: includeAuthor,
-            authorOnSeparateLine: authorOnSeparateLine
-        )
-    }
-
-    func copyTextFont() -> Font {
-        if copyText.count < 100 { return .title }
-        if copyText.count < 200 { return .title2 }
-        if copyText.count < 300 { return .title3 }
+    func displayTextFont() -> Font {
+        let length = quote.length
+        if length < 100 { return .title }
+        if length < 200 { return .title2 }
+        if length < 300 { return .title3 }
         return .body
     }
 
     var body: some View {
         Form {
             Section(header: Text("QUOTE")) {
-                Text(copyText)
-                    .font(copyTextFont())
+                Text(quote.displayText)
+                    .font(displayTextFont())
                     .multilineTextAlignment(.center)
                     .textSelection(.enabled)
                     .frame(maxWidth: .infinity)
@@ -59,13 +48,22 @@ struct QuoteView: View {
                     .frame(maxWidth: .infinity)
             }
             Section(header: Text("STYLE")) {
-                Toggle(isOn: $includeQuotationMarks) { Text("Include quotation marks") }
-                    .onChange(of: includeQuotationMarks) { newValue in refresh() }
-                Toggle(isOn: $includeAuthor) { Text("Include author") }
-                    .onChange(of: includeAuthor) { newValue in refresh() }
-                if includeAuthor {
-                    Toggle(isOn: $authorOnSeparateLine) { Text("Author on separate line") }
-                        .onChange(of: authorOnSeparateLine) { newValue in refresh() }
+                Toggle(isOn: $displayQuotationMarks) { Text("Display quotation marks") }
+                .onChange(of: displayQuotationMarks) { newValue in
+                    quote.displayQuotationMarks = newValue
+                    Utility.updateContext(context: context)
+                }
+                Toggle(isOn: $displayAuthor) { Text("Display author") }
+                .onChange(of: displayAuthor) { newValue in
+                    quote.displayAuthor = newValue
+                    Utility.updateContext(context: context)
+                }
+                if quote.displayAuthor {
+                    Toggle(isOn: $displayAuthorOnNewLine) { Text("Display author on new line") }
+                    .onChange(of: displayAuthorOnNewLine) { newValue in
+                        quote.displayAuthorOnNewLine = newValue
+                        Utility.updateContext(context: context)
+                    }
                 }
             }
             if quote.tags!.count > 0 {
@@ -90,7 +88,7 @@ struct QuoteView: View {
             AddQuoteView(
                 quoteCollection: quote.collection!,
                 objectId: quote.objectID
-            ).onDisappear(perform: refresh)
+            )
         }
     }
 }

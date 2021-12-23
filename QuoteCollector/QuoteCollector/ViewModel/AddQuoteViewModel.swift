@@ -43,6 +43,9 @@ struct AddQuoteViewModel {
         quote.authorFirstName = values.authorFirstName
         quote.authorLastName = values.authorLastName
         quote.tags = values.tags
+        quote.displayQuotationMarks = values.displayQuotationMarks
+        quote.displayAuthor = values.displayAuthor
+        quote.displayAuthorOnNewLine = values.displayAuthorOnNewLine
         Utility.updateContext(context: context)
         return quote
     }
