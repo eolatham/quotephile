@@ -14,7 +14,7 @@ struct QuoteRowView: View {
             VStack(alignment: .leading) {
                 Text(quote.rawText)
                     .font(.body)
-                    .lineLimit(2)
+                    .lineLimit(1)
                     .truncationMode(.tail)
                 if quote.author.count > 0 {
                     Text(quote.author)

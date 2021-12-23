@@ -69,7 +69,7 @@ struct QuoteView: View {
             if quote.tags!.count > 0 {
                 Section(header: Text("TAGS")) {
                     ScrollView(.horizontal) {
-                        Text(quote.tags!).textSelection(.enabled)
+                        Text(quote.tags!).textSelection(.enabled).padding(.vertical, 10)
                     }
                 }
             }

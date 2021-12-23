@@ -50,6 +50,7 @@ struct AddQuoteView: View {
                     Section(header: Text("TAGS")) {
                         VStack {
                             TextField("Tags (comma-separated)", text: $tags)
+                                .lineLimit(1)
                         }
                     }
                     Section {

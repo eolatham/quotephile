@@ -11,13 +11,19 @@ struct Utility {
     static func dateToMonthString(date: Date) -> String {
         return date.formatted(.dateTime.month(.wide).year())
     }
-    
-    static func updateContext(context: NSManagedObjectContext) {
-        do {
-            try context.save()
-        } catch {
-            print("Save error: \(error)")
-        }
+
+    static func trimWhitespace(string: String) -> String {
+        return string
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: " ")
+            .joined(separator: " ")
+    }
+
+    static func trimWhitespace(string: Substring) -> String {
+        return string
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: " ")
+            .joined(separator: " ")
     }
 
     static func join(strings: [String?], separator: String = "\n") -> String {
@@ -29,5 +35,13 @@ struct Utility {
             }
         }
         return joined
+    }
+
+    static func updateContext(context: NSManagedObjectContext) {
+        do {
+            try context.save()
+        } catch {
+            print("Save error: \(error)")
+        }
     }
 }

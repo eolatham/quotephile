@@ -39,28 +39,14 @@ struct AddQuoteViewModel {
         }
         quote.dateChanged = now
         quote.collection = values.collection
-        quote.text = values.text
-        quote.authorFirstName = values.authorFirstName
-        quote.authorLastName = values.authorLastName
-        quote.tags = formatTags(tags: values.tags)
+        quote.text = Quote.formatText(text: values.text)
+        quote.authorFirstName = Quote.formatAuthor(author: values.authorFirstName)
+        quote.authorLastName = Quote.formatAuthor(author: values.authorLastName)
+        quote.tags = Quote.formatTags(tags: values.tags)
         quote.displayQuotationMarks = values.displayQuotationMarks
         quote.displayAuthor = values.displayAuthor
         quote.displayAuthorOnNewLine = values.displayAuthorOnNewLine
         Utility.updateContext(context: context)
         return quote
-    }
-
-    /**
-     * Transforms the given unformatted comma-separated list of tags into a
-     * comma-separated and alphabetically-sorted list of unique and capitalized tags.
-     */
-    func formatTags(tags: String) -> String {
-        return Set(
-            tags
-            .split(separator: ",")
-            .map({ tag in return tag.trimmingCharacters(in: .whitespacesAndNewlines).capitalized })
-        )
-        .sorted()
-        .joined(separator: ", ")
     }
 }
