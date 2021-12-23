@@ -28,20 +28,6 @@ class Quote: NSManagedObject {
         if name.isEmpty { return "Anonymous" }
         return name
     }
-    @objc var monthCreatedAscending: String {
-        return Utility.dateToMonthString(date:dateCreated!)
-    }
-    @objc var monthCreatedDescending: String {
-        // Add space to avoid crash upon switching sort mode
-        return Utility.dateToMonthString(date:dateCreated!) + " "
-    }
-    @objc var monthChangedAscending: String {
-        return Utility.dateToMonthString(date:dateChanged!)
-    }
-    @objc var monthChangedDescending: String {
-        // Add space to avoid crash upon switching sort mode
-        return Utility.dateToMonthString(date:dateChanged!) + " "
-    }
     @objc var authorFirstNameAscending: String {
         return authorFirstName!.isEmpty ? "ANONYMOUS" : authorFirstName!.uppercased()
     }
@@ -55,5 +41,26 @@ class Quote: NSManagedObject {
     @objc var authorLastNameDescending: String {
         // Add space to avoid crash upon switching sort mode
         return (authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()) + " "
+    }
+    @objc var tagsAscending: String {
+        return tags!.isEmpty ? "NONE" : tags!.uppercased()
+    }
+    @objc var tagsDescending: String {
+        // Add space to avoid crash upon switching sort mode
+        return (tags!.isEmpty ? "NONE" : tags!.uppercased()) + " "
+    }
+    @objc var monthCreatedAscending: String {
+        return Utility.dateToMonthString(date:dateCreated!)
+    }
+    @objc var monthCreatedDescending: String {
+        // Add space to avoid crash upon switching sort mode
+        return Utility.dateToMonthString(date:dateCreated!) + " "
+    }
+    @objc var monthChangedAscending: String {
+        return Utility.dateToMonthString(date:dateChanged!)
+    }
+    @objc var monthChangedDescending: String {
+        // Add space to avoid crash upon switching sort mode
+        return Utility.dateToMonthString(date:dateChanged!) + " "
     }
 }

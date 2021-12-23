@@ -11,6 +11,13 @@ import CoreData
 @objc(QuoteCollection)
 class QuoteCollection: NSManagedObject {
     @objc var exists: Bool { return name != nil }
+    @objc var nameFirstCharacterAscending: String {
+        return name!.first!.uppercased()
+    }
+    @objc var nameFirstCharacterDescending: String {
+        // Add space to avoid crash upon switching sort mode
+        return name!.first!.uppercased() + " "
+    }
     @objc var monthCreatedAscending: String {
         return Utility.dateToMonthString(date:dateCreated!)
     }
@@ -24,12 +31,5 @@ class QuoteCollection: NSManagedObject {
     @objc var monthChangedDescending: String {
         // Add space to avoid crash upon switching sort mode
         return Utility.dateToMonthString(date:dateChanged!) + " "
-    }
-    @objc var nameFirstCharacterAscending: String {
-        return name!.first!.uppercased()
-    }
-    @objc var nameFirstCharacterDescending: String {
-        // Add space to avoid crash upon switching sort mode
-        return name!.first!.uppercased() + " "
     }
 }
