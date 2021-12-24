@@ -7,6 +7,70 @@
 
 import SwiftUI
 
+struct QuoteCollectionListView: View {
+    @Environment(\.managedObjectContext) private var context
+
+    let viewModel = QuoteCollectionListViewModel()
+
+    @SectionedFetchRequest var quoteCollections: SectionedFetchResults<String, QuoteCollection>
+    var searchQuery: Binding<String>
+
+    @State private var selectedQuoteCollections: UUID?
+    @State private var toDelete: [QuoteCollection] = []
+    @State private var showDeleteAlert: Bool = false
+
+    var body: some View {
+        List(selection: $selectedQuoteCollections) {
+            // All Quotes collection
+            NavigationLink {
+                AllQuotesView()
+            } label: {
+                Text("All Quotes").font(.headline)
+            }
+            // Custom collections
+            ForEach(quoteCollections) { section in
+                Section(header: Text(section.id)) {
+                    ForEach(section) { quoteCollection in
+                        NavigationLink {
+                            QuoteCollectionView(quoteCollection: quoteCollection)
+                        } label: {
+                            QuoteCollectionRowView(quoteCollection: quoteCollection)
+                        }
+                    }
+                    .onDelete { indexSet in
+                        toDelete = indexSet.map { section[$0] }
+                        showDeleteAlert = true
+                    }
+                }
+            }
+        }
+        .listStyle(GroupedListStyle())  // Delete this?
+        .searchable(text: searchQuery)
+        .alert(isPresented: $showDeleteAlert) {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text(
+                    "Deleting this quote collection will " +
+                    "also delete all of its quotes. " +
+                    "This action cannot be undone!"
+                ),
+                primaryButton: .destructive(Text("Yes, delete")) {
+                    withAnimation {
+                        viewModel.deleteQuoteCollections(
+                            context: context,
+                            quoteCollections: toDelete
+                        )
+                        toDelete = []
+                    }
+                },
+                secondaryButton: .cancel(Text("No, cancel")) {
+                    toDelete = []
+                }
+            )
+        }
+    }
+}
+
 struct QuoteCollectionListContainerView: View {
     @Environment(\.managedObjectContext) private var context
 
@@ -57,70 +121,6 @@ struct QuoteCollectionListContainerView: View {
                 AddQuoteCollectionView()
             }
             .navigationTitle("Quote Collections")
-        }
-    }
-}
-
-struct QuoteCollectionListView: View {
-    @Environment(\.managedObjectContext) private var context
-
-    let viewModel = QuoteCollectionListViewModel()
-
-    @SectionedFetchRequest var quoteCollections: SectionedFetchResults<String, QuoteCollection>
-    var searchQuery: Binding<String>
-
-    @State private var selectedQuoteCollections: UUID?
-    @State private var toDelete: [QuoteCollection] = []
-    @State private var showDeleteAlert: Bool = false
-
-    var body: some View {
-        List(selection: $selectedQuoteCollections) {
-            // All Quotes collection
-            NavigationLink {
-                QuoteListContainerView()
-            } label: {
-                Text("All Quotes").font(.headline)
-            }
-            // Custom collections
-            ForEach(quoteCollections) { section in
-                Section(header: Text(section.id)) {
-                    ForEach(section) { quoteCollection in
-                        NavigationLink {
-                            QuoteListContainerView(quoteCollection: quoteCollection)
-                        } label: {
-                            QuoteCollectionRowView(quoteCollection: quoteCollection)
-                        }
-                    }
-                    .onDelete { indexSet in
-                        toDelete = indexSet.map { section[$0] }
-                        showDeleteAlert = true
-                    }
-                }
-            }
-        }
-        .listStyle(GroupedListStyle())  // Delete this?
-        .searchable(text: searchQuery)
-        .alert(isPresented: $showDeleteAlert) {
-            Alert(
-                title: Text("Are you sure?"),
-                message: Text(
-                    "Deleting this quote collection will " +
-                    "also delete all of its quotes. " +
-                    "This action cannot be undone!"
-                ),
-                primaryButton: .destructive(Text("Yes, delete")) {
-                    withAnimation {
-                        viewModel.deleteQuoteCollections(
-                            context: context,
-                            quoteCollections: toDelete
-                        )
-                        toDelete = []
-                    }
-                },
-                secondaryButton: .cancel(Text("No, cancel")) {
-                    toDelete = []
-                }
-            )
         }
     }
 }

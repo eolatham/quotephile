@@ -7,101 +7,6 @@
 
 import SwiftUI
 
-struct QuoteListContainerView: View {
-    @Environment(\.managedObjectContext) private var context
-
-    let viewModel = QuoteListViewModel()
-
-    var quoteCollection: QuoteCollection? = nil
-
-    @State private var searchTerm: String = ""
-    @State private var selectedSort: QuoteSort = QuoteSort.default
-    @State private var showAddQuoteView: Bool = false
-    @State private var showEditCollectionView: Bool = false
-
-    var searchQuery: Binding<String> {
-        Binding { searchTerm } set: { newValue in
-            searchTerm = newValue
-        }
-    }
-
-    var predicate: NSPredicate? {
-        let collectionPredicate: NSPredicate? =
-            quoteCollection == nil ? nil
-            : NSPredicate(format: "collection = %@", quoteCollection!)
-        let searchPredicate: NSPredicate? =
-            searchTerm.isEmpty ? nil
-            : NSCompoundPredicate(
-                orPredicateWithSubpredicates: [
-                    NSPredicate(format: "text CONTAINS[cd] %@", searchTerm),
-                    NSPredicate(format: "authorFirstName CONTAINS[cd] %@", searchTerm),
-                    NSPredicate(format: "authorLastName CONTAINS[cd] %@", searchTerm),
-                    NSPredicate(format: "tags CONTAINS[cd] %@", searchTerm)
-                ]
-            )
-        if collectionPredicate == nil && searchPredicate == nil {
-            return nil
-        }
-        else if collectionPredicate != nil && searchPredicate == nil {
-            return collectionPredicate
-        }
-        else if collectionPredicate == nil && searchPredicate != nil {
-            return searchPredicate
-        }
-        else {
-            return NSCompoundPredicate(
-                andPredicateWithSubpredicates: [
-                    collectionPredicate!,
-                    searchPredicate!
-                ]
-            )
-        }
-    }
-
-    var body: some View {
-        QuoteListView(
-            quotes: SectionedFetchRequest<String, Quote>(
-                sectionIdentifier: selectedSort.section,
-                sortDescriptors: selectedSort.descriptors,
-                predicate: predicate,
-                animation: .default
-            ),
-            searchQuery: searchQuery
-        )
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                SortQuotesView(
-                    selectedSort: $selectedSort,
-                    sorts: QuoteSort.sorts
-                )
-                if quoteCollection != nil {
-                    Button {
-                        showAddQuoteView = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                    Button {
-                        showEditCollectionView = true
-                    } label: {
-                        Image(systemName: "pencil")
-                    }
-                }
-            }
-        }
-        .sheet(isPresented: $showAddQuoteView) {
-            // Only invoked when quoteCollection != nil
-            AddQuoteView(quoteCollection: quoteCollection!)
-        }
-        .sheet(isPresented: $showEditCollectionView) {
-            // Only invoked when quoteCollection != nil
-            AddQuoteCollectionView(quoteCollection: quoteCollection!)
-        }
-        .navigationTitle(
-            quoteCollection == nil ? "All Quotes" : quoteCollection!.name!
-        )
-    }
-}
-
 struct QuoteListView: View {
     @Environment(\.managedObjectContext) private var context
 
@@ -155,5 +60,131 @@ struct QuoteListView: View {
                 }
             )
         }
+    }
+}
+
+struct AllQuotesView: View {
+    @Environment(\.managedObjectContext) private var context
+
+    let viewModel = QuoteListViewModel()
+
+    @State private var searchTerm: String = ""
+    @State private var selectedSort: QuoteSort = QuoteSort.default
+    @State private var showAddQuoteView: Bool = false
+    @State private var showEditCollectionView: Bool = false
+
+    var searchQuery: Binding<String> {
+        Binding { searchTerm } set: { newValue in
+            searchTerm = newValue
+        }
+    }
+
+    var predicate: NSPredicate? {
+        searchTerm.isEmpty ? nil : NSCompoundPredicate(
+            orPredicateWithSubpredicates: [
+                NSPredicate(format: "text CONTAINS[cd] %@", searchTerm),
+                NSPredicate(format: "authorFirstName CONTAINS[cd] %@", searchTerm),
+                NSPredicate(format: "authorLastName CONTAINS[cd] %@", searchTerm),
+                NSPredicate(format: "tags CONTAINS[cd] %@", searchTerm)
+            ]
+        )
+    }
+
+    var body: some View {
+        QuoteListView(
+            quotes: SectionedFetchRequest<String, Quote>(
+                sectionIdentifier: selectedSort.section,
+                sortDescriptors: selectedSort.descriptors,
+                predicate: predicate,
+                animation: .default
+            ),
+            searchQuery: searchQuery
+        )
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                SortQuotesView(
+                    selectedSort: $selectedSort,
+                    sorts: QuoteSort.sorts
+                )
+            }
+        }
+        .navigationTitle("All Quotes")
+    }
+}
+
+struct QuoteCollectionView: View {
+    @Environment(\.managedObjectContext) private var context
+
+    let viewModel = QuoteListViewModel()
+
+    @ObservedObject var quoteCollection: QuoteCollection
+
+    @State private var searchTerm: String = ""
+    @State private var selectedSort: QuoteSort = QuoteSort.default
+    @State private var showAddQuoteView: Bool = false
+    @State private var showEditCollectionView: Bool = false
+
+    var searchQuery: Binding<String> {
+        Binding { searchTerm } set: { newValue in
+            searchTerm = newValue
+        }
+    }
+
+    var predicate: NSPredicate? {
+        let collectionPredicate = NSPredicate(format: "collection = %@", quoteCollection)
+        if searchTerm.isEmpty {
+            return collectionPredicate
+        } else {
+            return NSCompoundPredicate(
+                andPredicateWithSubpredicates: [
+                    collectionPredicate,
+                    NSCompoundPredicate(
+                        orPredicateWithSubpredicates: [
+                            NSPredicate(format: "text CONTAINS[cd] %@", searchTerm),
+                            NSPredicate(format: "authorFirstName CONTAINS[cd] %@", searchTerm),
+                            NSPredicate(format: "authorLastName CONTAINS[cd] %@", searchTerm),
+                            NSPredicate(format: "tags CONTAINS[cd] %@", searchTerm)
+                        ]
+                    )
+                ]
+            )
+        }
+    }
+
+    var body: some View {
+        QuoteListView(
+            quotes: SectionedFetchRequest<String, Quote>(
+                sectionIdentifier: selectedSort.section,
+                sortDescriptors: selectedSort.descriptors,
+                predicate: predicate,
+                animation: .default
+            ),
+            searchQuery: searchQuery
+        )
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                SortQuotesView(
+                    selectedSort: $selectedSort,
+                    sorts: QuoteSort.sorts
+                )
+                Button {
+                    showAddQuoteView = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+                Button {
+                    showEditCollectionView = true
+                } label: {
+                    Image(systemName: "pencil")
+                }
+            }
+        }
+        .sheet(isPresented: $showAddQuoteView) {
+            AddQuoteView(quoteCollection: quoteCollection)
+        }
+        .sheet(isPresented: $showEditCollectionView) {
+            AddQuoteCollectionView(quoteCollection: quoteCollection)
+        }
+        .navigationTitle(quoteCollection.name!)
     }
 }

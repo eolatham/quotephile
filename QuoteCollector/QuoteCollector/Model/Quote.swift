@@ -10,9 +10,9 @@ import CoreData
 
 @objc(Quote)
 class Quote: NSManagedObject {
-    @objc var exists: Bool { return text != nil }
-    @objc var length: Int { return text!.count }
-    @objc var rawText: String { return text! }
+    @objc var exists: Bool { text != nil }
+    @objc var length: Int { text!.count }
+    @objc var rawText: String { text! }
     @objc var displayText: String {
         var s: String = text!
         if displayQuotationMarks { s = "“" + s + "”" }
@@ -29,39 +29,39 @@ class Quote: NSManagedObject {
         return name
     }
     @objc var authorFirstNameAscending: String {
-        return authorFirstName!.isEmpty ? "ANONYMOUS" : authorFirstName!.uppercased()
+        authorFirstName!.isEmpty ? "ANONYMOUS" : authorFirstName!.uppercased()
     }
     @objc var authorFirstNameDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return (authorFirstName!.isEmpty ? "ANONYMOUS" : authorFirstName!.uppercased()) + " "
+        (authorFirstName!.isEmpty ? "ANONYMOUS" : authorFirstName!.uppercased()) + " "
     }
     @objc var authorLastNameAscending: String {
-        return authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()
+        authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()
     }
     @objc var authorLastNameDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return (authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()) + " "
+        (authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()) + " "
     }
     @objc var tagsAscending: String {
-        return tags!.isEmpty ? "NONE" : tags!.uppercased()
+        tags!.isEmpty ? "NONE" : tags!.uppercased()
     }
     @objc var tagsDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return (tags!.isEmpty ? "NONE" : tags!.uppercased()) + " "
+        (tags!.isEmpty ? "NONE" : tags!.uppercased()) + " "
     }
     @objc var monthCreatedAscending: String {
-        return Utility.dateToMonthString(date:dateCreated!)
+        Utility.dateToMonthString(date:dateCreated!)
     }
     @objc var monthCreatedDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return Utility.dateToMonthString(date:dateCreated!) + " "
+        Utility.dateToMonthString(date:dateCreated!) + " "
     }
     @objc var monthChangedAscending: String {
-        return Utility.dateToMonthString(date:dateChanged!)
+        Utility.dateToMonthString(date:dateChanged!)
     }
     @objc var monthChangedDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return Utility.dateToMonthString(date:dateChanged!) + " "
+        Utility.dateToMonthString(date:dateChanged!) + " "
     }
 
     /**

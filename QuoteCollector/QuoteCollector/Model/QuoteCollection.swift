@@ -10,26 +10,26 @@ import CoreData
 
 @objc(QuoteCollection)
 class QuoteCollection: NSManagedObject {
-    @objc var exists: Bool { return name != nil }
+    @objc var exists: Bool { name != nil }
     @objc var nameFirstCharacterAscending: String {
-        return name!.first!.uppercased()
+        name!.first!.uppercased()
     }
     @objc var nameFirstCharacterDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return name!.first!.uppercased() + " "
+        name!.first!.uppercased() + " "
     }
     @objc var monthCreatedAscending: String {
-        return Utility.dateToMonthString(date:dateCreated!)
+        Utility.dateToMonthString(date:dateCreated!)
     }
     @objc var monthCreatedDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return Utility.dateToMonthString(date:dateCreated!) + " "
+        Utility.dateToMonthString(date:dateCreated!) + " "
     }
     @objc var monthChangedAscending: String {
-        return Utility.dateToMonthString(date:dateChanged!)
+        Utility.dateToMonthString(date:dateChanged!)
     }
     @objc var monthChangedDescending: String {
         // Add space to avoid crash upon switching sort mode
-        return Utility.dateToMonthString(date:dateChanged!) + " "
+        Utility.dateToMonthString(date:dateChanged!) + " "
     }
 }
