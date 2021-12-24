@@ -51,7 +51,6 @@ struct AddQuoteCollectionView: View {
                             },
                             label: { Text("Save").font(.headline) }
                         )
-                        .buttonStyle(PlainButtonStyle())
                         .foregroundColor(.accentColor)
                     }
                 }
