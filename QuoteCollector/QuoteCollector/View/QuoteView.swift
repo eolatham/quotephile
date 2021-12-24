@@ -87,7 +87,7 @@ struct QuoteView: View {
         .sheet(isPresented: $showEditQuoteView) {
             AddQuoteView(
                 quoteCollection: quote.collection!,
-                objectId: quote.objectID
+                quote: quote
             )
         }
     }

@@ -14,15 +14,15 @@ import CoreData
 struct AddQuoteCollectionView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) var presentation
-    
+
     let viewModel = AddQuoteCollectionViewModel()
-    
-    var objectId: NSManagedObjectID?
-    
+
+    var quoteCollection: QuoteCollection?
+
     @State private var name: String = ""
     @State private var isError: Bool = false
     @State private var nameErrorMsg: String? = nil
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -43,7 +43,7 @@ struct AddQuoteCollectionView: View {
                                 if isError == false {
                                     _ = viewModel.addQuoteCollection(
                                         context: context,
-                                        objectId: objectId,
+                                        quoteCollection: quoteCollection,
                                         values: QuoteCollectionValues(name: name)
                                     )
                                     presentation.wrappedValue.dismiss()
@@ -55,7 +55,9 @@ struct AddQuoteCollectionView: View {
                         .foregroundColor(.accentColor)
                     }
                 }
-                .navigationTitle(objectId == nil ? "Add Quote Collection" : "Edit Quote Collection")
+                .navigationTitle(
+                    quoteCollection == nil ? "Add Quote Collection" : "Edit Quote Collection"
+                )
                 .toolbar(
                     content: {
                         ToolbarItem(placement: .cancellationAction) {
@@ -72,13 +74,8 @@ struct AddQuoteCollectionView: View {
                 }
             }
             .onAppear {
-                if let quoteCollectionId = objectId, let quoteCollection =
-                    viewModel.fetchQuoteCollection(
-                        context: context,
-                        objectId: quoteCollectionId
-                    )
-                {
-                    name = quoteCollection.name!
+                if quoteCollection != nil {
+                    name = quoteCollection!.name!
                 }
             }
         }

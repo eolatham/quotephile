@@ -14,11 +14,11 @@ import CoreData
 struct AddQuoteView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) var presentation
-    
+
     let viewModel = AddQuoteViewModel()
-    
+
     var quoteCollection: QuoteCollection
-    var objectId: NSManagedObjectID?
+    var quote: Quote?
 
     @State private var text: String = ""
     @State private var authorFirstName: String = ""
@@ -79,18 +79,24 @@ struct AddQuoteView: View {
                                           authorFirstNameErrorMsg != nil ||
                                           authorLastNameErrorMsg != nil ||
                                           tagsErrorMsg != nil
-                            
+
                                 if isError == false {
+                                    var values: QuoteValues = QuoteValues(
+                                        collection: quoteCollection,
+                                        text: text,
+                                        authorFirstName: authorFirstName,
+                                        authorLastName: authorLastName,
+                                        tags: tags
+                                    )
+                                    if quote != nil {
+                                        values.displayQuotationMarks = quote!.displayQuotationMarks
+                                        values.displayAuthor = quote!.displayAuthor
+                                        values.displayAuthorOnNewLine = quote!.displayAuthorOnNewLine
+                                    }
                                     _ = viewModel.addQuote(
                                         context: context,
-                                        objectId: objectId,
-                                        values: QuoteValues(
-                                            collection: quoteCollection,
-                                            text: text,
-                                            authorFirstName: authorFirstName,
-                                            authorLastName: authorLastName,
-                                            tags: tags
-                                        )
+                                        quote: quote,
+                                        values: values
                                     )
                                     presentation.wrappedValue.dismiss()
                                 }
@@ -101,7 +107,7 @@ struct AddQuoteView: View {
                         .foregroundColor(.accentColor)
                     }
                 }
-                .navigationTitle(objectId == nil ? "Add Quote" : "Edit Quote")
+                .navigationTitle(quote == nil ? "Add Quote" : "Edit Quote")
                 .toolbar(
                     content: {
                         ToolbarItem(placement: .cancellationAction) {
@@ -127,13 +133,11 @@ struct AddQuoteView: View {
                 }
             }
             .onAppear {
-                if let quoteId = objectId,
-                   let quote = viewModel.fetchQuote(context: context, objectId: quoteId)
-                {
-                    text = quote.text!
-                    authorFirstName = quote.authorFirstName!
-                    authorLastName = quote.authorLastName!
-                    tags = quote.tags!
+                if quote != nil {
+                    text = quote!.text!
+                    authorFirstName = quote!.authorFirstName!
+                    authorLastName = quote!.authorLastName!
+                    tags = quote!.tags!
                 }
             }
         }

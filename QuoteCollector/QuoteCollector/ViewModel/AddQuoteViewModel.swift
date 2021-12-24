@@ -11,42 +11,29 @@ import CoreData
  * For adding and editing quotes.
  */
 struct AddQuoteViewModel {
-    func fetchQuote(
-        context: NSManagedObjectContext,
-        objectId: NSManagedObjectID
-    ) -> Quote? {
-        if let quote = context.object(with: objectId)
-            as? Quote { return quote }
-        return nil
-    }
-    
     func addQuote(
         context: NSManagedObjectContext,
-        objectId: NSManagedObjectID? = nil,
+        quote: Quote? = nil,
         values: QuoteValues
     ) -> Quote {
         let now = Date.now
-        let quote: Quote
-        if let quoteId = objectId,
-           let fetchedQuote = fetchQuote(
-            context: context,
-            objectId: quoteId
-           ) {
-            quote = fetchedQuote
+        let newQuote: Quote
+        if quote != nil {
+            newQuote = quote!
         } else {
-            quote = Quote(context: context)
-            quote.dateCreated = now
+            newQuote = Quote(context: context)
+            newQuote.dateCreated = now
         }
-        quote.dateChanged = now
-        quote.collection = values.collection
-        quote.text = Quote.formatText(text: values.text)
-        quote.authorFirstName = Quote.formatAuthor(author: values.authorFirstName)
-        quote.authorLastName = Quote.formatAuthor(author: values.authorLastName)
-        quote.tags = Quote.formatTags(tags: values.tags)
-        quote.displayQuotationMarks = values.displayQuotationMarks
-        quote.displayAuthor = values.displayAuthor
-        quote.displayAuthorOnNewLine = values.displayAuthorOnNewLine
+        newQuote.dateChanged = now
+        newQuote.collection = values.collection
+        newQuote.text = Quote.formatText(text: values.text)
+        newQuote.authorFirstName = Quote.formatAuthor(author: values.authorFirstName)
+        newQuote.authorLastName = Quote.formatAuthor(author: values.authorLastName)
+        newQuote.tags = Quote.formatTags(tags: values.tags)
+        newQuote.displayQuotationMarks = values.displayQuotationMarks
+        newQuote.displayAuthor = values.displayAuthor
+        newQuote.displayAuthorOnNewLine = values.displayAuthorOnNewLine
         Utility.updateContext(context: context)
-        return quote
+        return newQuote
     }
 }

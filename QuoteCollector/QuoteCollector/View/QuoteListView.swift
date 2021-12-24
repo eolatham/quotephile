@@ -94,7 +94,7 @@ struct QuoteListContainerView: View {
         }
         .sheet(isPresented: $showEditCollectionView) {
             // Only invoked when quoteCollection != nil
-            AddQuoteCollectionView(objectId: quoteCollection!.objectID)
+            AddQuoteCollectionView(quoteCollection: quoteCollection!)
         }
         .navigationTitle(
             quoteCollection == nil ? "All Quotes" : quoteCollection!.name!
