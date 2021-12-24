@@ -35,18 +35,20 @@ struct QuoteView: View {
 
     var body: some View {
         Form {
+            let displayText: String = quote.displayText
             Section(header: Text("QUOTE")) {
-                Text(quote.displayText)
+                Text(displayText)
                     .font(displayTextFont())
                     .multilineTextAlignment(.center)
                     .textSelection(.enabled)
                     .frame(maxWidth: .infinity)
+                    .fixedSize(horizontal: false, vertical: true) // Ensure text wraps
                     .padding()
                 Text("Tap and hold quote to copy or share!")
                     .font(.caption)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
-            }
+            }.id(displayText) // Ensure section refreshes when text changes
             Section(header: Text("STYLE")) {
                 Toggle(isOn: $displayQuotationMarks) { Text("Display quotation marks") }
                 .onChange(of: displayQuotationMarks) { newValue in
