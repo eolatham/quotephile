@@ -6,76 +6,46 @@
 //
 
 import SwiftUI
-import CoreData
 
-struct QuoteCollectionListView: View {
+struct QuoteCollectionListContainerView: View {
     @Environment(\.managedObjectContext) private var context
-    
+
     let viewModel = QuoteCollectionListViewModel()
 
-    @State private var selectedSort = QuoteCollectionSort.default
-    @State private var toDelete: [QuoteCollection] = []
-    @State private var showDeleteAlert: Bool = false
-    @State private var showAddCollectionView: Bool = false
     @State private var searchTerm: String = ""
+    @State private var selectedSort: QuoteCollectionSort = QuoteCollectionSort.default
+    @State private var showAddCollectionView: Bool = false
 
-    @SectionedFetchRequest(
-        sectionIdentifier: QuoteCollectionSort.default.section,
-        sortDescriptors: QuoteCollectionSort.default.descriptors,
-        animation: .default
-    )
-    private var quoteCollections: SectionedFetchResults<String, QuoteCollection>
-    
     var searchQuery: Binding<String> {
-        Binding {
-            searchTerm
-        } set: { newValue in
+        Binding { searchTerm } set: { newValue in
             searchTerm = newValue
-            if newValue.isEmpty {
-                quoteCollections.nsPredicate = nil
-            } else {
-                quoteCollections.nsPredicate = NSPredicate(format: "name CONTAINS[cd] %@", newValue)
-            }
         }
+    }
+
+    var predicate: NSPredicate? {
+        searchTerm.isEmpty ? nil : NSPredicate(
+            format: "name CONTAINS[cd] %@",
+            searchTerm
+        )
     }
 
     var body: some View {
         NavigationView {
-            List {
-                // All Quotes collection
-                NavigationLink {
-                    QuoteListView()
-                } label: {
-                    Text("All Quotes").font(.headline)
-                }
-                // Custom collections
-                ForEach(quoteCollections) { section in
-                    Section(header: Text(section.id)) {
-                        ForEach(section) { quoteCollection in
-                            NavigationLink {
-                                QuoteListView(quoteCollection: quoteCollection)
-                            } label: {
-                                QuoteCollectionRowView(quoteCollection: quoteCollection)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            self.toDelete = indexSet.map { section[$0] }
-                            self.showDeleteAlert = true
-                        }
-                    }
-                }
-            }
-            .searchable(text: searchQuery)
+            QuoteCollectionListView(
+                quoteCollections: SectionedFetchRequest<String, QuoteCollection>(
+                    sectionIdentifier: selectedSort.section,
+                    sortDescriptors: selectedSort.descriptors,
+                    predicate: predicate,
+                    animation: .default
+                ),
+                searchQuery: searchQuery
+            )
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     SortQuoteCollectionsView(
                         selectedSort: $selectedSort,
                         sorts: QuoteCollectionSort.sorts
                     )
-                        .onChange(of: selectedSort) { _ in
-                            quoteCollections.sortDescriptors = selectedSort.descriptors
-                            quoteCollections.sectionIdentifier = selectedSort.section
-                        }
                     Button {
                         showAddCollectionView = true
                     } label: {
@@ -86,30 +56,71 @@ struct QuoteCollectionListView: View {
             .sheet(isPresented: $showAddCollectionView) {
                 AddQuoteCollectionView()
             }
-            .alert(isPresented: $showDeleteAlert) {
-                Alert(
-                    title: Text("Are you sure?"),
-                    message: Text(
-                        "Deleting this quote collection will " +
-                        "also delete all of its quotes. " +
-                        "This action cannot be undone!"
-                    ),
-                    primaryButton: .destructive(Text("Yes, delete")) {
-                        withAnimation {
-                            viewModel.deleteQuoteCollections(
-                                context: context,
-                                quoteCollections: toDelete
-                            )
-                            self.toDelete = []
-                        }
-                    },
-                    secondaryButton: .cancel(Text("No, cancel")) {
-                        self.toDelete = []
-                    }
-                )
-            }
-            .listStyle(GroupedListStyle())
             .navigationTitle("Quote Collections")
+        }
+    }
+}
+
+struct QuoteCollectionListView: View {
+    @Environment(\.managedObjectContext) private var context
+
+    let viewModel = QuoteCollectionListViewModel()
+
+    @SectionedFetchRequest var quoteCollections: SectionedFetchResults<String, QuoteCollection>
+    var searchQuery: Binding<String>
+
+    @State private var selectedQuoteCollections: UUID?
+    @State private var toDelete: [QuoteCollection] = []
+    @State private var showDeleteAlert: Bool = false
+
+    var body: some View {
+        List(selection: $selectedQuoteCollections) {
+            // All Quotes collection
+            NavigationLink {
+                QuoteListContainerView()
+            } label: {
+                Text("All Quotes").font(.headline)
+            }
+            // Custom collections
+            ForEach(quoteCollections) { section in
+                Section(header: Text(section.id)) {
+                    ForEach(section) { quoteCollection in
+                        NavigationLink {
+                            QuoteListContainerView(quoteCollection: quoteCollection)
+                        } label: {
+                            QuoteCollectionRowView(quoteCollection: quoteCollection)
+                        }
+                    }
+                    .onDelete { indexSet in
+                        toDelete = indexSet.map { section[$0] }
+                        showDeleteAlert = true
+                    }
+                }
+            }
+        }
+        .listStyle(GroupedListStyle())  // Delete this?
+        .searchable(text: searchQuery)
+        .alert(isPresented: $showDeleteAlert) {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text(
+                    "Deleting this quote collection will " +
+                    "also delete all of its quotes. " +
+                    "This action cannot be undone!"
+                ),
+                primaryButton: .destructive(Text("Yes, delete")) {
+                    withAnimation {
+                        viewModel.deleteQuoteCollections(
+                            context: context,
+                            quoteCollections: toDelete
+                        )
+                        toDelete = []
+                    }
+                },
+                secondaryButton: .cancel(Text("No, cancel")) {
+                    toDelete = []
+                }
+            )
         }
     }
 }

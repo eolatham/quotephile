@@ -72,8 +72,11 @@ struct AddQuoteCollectionView: View {
                 }
             }
             .onAppear {
-                if let quoteCollectionId = objectId,
-                   let quoteCollection = viewModel.fetchQuoteCollection(context: context, objectId: quoteCollectionId)
+                if let quoteCollectionId = objectId, let quoteCollection =
+                    viewModel.fetchQuoteCollection(
+                        context: context,
+                        objectId: quoteCollectionId
+                    )
                 {
                     name = quoteCollection.name!
                 }

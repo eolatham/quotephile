@@ -7,47 +7,25 @@
 
 import SwiftUI
 
-struct QuoteListView: View {
+struct QuoteListContainerView: View {
     @Environment(\.managedObjectContext) private var context
-    
+
     let viewModel = QuoteListViewModel()
-    
+
     var quoteCollection: QuoteCollection? = nil
-    
-    @State private var selectedQuotes: UUID?
-    @State private var selectedSort = QuoteSort.default
-    @State private var toDelete: [Quote] = []
-    @State private var showDeleteAlert: Bool = false
+
+    @State private var searchTerm: String = ""
+    @State private var selectedSort: QuoteSort = QuoteSort.default
     @State private var showAddQuoteView: Bool = false
     @State private var showEditCollectionView: Bool = false
-    @State private var searchTerm: String = ""
 
-    @SectionedFetchRequest private var quotes: SectionedFetchResults<String, Quote>
-    
-    init(quoteCollection: QuoteCollection? = nil) {
-        self.quoteCollection = quoteCollection
-        if quoteCollection == nil {
-            // Render all quotes
-            _quotes = SectionedFetchRequest<String, Quote>(
-                sectionIdentifier: QuoteSort.default.section,
-                sortDescriptors: QuoteSort.default.descriptors,
-                animation: .default
-            )
-        } else {
-            // Render quotes in the given collection only
-            _quotes = SectionedFetchRequest<String, Quote>(
-                sectionIdentifier: QuoteSort.default.section,
-                sortDescriptors: QuoteSort.default.descriptors,
-                predicate: NSPredicate(format: "collection = %@", quoteCollection!),
-                animation: .default
-            )
+    var searchQuery: Binding<String> {
+        Binding { searchTerm } set: { newValue in
+            searchTerm = newValue
         }
     }
-    
-    /**
-     * Only works after initialization!
-     */
-    func setPredicate() {
+
+    var predicate: NSPredicate? {
         let collectionPredicate: NSPredicate? =
             quoteCollection == nil ? nil
             : NSPredicate(format: "collection = %@", quoteCollection!)
@@ -62,16 +40,16 @@ struct QuoteListView: View {
                 ]
             )
         if collectionPredicate == nil && searchPredicate == nil {
-            quotes.nsPredicate = nil
+            return nil
         }
         else if collectionPredicate != nil && searchPredicate == nil {
-            quotes.nsPredicate = collectionPredicate
+            return collectionPredicate
         }
         else if collectionPredicate == nil && searchPredicate != nil {
-            quotes.nsPredicate = searchPredicate
+            return searchPredicate
         }
         else {
-            quotes.nsPredicate = NSCompoundPredicate(
+            return NSCompoundPredicate(
                 andPredicateWithSubpredicates: [
                     collectionPredicate!,
                     searchPredicate!
@@ -80,44 +58,22 @@ struct QuoteListView: View {
         }
     }
 
-    var searchQuery: Binding<String> {
-        Binding {
-            searchTerm
-        } set: { newValue in
-            searchTerm = newValue
-            setPredicate()
-        }
-    }
-
     var body: some View {
-        List(selection: $selectedQuotes) {
-            ForEach(quotes) { section in
-                Section(header: Text(section.id)) {
-                    ForEach(section) { quote in
-                        NavigationLink {
-                            QuoteView(quote: quote)
-                        } label: {
-                            QuoteRowView(quote: quote)
-                        }
-                    }
-                    .onDelete { indexSet in
-                        self.toDelete = indexSet.map { section[$0] }
-                        self.showDeleteAlert = true
-                    }
-                }
-            }
-        }
-        .searchable(text: searchQuery)
+        QuoteListView(
+            quotes: SectionedFetchRequest<String, Quote>(
+                sectionIdentifier: selectedSort.section,
+                sortDescriptors: selectedSort.descriptors,
+                predicate: predicate,
+                animation: .default
+            ),
+            searchQuery: searchQuery
+        )
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 SortQuotesView(
                     selectedSort: $selectedSort,
                     sorts: QuoteSort.sorts
                 )
-                    .onChange(of: selectedSort) { _ in
-                        quotes.sortDescriptors = selectedSort.descriptors
-                        quotes.sectionIdentifier = selectedSort.section
-                    }
                 if quoteCollection != nil {
                     Button {
                         showAddQuoteView = true
@@ -140,6 +96,44 @@ struct QuoteListView: View {
             // Only invoked when quoteCollection != nil
             AddQuoteCollectionView(objectId: quoteCollection!.objectID)
         }
+        .navigationTitle(
+            quoteCollection == nil ? "All Quotes" : quoteCollection!.name!
+        )
+    }
+}
+
+struct QuoteListView: View {
+    @Environment(\.managedObjectContext) private var context
+
+    let viewModel: QuoteListViewModel = QuoteListViewModel()
+
+    @SectionedFetchRequest var quotes: SectionedFetchResults<String, Quote>
+    var searchQuery: Binding<String>
+
+    @State private var selectedQuotes: UUID?
+    @State private var toDelete: [Quote] = []
+    @State private var showDeleteAlert: Bool = false
+
+    var body: some View {
+        List(selection: $selectedQuotes) {
+            ForEach(quotes) { section in
+                Section(header: Text(section.id)) {
+                    ForEach(section) { quote in
+                        NavigationLink {
+                            QuoteView(quote: quote)
+                        } label: {
+                            QuoteRowView(quote: quote)
+                        }
+                    }
+                    .onDelete { indexSet in
+                        toDelete = indexSet.map { section[$0] }
+                        showDeleteAlert = true
+                    }
+                }
+            }
+        }
+        .listStyle(GroupedListStyle())  // Delete this?
+        .searchable(text: searchQuery)
         .alert(isPresented: $showDeleteAlert) {
             Alert(
                 title: Text("Are you sure?"),
@@ -153,17 +147,13 @@ struct QuoteListView: View {
                             context: context,
                             quotes: toDelete
                         )
-                        self.toDelete = []
+                        toDelete = []
                     }
                 },
                 secondaryButton: .cancel(Text("No, cancel")) {
-                    self.toDelete = []
+                    toDelete = []
                 }
             )
         }
-        .listStyle(GroupedListStyle())
-        .navigationTitle(
-            quoteCollection == nil ? "All Quotes" : quoteCollection!.name!
-        )
     }
 }
