@@ -15,7 +15,7 @@ struct QuoteListView: View {
     @SectionedFetchRequest var quotes: SectionedFetchResults<String, Quote>
     var searchQuery: Binding<String>
 
-    @State private var selected: Set<UUID> = Set<UUID>()
+    @State private var selected: Set<Quote> = Set<Quote>()
     @State private var toDelete: [Quote] = []
     @State private var showDeleteAlert: Bool = false
 
@@ -38,6 +38,7 @@ struct QuoteListView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .toolbar(content: { EditButton() })
         .searchable(text: searchQuery)
         .alert(isPresented: $showDeleteAlert) {
             Alert(
