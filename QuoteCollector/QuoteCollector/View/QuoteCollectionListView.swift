@@ -15,12 +15,12 @@ struct QuoteCollectionListView: View {
     @SectionedFetchRequest var quoteCollections: SectionedFetchResults<String, QuoteCollection>
     var searchQuery: Binding<String>
 
-    @State private var selectedQuoteCollections: UUID?
+    @State private var selected: Set<UUID> = Set<UUID>()
     @State private var toDelete: [QuoteCollection] = []
     @State private var showDeleteAlert: Bool = false
 
     var body: some View {
-        List(selection: $selectedQuoteCollections) {
+        List(selection: $selected) {
             // All Quotes collection
             NavigationLink {
                 AllQuotesView()
@@ -44,7 +44,7 @@ struct QuoteCollectionListView: View {
                 }
             }
         }
-        .listStyle(GroupedListStyle())  // Delete this?
+        .listStyle(.insetGrouped)
         .searchable(text: searchQuery)
         .alert(isPresented: $showDeleteAlert) {
             Alert(
