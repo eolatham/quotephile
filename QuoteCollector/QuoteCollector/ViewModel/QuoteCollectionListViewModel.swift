@@ -11,7 +11,7 @@ import SwiftUI
 struct QuoteCollectionListViewModel {
     func deleteQuoteCollections(
         context: NSManagedObjectContext,
-        quoteCollections: [QuoteCollection]
+        quoteCollections: Set<QuoteCollection>
     ) {
         quoteCollections.forEach(context.delete)
         Utility.updateContext(context: context)

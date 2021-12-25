@@ -19,9 +19,7 @@ struct SortQuoteCollectionsView: View {
                     Text(sort.name)
                 }
             }
-        } label: {
-            Label("Sort", systemImage: "arrow.up.arrow.down")
-        }
+        } label: { Text("Sort") }
         .pickerStyle(.inline)
     }
 }

@@ -79,11 +79,7 @@ struct QuoteView: View {
         .navigationTitle("View Quote")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button {
-                    showEditQuoteView = true
-                } label: {
-                    Image(systemName: "pencil")
-                }
+                Button { showEditQuoteView = true } label: { Text("Edit") }
             }
         }
         .sheet(isPresented: $showEditQuoteView) {

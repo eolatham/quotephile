@@ -7,6 +7,37 @@
 
 import SwiftUI
 
+struct QuoteListItemView: View {
+    @ObservedObject var quote: Quote
+    var inSelectionMode: Bool
+    var selectedQuotes: Binding<Set<Quote>>
+
+    var body: some View {
+        let isSelected: Bool = selectedQuotes.wrappedValue.contains(quote)
+        if inSelectionMode {
+            HStack {
+                Button {
+                    if isSelected { selectedQuotes.wrappedValue.remove(quote) }
+                    else { selectedQuotes.wrappedValue.update(with: quote) }
+                } label: {
+                    Image(
+                        systemName: isSelected
+                            ? "checkmark.circle.fill"
+                            : "checkmark.circle"
+                    )
+                }
+                QuoteRowView(quote: quote)
+            }.foregroundColor(isSelected ? .accentColor : .black)
+        } else {
+            NavigationLink {
+                QuoteView(quote: quote)
+            } label: {
+                QuoteRowView(quote: quote)
+            }
+        }
+    }
+}
+
 struct QuoteListView: View {
     @Environment(\.managedObjectContext) private var context
 
@@ -14,51 +45,69 @@ struct QuoteListView: View {
 
     @SectionedFetchRequest var quotes: SectionedFetchResults<String, Quote>
     var searchQuery: Binding<String>
+    var inSelectionMode: Binding<Bool>
+    var selectedQuotes: Binding<Set<Quote>>
 
-    @State private var selected: Set<Quote> = Set<Quote>()
-    @State private var toDelete: [Quote] = []
+    @State private var showEditView: Bool = false
+    @State private var showMoveView: Bool = false
     @State private var showDeleteAlert: Bool = false
 
     var body: some View {
-        List(selection: $selected) {
+        List {
             ForEach(quotes) { section in
                 Section(header: Text(section.id)) {
                     ForEach(section) { quote in
-                        NavigationLink {
-                            QuoteView(quote: quote)
-                        } label: {
-                            QuoteRowView(quote: quote)
-                        }
-                    }
-                    .onDelete { indexSet in
-                        toDelete = indexSet.map { section[$0] }
-                        showDeleteAlert = true
+                        QuoteListItemView(
+                            quote: quote,
+                            inSelectionMode: inSelectionMode.wrappedValue,
+                            selectedQuotes: selectedQuotes
+                        )
                     }
                 }
             }
         }
         .listStyle(.insetGrouped)
-        .toolbar(content: { EditButton() })
         .searchable(text: searchQuery)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                Button {
+                    if inSelectionMode.wrappedValue {
+                        selectedQuotes.wrappedValue.removeAll()
+                    }
+                    inSelectionMode.wrappedValue.toggle()
+                } label: {
+                    Text(inSelectionMode.wrappedValue ? "Done" : "Select")
+                }
+                if inSelectionMode.wrappedValue {
+                    let disabled: Bool = selectedQuotes.wrappedValue.isEmpty
+                    Button { showEditView = true }
+                        label: { Text("Edit") }.disabled(disabled)
+                    Button { showMoveView = true }
+                        label: { Text("Move") }.disabled(disabled)
+                    Button { showDeleteAlert = true }
+                        label: { Text("Delete") }.disabled(disabled)
+                }
+            }
+        }
+        .sheet(isPresented: $showEditView ) {}  // TODO: render new view here
+        .sheet(isPresented: $showMoveView ) {}  // TODO: render new view here
         .alert(isPresented: $showDeleteAlert) {
             Alert(
                 title: Text("Are you sure?"),
                 message: Text(
-                    "Are you sure you want to delete this quote? " +
-                    "This action cannot be undone!"
+                    "Are you sure you want to delete the selected " +
+                    "quotes? This action cannot be undone!"
                 ),
                 primaryButton: .destructive(Text("Yes, delete")) {
                     withAnimation {
                         viewModel.deleteQuotes(
                             context: context,
-                            quotes: toDelete
+                            quotes: selectedQuotes.wrappedValue
                         )
-                        toDelete = []
+                        selectedQuotes.wrappedValue.removeAll()
                     }
                 },
-                secondaryButton: .cancel(Text("No, cancel")) {
-                    toDelete = []
-                }
+                secondaryButton: .cancel(Text("No, cancel"))
             )
         }
     }
@@ -70,9 +119,9 @@ struct AllQuotesView: View {
     let viewModel = QuoteListViewModel()
 
     @State private var searchTerm: String = ""
+    @State private var inSelectionMode: Bool = false
+    @State private var selectedQuotes: Set<Quote> = Set<Quote>()
     @State private var selectedSort: QuoteSort = QuoteSort.default
-    @State private var showAddQuoteView: Bool = false
-    @State private var showEditCollectionView: Bool = false
 
     var searchQuery: Binding<String> {
         Binding { searchTerm } set: { newValue in
@@ -99,14 +148,18 @@ struct AllQuotesView: View {
                 predicate: predicate,
                 animation: .default
             ),
-            searchQuery: searchQuery
+            searchQuery: searchQuery,
+            inSelectionMode: $inSelectionMode,
+            selectedQuotes: $selectedQuotes
         )
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                SortQuotesView(
-                    selectedSort: $selectedSort,
-                    sorts: QuoteSort.sorts
-                )
+                if !inSelectionMode {
+                    SortQuotesView(
+                        selectedSort: $selectedSort,
+                        sorts: QuoteSort.sorts
+                    )
+                }
             }
         }
         .navigationTitle("All Quotes")
@@ -121,6 +174,8 @@ struct QuoteCollectionView: View {
     @ObservedObject var quoteCollection: QuoteCollection
 
     @State private var searchTerm: String = ""
+    @State private var inSelectionMode: Bool = false
+    @State private var selectedQuotes: Set<Quote> = Set<Quote>()
     @State private var selectedSort: QuoteSort = QuoteSort.default
     @State private var showAddQuoteView: Bool = false
     @State private var showEditCollectionView: Bool = false
@@ -160,23 +215,19 @@ struct QuoteCollectionView: View {
                 predicate: predicate,
                 animation: .default
             ),
-            searchQuery: searchQuery
+            searchQuery: searchQuery,
+            inSelectionMode: $inSelectionMode,
+            selectedQuotes: $selectedQuotes
         )
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                SortQuotesView(
-                    selectedSort: $selectedSort,
-                    sorts: QuoteSort.sorts
-                )
-                Button {
-                    showAddQuoteView = true
-                } label: {
-                    Image(systemName: "plus")
-                }
-                Button {
-                    showEditCollectionView = true
-                } label: {
-                    Image(systemName: "pencil")
+                if !inSelectionMode {
+                    SortQuotesView(
+                        selectedSort: $selectedSort,
+                        sorts: QuoteSort.sorts
+                    )
+                    Button { showAddQuoteView = true } label: { Text("Add") }
+                    Button { showEditCollectionView = true } label: { Text("Edit") }
                 }
             }
         }

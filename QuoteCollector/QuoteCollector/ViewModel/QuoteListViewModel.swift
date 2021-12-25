@@ -9,7 +9,7 @@ import CoreData
 import SwiftUI
 
 struct QuoteListViewModel {
-    func deleteQuotes(context: NSManagedObjectContext, quotes: [Quote]) {
+    func deleteQuotes(context: NSManagedObjectContext, quotes: Set<Quote>) {
         quotes.forEach(context.delete)
         Utility.updateContext(context: context)
     }
