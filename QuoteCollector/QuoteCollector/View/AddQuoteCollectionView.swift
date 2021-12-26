@@ -13,9 +13,9 @@ import CoreData
  */
 struct AddQuoteCollectionView: View {
     @Environment(\.managedObjectContext) private var context
-    @Environment(\.presentationMode) var presentation
+    @Environment(\.presentationMode) private var presentation
 
-    let viewModel = AddQuoteCollectionViewModel()
+    private let viewModel = AddQuoteCollectionViewModel()
 
     var quoteCollection: QuoteCollection?
 

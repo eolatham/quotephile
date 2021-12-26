@@ -25,7 +25,7 @@ struct QuoteView: View {
         self.showEditQuoteView = false
     }
 
-    func displayTextFont() -> Font {
+    private func displayTextFont() -> Font {
         let length = quote.length
         if length < 100 { return .title }
         if length < 200 { return .title2 }

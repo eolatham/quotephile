@@ -9,6 +9,7 @@ import SwiftUI
 
 struct QuoteRowView: View {
     @ObservedObject var quote: Quote
+    
     var body: some View {
         if quote.exists {
             VStack(alignment: .leading) {
