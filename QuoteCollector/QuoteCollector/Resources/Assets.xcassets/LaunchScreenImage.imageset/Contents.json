@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "fg_blue.png",
+      "filename" : "light.png",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "fg_white.png",
+      "filename" : "dark.png",
       "idiom" : "universal"
     }
   ],
