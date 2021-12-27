@@ -30,7 +30,7 @@ struct QuoteCollectionListContainerView: View {
 
     var body: some View {
         NavigationView {
-            GroupedMultiSelectNavigationListView<
+            CustomListView<
                 QuoteCollection,
                 QuoteCollectionRowView,
                 QuoteCollectionView,

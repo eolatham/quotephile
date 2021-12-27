@@ -33,7 +33,7 @@ struct AllQuotesView: View {
     }
 
     var body: some View {
-        GroupedMultiSelectNavigationListView<
+        CustomListView<
             Quote,
             QuoteRowView,
             QuoteView,
@@ -113,7 +113,7 @@ struct QuoteCollectionView: View {
 
     var body: some View {
         if quoteCollection.exists {
-            GroupedMultiSelectNavigationListView<
+            CustomListView<
                 Quote,
                 QuoteRowView,
                 QuoteView,
