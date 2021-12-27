@@ -1,11 +1,4 @@
-//
-//  Utility.swift
-//  QuoteCollector
-//
-//  Created by Eric Latham on 12/10/21.
-//
-
-import CoreData
+import Foundation
 
 struct Utility {
     static func dateToMonthString(date: Date) -> String {
@@ -35,13 +28,5 @@ struct Utility {
             }
         }
         return joined
-    }
-
-    static func updateContext(context: NSManagedObjectContext) {
-        do {
-            try context.save()
-        } catch {
-            print("Save error: \(error)")
-        }
     }
 }

@@ -1,12 +1,4 @@
-//
-//  AddQuoteView.swift
-//  QuoteCollector
-//
-//  Created by Eric Latham on 12/12/21.
-//
-
 import SwiftUI
-import CoreData
 
 /**
  * For adding and editing quotes.
@@ -14,8 +6,6 @@ import CoreData
 struct AddQuoteView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation
-
-    private let viewModel = AddQuoteViewModel()
 
     var quoteCollection: QuoteCollection
     var quote: Quote?
@@ -93,7 +83,7 @@ struct AddQuoteView: View {
                                         values.displayAuthor = quote!.displayAuthor
                                         values.displayAuthorOnNewLine = quote!.displayAuthorOnNewLine
                                     }
-                                    _ = viewModel.addQuote(
+                                    _ = DatabaseFunctions.addQuote(
                                         context: context,
                                         quote: quote,
                                         values: values

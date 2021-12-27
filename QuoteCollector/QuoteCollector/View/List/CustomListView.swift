@@ -1,10 +1,3 @@
-//
-//  GroupedMultiSelectNavigationListView.swift
-//  QuoteCollector
-//
-//  Created by Eric Latham on 12/26/21.
-//
-
 import SwiftUI
 import CoreData
 
@@ -15,7 +8,7 @@ import CoreData
 struct CustomListView<
     Entity: NSManagedObject,
     EntityRowView: View,
-    EntityContentView: View,
+    EntityPageView: View,
     ConstantListPrefixView: View,
     ConstantListSuffixView: View,
     AddEntitySheetContentView: View,
@@ -28,7 +21,7 @@ struct CustomListView<
     @Binding var selectedSort: Sort<Entity>
     var sortOptions: [Sort<Entity>]
     var entityRowViewBuilder: (Entity) -> EntityRowView
-    var entityContentViewBuilder: (Entity) -> EntityContentView
+    var entityPageViewBuilder: (Entity) -> EntityPageView
     var constantListPrefixViewBuilder: (() -> ConstantListPrefixView)? = nil
     var constantListSuffixViewBuilder: (() -> ConstantListSuffixView)? = nil
     var addEntitySheetContentViewBuilder: (() -> AddEntitySheetContentView)? = nil
@@ -59,7 +52,7 @@ struct CustomListView<
                             selectedEntities: $selectedEntities,
                             inSelectionMode: inSelectionMode,
                             rowViewBuilder: entityRowViewBuilder,
-                            contentViewBuilder: entityContentViewBuilder
+                            pageViewBuilder: entityPageViewBuilder
                         )
                     }
                 }
@@ -144,27 +137,27 @@ struct CustomListView<
 struct CustomListItemView<
     Entity: NSManagedObject,
     RowView: View,
-    ContentView: View
+    PageView: View
 >: View {
     @ObservedObject var entity: Entity
     @Binding var selectedEntities: Set<Entity>
     var inSelectionMode: Bool
 
     let rowView: RowView
-    let contentView: ContentView
+    let pageView: PageView
 
     init(
         entity: Entity,
         selectedEntities: Binding<Set<Entity>>,
         inSelectionMode: Bool,
         @ViewBuilder rowViewBuilder: (Entity) -> RowView,
-        @ViewBuilder contentViewBuilder: (Entity) -> ContentView
+        @ViewBuilder pageViewBuilder: (Entity) -> PageView
     ) {
         self.entity = entity
         _selectedEntities = selectedEntities
         self.inSelectionMode = inSelectionMode
         self.rowView = rowViewBuilder(entity)
-        self.contentView = contentViewBuilder(entity)
+        self.pageView = pageViewBuilder(entity)
     }
 
     var body: some View {
@@ -182,8 +175,8 @@ struct CustomListItemView<
                     )
                 }
                 rowView
-            }.foregroundColor(isSelected ? .accentColor : .black)
-        } else { NavigationLink { contentView } label: { rowView } }
+            }.foregroundColor(isSelected ? .accentColor : .primary)
+        } else { NavigationLink { pageView } label: { rowView } }
     }
 }
 

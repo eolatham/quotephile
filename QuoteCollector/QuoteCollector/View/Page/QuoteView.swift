@@ -1,10 +1,3 @@
-//
-//  QuoteView.swift
-//  QuoteCollector
-//
-//  Created by Eric Latham on 12/19/21.
-//
-
 import SwiftUI
 
 struct QuoteView: View {
@@ -51,20 +44,24 @@ struct QuoteView: View {
             }.id(displayText) // Ensure section refreshes when text changes
             Section(header: Text("STYLE")) {
                 Toggle(isOn: $displayQuotationMarks) { Text("Display quotation marks") }
+                .tint(.accentColor)
                 .onChange(of: displayQuotationMarks) { newValue in
                     quote.displayQuotationMarks = newValue
-                    Utility.updateContext(context: context)
+                    DatabaseFunctions.updateContext(context: context)
                 }
                 Toggle(isOn: $displayAuthor) { Text("Display author") }
+                .tint(.accentColor)
                 .onChange(of: displayAuthor) { newValue in
                     quote.displayAuthor = newValue
-                    Utility.updateContext(context: context)
+                    DatabaseFunctions.updateContext(context: context)
                 }
+                .tint(.accentColor)
                 if quote.displayAuthor {
                     Toggle(isOn: $displayAuthorOnNewLine) { Text("Display author on new line") }
+                    .tint(.accentColor)
                     .onChange(of: displayAuthorOnNewLine) { newValue in
                         quote.displayAuthorOnNewLine = newValue
-                        Utility.updateContext(context: context)
+                        DatabaseFunctions.updateContext(context: context)
                     }
                 }
             }
@@ -83,7 +80,7 @@ struct QuoteView: View {
             }
         }
         .sheet(isPresented: $showEditQuoteView) {
-            AddQuoteView(
+            EditQuoteView(
                 quoteCollection: quote.collection!,
                 quote: quote
             )

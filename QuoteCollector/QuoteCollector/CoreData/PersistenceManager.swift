@@ -1,10 +1,3 @@
-//
-//  PersistenceManager.swift
-//  QuoteCollector
-//
-//  Created by Eric Latham on 12/7/21.
-//
-
 import CoreData
 
 struct PersistenceManager {
@@ -27,15 +20,13 @@ struct PersistenceManager {
     static var preview: PersistenceManager = {
         let manager = PersistenceManager(inMemory: true)
         let context = manager.container.viewContext
-        let addQuoteCollectionViewModel = AddQuoteCollectionViewModel()
-        let addQuoteViewModel = AddQuoteViewModel()
         for i in 1..<6 {
-            let quoteCollection = addQuoteCollectionViewModel.addQuoteCollection(
+            let quoteCollection = DatabaseFunctions.addQuoteCollection(
                 context: context,
                 values: QuoteCollectionValues(name: "Quote Collection #\(i)")
             )
             for j in 1..<11 {
-                let quote = addQuoteViewModel.addQuote(
+                let quote = DatabaseFunctions.addQuote(
                     context: context,
                     values: QuoteValues(
                         collection: quoteCollection,
@@ -44,7 +35,7 @@ struct PersistenceManager {
                 )
             }
         }
-        Utility.updateContext(context: context)
+        DatabaseFunctions.updateContext(context: context)
         return manager
     }()
 }

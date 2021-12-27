@@ -1,15 +1,8 @@
-//
-//  ContentView.swift
-//  QuoteCollector
-//
-//  Created by Eric Latham on 12/7/21.
-//
-
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        QuoteCollectionListContainerView()
+        QuoteCollectionsView()
     }
 }
 

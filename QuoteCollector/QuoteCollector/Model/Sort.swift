@@ -1,10 +1,3 @@
-//
-//  Sort.swift
-//  QuoteCollector
-//
-//  Created by Eric Latham on 12/26/21.
-//
-
 import Foundation
 
 struct Sort<E>: Hashable, Identifiable {
