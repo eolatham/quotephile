@@ -45,8 +45,8 @@ struct QuoteCollectionView: View {
                 EmptyView,
                 AddQuoteView,
                 EditQuoteCollectionView,
-                EmptyView,  // TODO: add bulk edit view
-                EmptyView   // TODO: add bulk move view
+                BulkEditQuotesView,
+                BulkMoveQuotesView
             >(
                 entities: SectionedFetchRequest<String, Quote>(
                     sectionIdentifier: selectedSort.section,
@@ -68,6 +68,12 @@ struct QuoteCollectionView: View {
                 },
                 editParentSheetContentViewBuilder: {
                     EditQuoteCollectionView(quoteCollection: quoteCollection)
+                },
+                bulkEditSheetContentViewBuilder: { quotes in
+                    BulkEditQuotesView(quotes: quotes)
+                },
+                bulkMoveSheetContentViewBuilder: { quotes in
+                    BulkMoveQuotesView(quotes: quotes)
                 },
                 bulkDeleteFunction: { quotes in
                     DatabaseFunctions.deleteQuotes(

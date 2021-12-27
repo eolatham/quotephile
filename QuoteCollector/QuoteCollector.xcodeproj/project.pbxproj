@@ -27,6 +27,8 @@
 		B69E1AC3277A502C002A0150 /* DatabaseFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69E1AC2277A502C002A0150 /* DatabaseFunctions.swift */; };
 		B6B00A742778D49F00B22C5D /* CustomListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B00A732778D49F00B22C5D /* CustomListView.swift */; };
 		B6B00A782778F99600B22C5D /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B00A772778F99600B22C5D /* Sort.swift */; };
+		B6B5707B277A5F0700ECBB26 /* BulkEditQuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B5707A277A5F0700ECBB26 /* BulkEditQuotesView.swift */; };
+		B6B5707D277A5F2000ECBB26 /* BulkMoveQuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B5707C277A5F2000ECBB26 /* BulkMoveQuotesView.swift */; };
 		B6BB64C0276FD07E00FA15F2 /* QuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BB64BF276FD07E00FA15F2 /* QuoteView.swift */; };
 		B6F1AA242763ECB6004D054F /* QuoteCollectionSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F1AA232763ECB6004D054F /* QuoteCollectionSort.swift */; };
 		B6F1AA262763ECC4004D054F /* QuoteCollectionValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F1AA252763ECC4004D054F /* QuoteCollectionValues.swift */; };
@@ -77,6 +79,8 @@
 		B69E1AC2277A502C002A0150 /* DatabaseFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFunctions.swift; sourceTree = "<group>"; };
 		B6B00A732778D49F00B22C5D /* CustomListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomListView.swift; sourceTree = "<group>"; };
 		B6B00A772778F99600B22C5D /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
+		B6B5707A277A5F0700ECBB26 /* BulkEditQuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkEditQuotesView.swift; sourceTree = "<group>"; };
+		B6B5707C277A5F2000ECBB26 /* BulkMoveQuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkMoveQuotesView.swift; sourceTree = "<group>"; };
 		B6BB64BF276FD07E00FA15F2 /* QuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteView.swift; sourceTree = "<group>"; };
 		B6F1AA232763ECB6004D054F /* QuoteCollectionSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionSort.swift; sourceTree = "<group>"; };
 		B6F1AA252763ECC4004D054F /* QuoteCollectionValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionValues.swift; sourceTree = "<group>"; };
@@ -203,6 +207,8 @@
 			children = (
 				B686F6CF2766745100FC8573 /* AddQuoteView.swift */,
 				B69E1ABA277A4C59002A0150 /* EditQuoteView.swift */,
+				B6B5707A277A5F0700ECBB26 /* BulkEditQuotesView.swift */,
+				B6B5707C277A5F2000ECBB26 /* BulkMoveQuotesView.swift */,
 				B687317627644B21001FE9A0 /* AddQuoteCollectionView.swift */,
 				B69E1ABC277A4C91002A0150 /* EditQuoteCollectionView.swift */,
 			);
@@ -389,6 +395,7 @@
 				B645C4A8275FCDC000AE1810 /* ContentView.swift in Sources */,
 				B6BB64C0276FD07E00FA15F2 /* QuoteView.swift in Sources */,
 				B6F1AA2B2763F055004D054F /* Utility.swift in Sources */,
+				B6B5707B277A5F0700ECBB26 /* BulkEditQuotesView.swift in Sources */,
 				B6F1AA262763ECC4004D054F /* QuoteCollectionValues.swift in Sources */,
 				B687317727644B21001FE9A0 /* AddQuoteCollectionView.swift in Sources */,
 				B687317B2764573D001FE9A0 /* QuoteCollectionsView.swift in Sources */,
@@ -399,6 +406,7 @@
 				B69E1AC3277A502C002A0150 /* DatabaseFunctions.swift in Sources */,
 				B686F6D02766745100FC8573 /* AddQuoteView.swift in Sources */,
 				B645C4E2275FDEBC00AE1810 /* Quote.swift in Sources */,
+				B6B5707D277A5F2000ECBB26 /* BulkMoveQuotesView.swift in Sources */,
 				B6843A0F27664D7A00894D44 /* QuoteCollector.xcdatamodeld in Sources */,
 				B645C4E0275FDEBC00AE1810 /* QuoteCollection.swift in Sources */,
 				B6F1AA242763ECB6004D054F /* QuoteCollectionSort.swift in Sources */,
