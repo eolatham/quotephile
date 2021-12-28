@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="1.0">
     <entity name="Quote" representedClassName="Quote" syncable="YES" codeGenerationType="category" coreSpotlightDisplayNameExpression="Quote">
-        <attribute name="authorFirstName" attributeType="String" minValueString="0" maxValueString="500" defaultValueString="" spotlightIndexingEnabled="YES"/>
-        <attribute name="authorLastName" attributeType="String" minValueString="0" maxValueString="500" defaultValueString="" spotlightIndexingEnabled="YES"/>
+        <attribute name="authorFirstName" attributeType="String" defaultValueString="" spotlightIndexingEnabled="YES"/>
+        <attribute name="authorLastName" attributeType="String" defaultValueString="" spotlightIndexingEnabled="YES"/>
         <attribute name="dateChanged" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="displayAuthor" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="displayAuthorOnNewLine" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="displayQuotationMarks" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="tags" attributeType="String" minValueString="0" maxValueString="1000" defaultValueString="" spotlightIndexingEnabled="YES"/>
-        <attribute name="text" attributeType="String" minValueString="1" maxValueString="10000" spotlightIndexingEnabled="YES"/>
+        <attribute name="tags" attributeType="String" defaultValueString="" spotlightIndexingEnabled="YES"/>
+        <attribute name="text" attributeType="String" minValueString="1" spotlightIndexingEnabled="YES"/>
         <relationship name="collection" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteCollection" inverseName="quotes" inverseEntity="QuoteCollection"/>
     </entity>
     <entity name="QuoteCollection" representedClassName="QuoteCollection" syncable="YES" codeGenerationType="category" coreSpotlightDisplayNameExpression="QuoteCollection">
         <attribute name="dateChanged" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="name" attributeType="String" minValueString="1" maxValueString="1000" spotlightIndexingEnabled="YES"/>
+        <attribute name="name" attributeType="String" minValueString="1" spotlightIndexingEnabled="YES"/>
         <relationship name="quotes" toMany="YES" deletionRule="Cascade" destinationEntity="Quote" inverseName="collection" inverseEntity="Quote"/>
     </entity>
     <elements>

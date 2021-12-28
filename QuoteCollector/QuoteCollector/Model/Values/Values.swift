@@ -4,14 +4,9 @@
  */
 protocol Values {
     /**
-     * Formats all attributes that require formatting.
-     * To be used when saving an entity.
+     * Formats all attributes that require formatting and
+     * validates all attributes that require validation.
+     * To be used before saving an entity.
      */
-    func format()
-
-    /**
-     * Validates all attributes that require validation.
-     * To be used when saving an entity.
-     */
-    func validate() throws
+    func formatAndValidate() throws
 }

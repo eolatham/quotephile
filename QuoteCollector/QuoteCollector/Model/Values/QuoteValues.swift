@@ -1,7 +1,3 @@
-/**
- * A class encapsulating user-editable quote values
- * and methods for formatting and validating them.
- */
 class QuoteValues: Values {
     var collection: QuoteCollection
     var text: String
@@ -32,26 +28,16 @@ class QuoteValues: Values {
         self.displayAuthorOnNewLine = displayAuthorOnNewLine
     }
 
-    /**
-     * Formats all attributes that require formatting.
-     * To be used when saving a quote.
-     */
-    func format() {
+    func formatAndValidate() throws {
+        // Format
         text = QuoteValues.formatText(text: text)
         authorFirstName = QuoteValues.formatAuthor(author: authorFirstName)
         authorLastName = QuoteValues.formatAuthor(author: authorLastName)
         tags = QuoteValues.formatTags(tags: tags)
-    }
-
-    /**
-     * Validates all attributes that require validation.
-     * To be used when saving a quote.
-     */
-    func validate() throws {
-        try QuoteValues.validateText(text: text)
-        try QuoteValues.validateAuthorFirstName(authorFirstName: authorFirstName)
-        try QuoteValues.validateAuthorLastName(authorLastName: authorLastName)
-        try QuoteValues.validateTags(tags: tags)
+        // Validate
+        if text.isEmpty {
+            throw ValidationError.withMessage(ErrorMessage.textEmpty)
+        }
     }
 
     /**
@@ -72,9 +58,9 @@ class QuoteValues: Values {
      * Transforms the given comma-separated list of tags into
      * a set of unique, nonempty, and capitalized tags.
      */
-    static func tagsStringToFormattedSet(tags: String) -> Set<String> {
+    static func tagsStringToFormattedSet(tagsString: String) -> Set<String> {
         var formattedSet: Set<String> = Set()
-        for tag in tags.split(separator: ",") {
+        for tag in tagsString.split(separator: ",") {
             let formattedTag = Utility.trimWhitespace(string: tag).capitalized
             if formattedTag.count > 0 { formattedSet.update(with: formattedTag) }
         }
@@ -85,8 +71,8 @@ class QuoteValues: Values {
      * Transforms the given formatted set of tags into a
      * comma-separated and alphabetically-sorted list.
      */
-    static func formattedSetOfTagsToString(tags: Set<String>) -> String {
-        return tags.sorted().joined(separator: ", ")
+    static func formattedTagsSetToString(tagsSet: Set<String>) -> String {
+        return tagsSet.sorted().joined(separator: ", ")
     }
 
     /**
@@ -94,47 +80,33 @@ class QuoteValues: Values {
      * and alphabetically-sorted list of unique, nonempty, and capitalized tags.
      */
     static func formatTags(tags: String) -> String {
-        return formattedSetOfTagsToString(
-            tags: tagsStringToFormattedSet(tags: tags)
+        return formattedTagsSetToString(
+            tagsSet: tagsStringToFormattedSet(tagsString: tags)
         )
     }
 
     /**
-     * Validates the length of the given text string.
+     * Transforms the given comma-separated lists of tags into a comma-separated
+     * and alphabetically-sorted list of unique, nonempty, and capitalized tags.
      */
-    static func validateText(text: String) throws {
-        if text.count < 1 {
-            throw ValidationError.withMessage(ErrorMessage.textEmpty)
+    static func combineTags(tagsStrings: [String]) -> String {
+        var tagsSet: Set<String> = []
+        for tagsString in tagsStrings {
+            for tag in tagsStringToFormattedSet(tagsString: tagsString) {
+                tagsSet.update(with: tag)
+            }
         }
-        else if text.count > 10000 {
-            throw ValidationError.withMessage(ErrorMessage.textTooLong)
-        }
+        return formattedTagsSetToString(tagsSet: tagsSet)
     }
 
     /**
-     * Validates the length of the given author first name string.
+     * Returns a formatted version of `from` without any tags from `remove`.
      */
-    static func validateAuthorFirstName(authorFirstName: String) throws {
-        if authorFirstName.count > 500 {
-            throw ValidationError.withMessage(ErrorMessage.authorFirstNameTooLong)
+    static func removeTags(remove: String, from: String) -> String {
+        var tagsSet = QuoteValues.tagsStringToFormattedSet(tagsString: from)
+        for tag in QuoteValues.tagsStringToFormattedSet(tagsString: remove) {
+            tagsSet.remove(tag)
         }
-    }
-
-    /**
-     * Validates the length of the given author last name string.
-     */
-    static func validateAuthorLastName(authorLastName: String) throws {
-        if authorLastName.count > 500 {
-            throw ValidationError.withMessage(ErrorMessage.authorLastNameTooLong)
-        }
-    }
-
-    /**
-     * Validates the length of the given tags string.
-     */
-    static func validateTags(tags: String) throws {
-        if tags.count > 1000 {
-            throw ValidationError.withMessage(ErrorMessage.tagsTooLong)
-        }
+        return formattedTagsSetToString(tagsSet: tagsSet)
     }
 }

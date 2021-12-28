@@ -1,7 +1,3 @@
-/**
- * A class encapsulating user-editable quote collection values
- * and methods for formatting and validating them.
- */
 class QuoteCollectionValues: Values {
     var name: String
 
@@ -9,20 +5,13 @@ class QuoteCollectionValues: Values {
         self.name = name
     }
 
-    /**
-     * Formats all attributes that require formatting.
-     * To be used when saving a quote collection.
-     */
-    func format() {
+    func formatAndValidate() throws {
+        // Format
         name = QuoteCollectionValues.formatName(name: name)
-    }
-
-    /**
-     * Validates all attributes that require validation.
-     * To be used when saving a quote collection.
-     */
-    func validate() throws {
-        try QuoteCollectionValues.validateName(name: name)
+        // Validate
+        if name.isEmpty {
+            throw ValidationError.withMessage(ErrorMessage.nameEmpty)
+        }
     }
 
     /**
@@ -30,17 +19,5 @@ class QuoteCollectionValues: Values {
      */
     static func formatName(name: String) -> String {
         return Utility.trimWhitespace(string: name)
-    }
-
-    /**
-     * Validates the length of the given name string.
-     */
-    static func validateName(name: String) throws {
-        if name.count < 1 {
-            throw ValidationError.withMessage(ErrorMessage.nameEmpty)
-        }
-        else if name.count > 1000 {
-            throw ValidationError.withMessage(ErrorMessage.nameTooLong)
-        }
     }
 }

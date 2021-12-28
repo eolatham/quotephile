@@ -1,5 +1,11 @@
 import CoreData
 
+enum EditMode: String {
+    case replace = "replace"
+    case add = "add"
+    case remove = "remove"
+}
+
 struct DatabaseFunctions {
     static func updateContext(context: NSManagedObjectContext) {
         do { try context.save() }
@@ -15,8 +21,7 @@ struct DatabaseFunctions {
         quote: Quote? = nil,
         values: QuoteValues
     ) throws -> Quote {
-        values.format()
-        try values.validate()
+        try values.formatAndValidate()
         let now = Date.now
         let newQuote: Quote
         if quote != nil {
@@ -58,8 +63,7 @@ struct DatabaseFunctions {
         quoteCollection: QuoteCollection? = nil,
         values: QuoteCollectionValues
     ) throws -> QuoteCollection {
-        values.format()
-        try values.validate()
+        try values.formatAndValidate()
         let now = Date.now
         let newQuoteCollection: QuoteCollection
         if quoteCollection != nil {
@@ -110,39 +114,37 @@ struct DatabaseFunctions {
         quotes: Set<Quote>,
         newAuthorFirstName: String? = nil,
         newAuthorLastName: String? = nil,
-        newTags: String? = nil,
-        addTags: String? = nil,
-        removeTags: String? = nil
-    ) throws {
+        tags: String? = nil,
+        tagsMode: EditMode = EditMode.replace
+    ) {
+        var formattedNewAuthorFirstName: String? = nil
+        var formattedNewAuthorLastName: String? = nil
+        var formattedTags: String? = nil
         if newAuthorFirstName != nil {
-            try QuoteValues.validateAuthorFirstName(authorFirstName: newAuthorFirstName!)
+            formattedNewAuthorFirstName = QuoteValues.formatAuthor(author: newAuthorFirstName!)
         }
         if newAuthorLastName != nil {
-            try QuoteValues.validateAuthorLastName(authorLastName: newAuthorLastName!)
+            formattedNewAuthorLastName = QuoteValues.formatAuthor(author: newAuthorLastName!)
         }
-        if newTags != nil {
-            try QuoteValues.validateTags(tags: newTags!)
+        if tags != nil {
+            formattedTags = QuoteValues.formatTags(tags: tags!)
         }
-        // TODO: add validation for addTags... (before changing any quotes)
         for quote in quotes {
-            // Author logic
-            if newAuthorFirstName != nil {
-                quote.authorFirstName = QuoteValues.formatAuthor(author: newAuthorFirstName!)
+            if formattedNewAuthorFirstName != nil {
+                quote.authorFirstName = formattedNewAuthorFirstName!
             }
-            if newAuthorLastName != nil {
-                quote.authorLastName = QuoteValues.formatAuthor(author: newAuthorLastName!)
+            if formattedNewAuthorLastName != nil {
+                quote.authorLastName = formattedNewAuthorLastName!
             }
-            // Tags logic
-            if newTags != nil {
-                quote.tags = QuoteValues.formatTags(tags: newTags!)
-            } else if addTags != nil {
-                quote.tags = QuoteValues.formatTags(tags: "\(quote.tags!),\(addTags!)")
-            } else if removeTags != nil {
-                var tagSet = QuoteValues.tagsStringToFormattedSet(tags: quote.tags!)
-                for tag in QuoteValues.tagsStringToFormattedSet(tags: removeTags!) {
-                    tagSet.remove(tag)
+            if formattedTags != nil {
+                switch tagsMode {
+                case .replace:
+                    quote.tags = formattedTags!
+                case .add:
+                    quote.tags = QuoteValues.combineTags(tagsStrings: [quote.tags!, formattedTags!])
+                case .remove:
+                    quote.tags = QuoteValues.removeTags(remove: formattedTags!, from: quote.tags!)
                 }
-                quote.tags = QuoteValues.formattedSetOfTagsToString(tags: tagSet)
             }
         }
         updateContext(context: context)

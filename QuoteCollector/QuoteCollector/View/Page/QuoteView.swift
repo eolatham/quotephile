@@ -55,7 +55,6 @@ struct QuoteView: View {
                     quote.displayAuthor = newValue
                     DatabaseFunctions.updateContext(context: context)
                 }
-                .tint(.accentColor)
                 if quote.displayAuthor {
                     Toggle(isOn: $displayAuthorOnNewLine) { Text("Display author on new line") }
                     .tint(.accentColor)
