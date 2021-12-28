@@ -40,13 +40,13 @@ struct BulkEditQuotesView: View {
                         Toggle(isOn: $editTags) { Text("Edit tags") }
                             .tint(.accentColor)
                         if editTags {
+                            TextField("Tags (comma-separated)", text: $tags)
+                                .lineLimit(1)
                             Picker("Mode", selection: $tagsEditMode) {
                                 Text("Replace").tag(EditMode.replace)
                                 Text("Add").tag(EditMode.add)
                                 Text("Remove").tag(EditMode.remove)
-                            }.pickerStyle(InlinePickerStyle())
-                            TextField("Tags (comma-separated)", text: $tags)
-                                .lineLimit(1)
+                            }.pickerStyle(.segmented)
                         }
                     }
                 }
