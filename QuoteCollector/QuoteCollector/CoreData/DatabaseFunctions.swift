@@ -91,15 +91,6 @@ struct DatabaseFunctions {
         updateContext(context: context)
     }
 
-    static func moveQuotes(
-        context: NSManagedObjectContext,
-        quotes: Set<Quote>,
-        newCollection: QuoteCollection
-    ) {
-        quotes.forEach({ quote in quote.collection = newCollection })
-        updateContext(context: context)
-    }
-
     static func editQuotes(
         context: NSManagedObjectContext,
         quotes: Set<Quote>,
@@ -130,6 +121,15 @@ struct DatabaseFunctions {
                 quote.tags = Quote.formattedSetOfTagsToString(tags: tagSet)
             }
         }
+        updateContext(context: context)
+    }
+
+    static func moveQuotes(
+        context: NSManagedObjectContext,
+        quotes: Set<Quote>,
+        newCollection: QuoteCollection
+    ) {
+        quotes.forEach({ quote in quote.collection = newCollection })
         updateContext(context: context)
     }
 }
