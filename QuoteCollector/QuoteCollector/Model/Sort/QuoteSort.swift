@@ -64,4 +64,15 @@ struct QuoteSort {
         )
     ]
     static var `default`: Sort<Quote> { sorts[7] }
+
+    static func withId(id: Int) -> Sort<Quote>? {
+        var sortWithId: Sort<Quote>? = nil
+        for sort in sorts {
+            if sort.id == id {
+                sortWithId = sort
+                break
+            }
+        }
+        return sortWithId
+    }
 }

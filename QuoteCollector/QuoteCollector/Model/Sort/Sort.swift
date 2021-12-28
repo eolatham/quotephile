@@ -6,4 +6,3 @@ struct Sort<E>: Hashable, Identifiable {
     let descriptors: [SortDescriptor<E>]
     let section: KeyPath<E, String>
 }
-

@@ -4,7 +4,7 @@ struct QuoteCollectionsView: View {
     @Environment(\.managedObjectContext) private var context
 
     @State private var searchTerm: String = ""
-    @State private var selectedSort: Sort<QuoteCollection> = QuoteCollectionSort.default
+    @State private var selectedSort: Sort<QuoteCollection> = QuoteCollectionSort.getUserDefault()
 
     private var searchQuery: Binding<String> {
         Binding { searchTerm } set: { newValue in
@@ -70,6 +70,12 @@ struct QuoteCollectionsView: View {
                 )
             )
             .navigationTitle("Quote Collections")
+            .onChange(
+                of: selectedSort,
+                perform: { _ in
+                    QuoteCollectionSort.setUserDefault(sort: selectedSort)
+                }
+            )
         }
     }
 }
