@@ -158,4 +158,16 @@ struct DatabaseFunctions {
         quotes.forEach({ quote in quote.collection = newCollection })
         updateContext(context: context)
     }
+
+    /**
+     * Returns all existing quote collections sorted by name.
+     */
+    static func fetchQuoteCollections(context: NSManagedObjectContext) -> [QuoteCollection] {
+        let fetchRequest: NSFetchRequest<QuoteCollection> = QuoteCollection.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \QuoteCollection.name, ascending: true)]
+        let quoteCollections: [QuoteCollection]
+        do { quoteCollections = try context.fetch(fetchRequest) }
+        catch { quoteCollections = [] }
+        return quoteCollections
+    }
 }

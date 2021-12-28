@@ -21,23 +21,17 @@ struct AddQuoteView: View {
         NavigationView {
             Form {
                 Section(header: Text("TEXT")) {
-                    VStack {
-                        TextEditor(text: $text)
-                    }
+                    TextEditor(text: $text)
                 }
                 Section(header: Text("AUTHOR")) {
-                    VStack {
-                        TextField("First Name (optional)", text: $authorFirstName)
-                            .lineLimit(1)
-                        TextField("Last Name (optional)", text: $authorLastName)
-                            .lineLimit(1)
-                    }
+                    TextField("First Name (optional)", text: $authorFirstName)
+                        .lineLimit(1)
+                    TextField("Last Name (optional)", text: $authorLastName)
+                        .lineLimit(1)
                 }
                 Section(header: Text("TAGS")) {
-                    VStack {
-                        TextField("Tags (comma-separated)", text: $tags)
-                            .lineLimit(1)
-                    }
+                    TextField("Tags (comma-separated)", text: $tags)
+                        .lineLimit(1)
                 }
                 Section {
                     Button(

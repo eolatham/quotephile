@@ -13,41 +13,35 @@ struct BulkEditQuotesView: View {
     @State private var editTags: Bool = false
     @State private var tagsEditMode: EditMode = EditMode.replace
     @State private var tags: String = ""
-    @State private var isError: Bool = false
-    @State private var errorMessage: String? = nil
 
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("AUTHOR")) {
-                    VStack {
-                        Toggle(isOn: $replaceAuthorFirstName) { Text("Replace author first name") }
-                            .tint(.accentColor)
-                        if replaceAuthorFirstName {
-                            TextField("First Name (optional)", text: $authorFirstName)
-                                .lineLimit(1)
-                        }
-                        Toggle(isOn: $replaceAuthorLastName) { Text("Replace author last name") }
-                            .tint(.accentColor)
-                        if replaceAuthorLastName {
-                            TextField("Last Name (optional)", text: $authorLastName)
-                                .lineLimit(1)
-                        }
+                    Toggle(isOn: $replaceAuthorFirstName) { Text("Replace author first name") }
+                        .tint(.accentColor)
+                    if replaceAuthorFirstName {
+                        TextField("First Name (optional)", text: $authorFirstName)
+                            .lineLimit(1)
+                    }
+                    Toggle(isOn: $replaceAuthorLastName) { Text("Replace author last name") }
+                        .tint(.accentColor)
+                    if replaceAuthorLastName {
+                        TextField("Last Name (optional)", text: $authorLastName)
+                            .lineLimit(1)
                     }
                 }
                 Section(header: Text("TAGS")) {
-                    VStack {
-                        Toggle(isOn: $editTags) { Text("Edit tags") }
-                            .tint(.accentColor)
-                        if editTags {
-                            TextField("Tags (comma-separated)", text: $tags)
-                                .lineLimit(1)
-                            Picker("Mode", selection: $tagsEditMode) {
-                                Text("Replace").tag(EditMode.replace)
-                                Text("Add").tag(EditMode.add)
-                                Text("Remove").tag(EditMode.remove)
-                            }.pickerStyle(.segmented)
-                        }
+                    Toggle(isOn: $editTags) { Text("Edit tags") }
+                        .tint(.accentColor)
+                    if editTags {
+                        TextField("Tags (comma-separated)", text: $tags)
+                            .lineLimit(1)
+                        Picker("Mode", selection: $tagsEditMode) {
+                            Text("Replace").tag(EditMode.replace)
+                            Text("Add").tag(EditMode.add)
+                            Text("Remove").tag(EditMode.remove)
+                        }.pickerStyle(.segmented)
                     }
                 }
                 Section {
@@ -63,7 +57,12 @@ struct BulkEditQuotesView: View {
                                 )
                             presentation.wrappedValue.dismiss()
                         },
-                        label: { Text("Save").font(.headline) }
+                        label: {
+                            Text(
+                                "Update \(quotes.count) selected " +
+                                "\(quotes.count == 1 ? "quote" : "quotes")"
+                            ).font(.headline)
+                        }
                     )
                     .foregroundColor(.accentColor)
                 }
@@ -76,19 +75,6 @@ struct BulkEditQuotesView: View {
                     }
                 }
             )
-            .alert(isPresented: $isError) {
-                Alert(
-                    title: Text("Error"),
-                    message: Text(errorMessage!),
-                    dismissButton: .default(
-                        Text("Dismiss"),
-                        action: {
-                            isError = false
-                            errorMessage = nil
-                        }
-                    )
-                )
-            }
         }
     }
 }
