@@ -11,7 +11,7 @@ struct AddQuoteCollectionView: View {
 
     @State private var name: String = ""
     @State private var isError: Bool = false
-    @State private var nameErrorMsg: String? = nil
+    @State private var errorMessage: String? = nil
 
     var body: some View {
         NavigationView {
@@ -24,16 +24,19 @@ struct AddQuoteCollectionView: View {
                 Section {
                     Button(
                         action: {
-                            if name.isEmpty { nameErrorMsg = "Name is empty!" }
-                            else { nameErrorMsg = nil }
-                            isError = nameErrorMsg != nil
-                            if isError == false {
-                                _ = DatabaseFunctions.addQuoteCollection(
+                            do {
+                                try _ = DatabaseFunctions.addQuoteCollection(
                                     context: context,
                                     quoteCollection: quoteCollection,
                                     values: QuoteCollectionValues(name: name)
                                 )
                                 presentation.wrappedValue.dismiss()
+                            } catch ValidationError.withMessage(let message) {
+                                isError = true
+                                errorMessage = message
+                            } catch {
+                                isError = true
+                                errorMessage = ErrorMessage.default
                             }
                         },
                         label: { Text("Save").font(.headline) }
@@ -54,8 +57,14 @@ struct AddQuoteCollectionView: View {
             .alert(isPresented: $isError) {
                 Alert(
                     title: Text("Error"),
-                    message: Text(nameErrorMsg!),
-                    dismissButton: .default(Text("OK"))
+                    message: Text(errorMessage!),
+                    dismissButton: .default(
+                        Text("Dismiss"),
+                        action: {
+                            isError = false
+                            errorMessage = nil
+                        }
+                    )
                 )
             }
         }

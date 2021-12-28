@@ -15,10 +15,7 @@ struct AddQuoteView: View {
     @State private var authorLastName: String = ""
     @State private var tags: String = ""
     @State private var isError: Bool = false
-    @State private var textErrorMsg: String? = nil
-    @State private var authorFirstNameErrorMsg: String? = nil
-    @State private var authorLastNameErrorMsg: String? = nil
-    @State private var tagsErrorMsg: String? = nil
+    @State private var errorMessage: String? = nil
 
     var body: some View {
         NavigationView {
@@ -45,49 +42,31 @@ struct AddQuoteView: View {
                 Section {
                     Button(
                         action: {
-                            if text.count < 1 { textErrorMsg = "Text is empty!" }
-                            else if text.count > 10000 { textErrorMsg = "Text is too long!" }
-                            else { textErrorMsg = nil }
-
-                            if authorFirstName.count > 500 {
-                                authorFirstNameErrorMsg = "Author first name is too long!"
+                            let values: QuoteValues = QuoteValues(
+                                collection: quoteCollection,
+                                text: text,
+                                authorFirstName: authorFirstName,
+                                authorLastName: authorLastName,
+                                tags: tags
+                            )
+                            if quote != nil {
+                                values.displayQuotationMarks = quote!.displayQuotationMarks
+                                values.displayAuthor = quote!.displayAuthor
+                                values.displayAuthorOnNewLine = quote!.displayAuthorOnNewLine
                             }
-                            else { authorFirstNameErrorMsg = nil }
-
-                            if authorLastName.count > 500 {
-                                authorLastNameErrorMsg = "Author last name is too long!"
-                            }
-                            else { authorLastNameErrorMsg = nil }
-
-                            if tags.count > 1000 {
-                                tagsErrorMsg = "Tags are too long!"
-                            }
-                            else { tagsErrorMsg = nil }
-
-                            isError = textErrorMsg != nil ||
-                                      authorFirstNameErrorMsg != nil ||
-                                      authorLastNameErrorMsg != nil ||
-                                      tagsErrorMsg != nil
-
-                            if isError == false {
-                                var values: QuoteValues = QuoteValues(
-                                    collection: quoteCollection,
-                                    text: text,
-                                    authorFirstName: authorFirstName,
-                                    authorLastName: authorLastName,
-                                    tags: tags
-                                )
-                                if quote != nil {
-                                    values.displayQuotationMarks = quote!.displayQuotationMarks
-                                    values.displayAuthor = quote!.displayAuthor
-                                    values.displayAuthorOnNewLine = quote!.displayAuthorOnNewLine
-                                }
-                                _ = DatabaseFunctions.addQuote(
+                            do {
+                                try _ = DatabaseFunctions.addQuote(
                                     context: context,
                                     quote: quote,
                                     values: values
                                 )
                                 presentation.wrappedValue.dismiss()
+                            } catch ValidationError.withMessage(let message) {
+                                isError = true
+                                errorMessage = message
+                            } catch {
+                                isError = true
+                                errorMessage = ErrorMessage.default
                             }
                         },
                         label: { Text("Save").font(.headline) }
@@ -106,17 +85,14 @@ struct AddQuoteView: View {
             .alert(isPresented: $isError) {
                 Alert(
                     title: Text("Error"),
-                    message: Text(
-                        Utility.join(
-                            strings: [
-                                textErrorMsg,
-                                authorFirstNameErrorMsg,
-                                authorLastNameErrorMsg,
-                                tagsErrorMsg
-                            ]
-                        )
-                    ),
-                    dismissButton: .default(Text("OK"))
+                    message: Text(errorMessage!),
+                    dismissButton: .default(
+                        Text("Dismiss"),
+                        action: {
+                            isError = false
+                            errorMessage = nil
+                        }
+                    )
                 )
             }
         }

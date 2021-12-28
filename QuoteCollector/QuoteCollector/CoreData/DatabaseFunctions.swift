@@ -7,13 +7,16 @@ struct DatabaseFunctions {
     }
 
     /**
-     * For adding and editing a quote.
+     * For adding or editing a quote.
+     * Formats and validates values before saving.
      */
     static func addQuote(
         context: NSManagedObjectContext,
         quote: Quote? = nil,
         values: QuoteValues
-    ) -> Quote {
+    ) throws -> Quote {
+        values.format()
+        try values.validate()
         let now = Date.now
         let newQuote: Quote
         if quote != nil {
@@ -24,10 +27,10 @@ struct DatabaseFunctions {
         }
         newQuote.dateChanged = now
         newQuote.collection = values.collection
-        newQuote.text = Quote.formatText(text: values.text)
-        newQuote.authorFirstName = Quote.formatAuthor(author: values.authorFirstName)
-        newQuote.authorLastName = Quote.formatAuthor(author: values.authorLastName)
-        newQuote.tags = Quote.formatTags(tags: values.tags)
+        newQuote.text = values.text
+        newQuote.authorFirstName = values.authorFirstName
+        newQuote.authorLastName = values.authorLastName
+        newQuote.tags = values.tags
         newQuote.displayQuotationMarks = values.displayQuotationMarks
         newQuote.displayAuthor = values.displayAuthor
         newQuote.displayAuthorOnNewLine = values.displayAuthorOnNewLine
@@ -35,20 +38,28 @@ struct DatabaseFunctions {
         return newQuote
     }
 
+    /**
+     * Formats and validates values before saving.
+     */
     static func editQuote(
         context: NSManagedObjectContext,
         quote: Quote,
         values: QuoteValues
-    ) { _ = addQuote(context: context, quote: quote, values: values) }
+    ) throws {
+        try _ = addQuote(context: context, quote: quote, values: values)
+    }
 
     /**
-     * For adding and editing a quote collection.
+     * For adding or editing a quote collection.
+     * Formats and validates values before saving.
      */
     static func addQuoteCollection(
         context: NSManagedObjectContext,
         quoteCollection: QuoteCollection? = nil,
         values: QuoteCollectionValues
-    ) -> QuoteCollection {
+    ) throws -> QuoteCollection {
+        values.format()
+        try values.validate()
         let now = Date.now
         let newQuoteCollection: QuoteCollection
         if quoteCollection != nil {
@@ -63,12 +74,15 @@ struct DatabaseFunctions {
         return newQuoteCollection
     }
 
+    /**
+     * Formats and validates values before saving.
+     */
     static func editQuoteCollection(
         context: NSManagedObjectContext,
         quoteCollection: QuoteCollection,
         values: QuoteCollectionValues
-    ) {
-        _ = addQuoteCollection(
+    ) throws {
+        try _ = addQuoteCollection(
             context: context,
             quoteCollection: quoteCollection,
             values: values
@@ -99,26 +113,36 @@ struct DatabaseFunctions {
         newTags: String? = nil,
         addTags: String? = nil,
         removeTags: String? = nil
-    ) {
+    ) throws {
+        if newAuthorFirstName != nil {
+            try QuoteValues.validateAuthorFirstName(authorFirstName: newAuthorFirstName!)
+        }
+        if newAuthorLastName != nil {
+            try QuoteValues.validateAuthorLastName(authorLastName: newAuthorLastName!)
+        }
+        if newTags != nil {
+            try QuoteValues.validateTags(tags: newTags!)
+        }
+        // TODO: add validation for addTags... (before changing any quotes)
         for quote in quotes {
             // Author logic
             if newAuthorFirstName != nil {
-                quote.authorFirstName = Quote.formatAuthor(author: newAuthorFirstName!)
+                quote.authorFirstName = QuoteValues.formatAuthor(author: newAuthorFirstName!)
             }
             if newAuthorLastName != nil {
-                quote.authorLastName = Quote.formatAuthor(author: newAuthorLastName!)
+                quote.authorLastName = QuoteValues.formatAuthor(author: newAuthorLastName!)
             }
             // Tags logic
             if newTags != nil {
-                quote.tags = Quote.formatTags(tags: newTags!)
+                quote.tags = QuoteValues.formatTags(tags: newTags!)
             } else if addTags != nil {
-                quote.tags = Quote.formatTags(tags: "\(quote.tags!),\(addTags!)")
+                quote.tags = QuoteValues.formatTags(tags: "\(quote.tags!),\(addTags!)")
             } else if removeTags != nil {
-                var tagSet = Quote.tagsStringToFormattedSet(tags: quote.tags!)
-                for tag in Quote.tagsStringToFormattedSet(tags: removeTags!) {
+                var tagSet = QuoteValues.tagsStringToFormattedSet(tags: quote.tags!)
+                for tag in QuoteValues.tagsStringToFormattedSet(tags: removeTags!) {
                     tagSet.remove(tag)
                 }
-                quote.tags = Quote.formattedSetOfTagsToString(tags: tagSet)
+                quote.tags = QuoteValues.formattedSetOfTagsToString(tags: tagSet)
             }
         }
         updateContext(context: context)

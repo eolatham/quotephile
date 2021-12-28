@@ -66,9 +66,7 @@ struct CustomListView<
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button {
-                    if inSelectionMode {
-                        selectedEntities.removeAll()
-                    }
+                    if inSelectionMode { selectedEntities.removeAll() }
                     inSelectionMode.toggle()
                 } label: {
                     Text(inSelectionMode ? "Done" : "Select")

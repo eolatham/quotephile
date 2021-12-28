@@ -16,17 +16,17 @@ struct PersistenceManager {
             }
         })
     }
-    
+
     static var preview: PersistenceManager = {
         let manager = PersistenceManager(inMemory: true)
         let context = manager.container.viewContext
         for i in 1..<6 {
-            let quoteCollection = DatabaseFunctions.addQuoteCollection(
+            let quoteCollection = try! DatabaseFunctions.addQuoteCollection(
                 context: context,
                 values: QuoteCollectionValues(name: "Quote Collection #\(i)")
             )
             for j in 1..<11 {
-                let quote = DatabaseFunctions.addQuote(
+                let quote = try! DatabaseFunctions.addQuote(
                     context: context,
                     values: QuoteValues(
                         collection: quoteCollection,
