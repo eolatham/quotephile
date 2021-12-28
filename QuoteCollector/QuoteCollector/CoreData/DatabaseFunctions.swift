@@ -29,6 +29,7 @@ struct DatabaseFunctions {
         } else {
             newQuote = Quote(context: context)
             newQuote.dateCreated = now
+            newQuote.id = UUID()
         }
         newQuote.dateChanged = now
         newQuote.collection = values.collection
@@ -71,6 +72,7 @@ struct DatabaseFunctions {
         } else {
             newQuoteCollection = QuoteCollection(context: context)
             newQuoteCollection.dateCreated = now
+            newQuoteCollection.id = UUID()
         }
         newQuoteCollection.dateChanged = now
         newQuoteCollection.name = values.name

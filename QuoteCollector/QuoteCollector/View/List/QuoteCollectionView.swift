@@ -1,12 +1,26 @@
 import SwiftUI
 
 struct QuoteCollectionView: View {
+    @ObservedObject var quoteCollection: QuoteCollection
+
+    var body: some View {
+        _QuoteCollectionView(
+            quoteCollection: quoteCollection,
+            selectedSort: QuoteSort.getUserDefault(quoteCollection: quoteCollection)
+        )
+        // This wrapping is necessary because initializing state (selectedSort in this case)
+        // with an inline function call produces unreliable results; function calls in such
+        // contexts seem to be memoized to avoid recomputing them when the view is recreated.
+    }
+}
+
+struct _QuoteCollectionView: View {
     @Environment(\.managedObjectContext) private var context
 
     @ObservedObject var quoteCollection: QuoteCollection
+    @State var selectedSort: Sort<Quote>
 
     @State private var searchTerm: String = ""
-    @State private var selectedSort: Sort<Quote> = QuoteSort.default
 
     private var searchQuery: Binding<String> {
         Binding { searchTerm } set: { newValue in
@@ -87,6 +101,15 @@ struct QuoteCollectionView: View {
                 )
             )
             .navigationTitle(quoteCollection.name!)
+            .onChange(
+                of: selectedSort,
+                perform: { _ in
+                    QuoteSort.setUserDefault(
+                        sort: selectedSort,
+                        quoteCollection: quoteCollection
+                    )
+                }
+            )
         } else { EmptyView() }
     }
 }

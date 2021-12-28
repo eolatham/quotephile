@@ -1,10 +1,22 @@
 import SwiftUI
 
 struct QuoteCollectionsView: View {
+    var body: some View {
+        _QuoteCollectionsView(
+            selectedSort: QuoteCollectionSort.getUserDefault()
+        )
+        // This wrapping is necessary because initializing state (selectedSort in this case)
+        // with an inline function call produces unreliable results; function calls in such
+        // contexts seem to be memoized to avoid recomputing them when the view is recreated.
+    }
+}
+
+struct _QuoteCollectionsView: View {
     @Environment(\.managedObjectContext) private var context
 
+    @State var selectedSort: Sort<QuoteCollection>
+
     @State private var searchTerm: String = ""
-    @State private var selectedSort: Sort<QuoteCollection> = QuoteCollectionSort.getUserDefault()
 
     private var searchQuery: Binding<String> {
         Binding { searchTerm } set: { newValue in

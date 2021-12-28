@@ -1,10 +1,20 @@
 import SwiftUI
 
 struct AllQuotesView: View {
+    var body: some View {
+        _AllQuotesView(selectedSort: QuoteSort.getUserDefault())
+        // This wrapping is necessary because initializing state (selectedSort in this case)
+        // with an inline function call produces unreliable results; function calls in such
+        // contexts seem to be memoized to avoid recomputing them when the view is recreated.
+    }
+}
+
+struct _AllQuotesView: View {
     @Environment(\.managedObjectContext) private var context
 
+    @State var selectedSort: Sort<Quote>
+
     @State private var searchTerm: String = ""
-    @State private var selectedSort: Sort<Quote> = QuoteSort.default
 
     private var searchQuery: Binding<String> {
         Binding { searchTerm } set: { newValue in
@@ -68,5 +78,11 @@ struct AllQuotesView: View {
             )
         )
         .navigationTitle("All Quotes")
+        .onChange(
+            of: selectedSort,
+            perform: { _ in
+                QuoteSort.setUserDefault(sort: selectedSort)
+            }
+        )
     }
 }

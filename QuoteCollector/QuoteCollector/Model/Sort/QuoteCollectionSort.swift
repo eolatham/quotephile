@@ -53,7 +53,10 @@ struct QuoteCollectionSort {
     ]
     static var `default`: Sort<QuoteCollection> { sorts[3] }
 
-    static func withId(id: Int) -> Sort<QuoteCollection>? {
+    /**
+     * Helper for the user default methods.
+     */
+    private static func withId(id: Int) -> Sort<QuoteCollection>? {
         var sortWithId: Sort<QuoteCollection>? = nil
         for sort in sorts {
             if sort.id == id {
@@ -70,7 +73,8 @@ struct QuoteCollectionSort {
      */
     static func getUserDefault() -> Sort<QuoteCollection> {
         var sort: Sort<QuoteCollection>? = nil
-        let id: Int? = UserDefaults.standard.object(forKey: "quoteCollectionsSortId") as? Int
+        let key = "quoteCollectionsSortId"
+        let id: Int? = UserDefaults.standard.object(forKey: key) as? Int
         if id != nil { sort = QuoteCollectionSort.withId(id: id!) }
         return sort ?? QuoteCollectionSort.default
     }

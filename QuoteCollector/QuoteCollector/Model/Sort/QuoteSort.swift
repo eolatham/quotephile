@@ -65,7 +65,10 @@ struct QuoteSort {
     ]
     static var `default`: Sort<Quote> { sorts[7] }
 
-    static func withId(id: Int) -> Sort<Quote>? {
+    /**
+     * Helper for the user default methods.
+     */
+    private static func withId(id: Int) -> Sort<Quote>? {
         var sortWithId: Sort<Quote>? = nil
         for sort in sorts {
             if sort.id == id {
@@ -74,5 +77,42 @@ struct QuoteSort {
             }
         }
         return sortWithId
+    }
+
+    /**
+     * Helper for the user default methods.
+     */
+    private static func userDefaultKey(
+        quoteCollection: QuoteCollection? = nil
+    ) -> String {
+        return quoteCollection == nil
+            ? "allQuotesSortId"
+            : "quoteCollectionSortId-\(quoteCollection!.id!)"
+    }
+
+    /**
+     * Gets the persisted user default quote sort (or the static default if no user default exists)
+     * for the given quote collection (or the "All Quotes" collection if no quote collection is given).
+     */
+    static func getUserDefault(
+        quoteCollection: QuoteCollection? = nil
+    ) -> Sort<Quote> {
+        var sort: Sort<Quote>? = nil
+        let key = userDefaultKey(quoteCollection: quoteCollection)
+        let id: Int? = UserDefaults.standard.object(forKey: key) as? Int
+        if id != nil { sort = QuoteSort.withId(id: id!) }
+        return sort ?? QuoteSort.default
+    }
+
+    /**
+     * Persists the given sort as the user default quote sort for the given quote
+     * collection (or the "All Quotes" collection if no quote collection is given).
+     */
+    static func setUserDefault(
+        sort: Sort<Quote>,
+        quoteCollection: QuoteCollection? = nil
+    ) {
+        let key = userDefaultKey(quoteCollection: quoteCollection)
+        UserDefaults.standard.set(sort.id, forKey: key)
     }
 }
