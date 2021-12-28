@@ -31,7 +31,7 @@ struct _BulkMoveQuotesView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("QUOTE COLLECTION")) {
+                Section(header: Text("DESTINATION")) {
                     Picker("Quote Collection", selection: $selectedCollection) {
                         ForEach(collectionOptions) { collection in
                             Text(collection.name!).tag(collection)
