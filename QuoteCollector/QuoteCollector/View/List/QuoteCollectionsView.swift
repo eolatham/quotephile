@@ -70,15 +70,15 @@ struct _QuoteCollectionsView: View {
                 addEntitySheetContentViewBuilder: {
                     AddQuoteCollectionView()
                 },
-                bulkDeleteFunction: { quoteCollections in
+                bulkDeleteFunction: { selection in
                     DatabaseFunctions.deleteQuoteCollections(
                         context: context,
-                        quoteCollections: quoteCollections
+                        quoteCollections: selection
                     )
                 },
-                bulkDeleteAlertMessage: { selected in
+                bulkDeleteAlertMessage: { selection in
                     return (
-                        "Deleting the \(selected.count) selected quote " +
+                        "Deleting the \(selection.count) selected quote " +
                         "collections will also delete all of their " +
                         "quotes. This action cannot be undone!"
                     )

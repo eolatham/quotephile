@@ -48,13 +48,13 @@ struct BulkEditQuotesView: View {
                     Button(
                         action: {
                             DatabaseFunctions.editQuotes(
-                                    context: context,
-                                    quotes: quotes,
-                                    newAuthorFirstName: replaceAuthorFirstName ? authorFirstName : nil,
-                                    newAuthorLastName: replaceAuthorLastName ? authorLastName : nil,
-                                    tags: editTags ? tags : nil,
-                                    tagsMode: tagsEditMode
-                                )
+                                context: context,
+                                quotes: quotes,
+                                newAuthorFirstName: replaceAuthorFirstName ? authorFirstName : nil,
+                                newAuthorLastName: replaceAuthorLastName ? authorLastName : nil,
+                                tags: editTags ? tags : nil,
+                                tagsMode: tagsEditMode
+                            )
                             presentation.wrappedValue.dismiss()
                         },
                         label: {

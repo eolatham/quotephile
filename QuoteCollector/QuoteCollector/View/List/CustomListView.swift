@@ -27,10 +27,17 @@ struct CustomListView<
     var constantListSuffixViewBuilder: (() -> ConstantListSuffixView)? = nil
     var addEntitySheetContentViewBuilder: (() -> AddEntitySheetContentView)? = nil
     var editParentSheetContentViewBuilder: (() -> EditParentSheetContentView)? = nil
-    var bulkEditSheetContentViewBuilder: ((Set<Entity>) -> BulkEditSheetContentView)? = nil
-    var bulkMoveSheetContentViewBuilder: ((Set<Entity>) -> BulkMoveSheetContentView)? = nil
-    var bulkDeleteFunction: ((Set<Entity>) -> Void)? = nil
-    var bulkDeleteAlertMessage: ((Set<Entity>)) -> String = { _ in return "This action cannot be undone!" }
+    var bulkEditSheetContentViewBuilder: (
+        (_ selection: Set<Entity>, _ exitSelectionMode: @escaping () -> Void) -> BulkEditSheetContentView
+        // Use exitSelectionMode if you want to exit selection mode after bulk edit is done
+    )? = nil
+    var bulkMoveSheetContentViewBuilder: (
+        (_ selection: Set<Entity>, _ exitSelectionMode: @escaping () -> Void) -> BulkMoveSheetContentView
+        // Use exitSelectionMode if you want to exit selection mode after bulk move is done
+    )? = nil
+    var bulkDeleteFunction: ((_ selection: Set<Entity>) -> Void)? = nil
+    var bulkDeleteAlertMessage: (_ selection: Set<Entity>) -> String
+        = { _ in return "This action cannot be undone!" }
 
     @State private var selectedEntities: Set<Entity> = []
     @State private var inSelectionMode: Bool = false
@@ -134,11 +141,11 @@ struct CustomListView<
         }
         .sheet(isPresented: $showBulkEditView ) {
             // Only renders when bulkEditSheetContentViewBuilder != nil
-            bulkEditSheetContentViewBuilder!(selectedEntities)
+            bulkEditSheetContentViewBuilder!(selectedEntities, exitSelectionMode)
         }
         .sheet(isPresented: $showBulkMoveView ) {
             // Only renders when bulkMoveSheetContentViewBuilder != nil
-            bulkMoveSheetContentViewBuilder!(selectedEntities)
+            bulkMoveSheetContentViewBuilder!(selectedEntities, exitSelectionMode)
         }
         .alert(isPresented: $showBulkDeleteAlert) {
             // Only renders when bulkDeleteFunction != nil

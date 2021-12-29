@@ -88,21 +88,21 @@ struct _QuoteCollectionView: View {
                 editParentSheetContentViewBuilder: {
                     EditQuoteCollectionView(quoteCollection: quoteCollection)
                 },
-                bulkEditSheetContentViewBuilder: { quotes in
-                    BulkEditQuotesView(quotes: quotes)
+                bulkEditSheetContentViewBuilder: { selection, exitSelectionMode in
+                    BulkEditQuotesView(quotes: selection)
                 },
-                bulkMoveSheetContentViewBuilder: { quotes in
-                    BulkMoveQuotesView(quotes: quotes)
+                bulkMoveSheetContentViewBuilder: { selection, exitSelectionMode in
+                    BulkMoveQuotesView(quotes: selection, afterMove: exitSelectionMode)
                 },
-                bulkDeleteFunction: { quotes in
+                bulkDeleteFunction: { selection in
                     DatabaseFunctions.deleteQuotes(
                         context: context,
-                        quotes: quotes
+                        quotes: selection
                     )
                 },
-                bulkDeleteAlertMessage: { selected in
+                bulkDeleteAlertMessage: { selection in
                     return (
-                        "Are you sure you want to delete the \(selected.count) " +
+                        "Are you sure you want to delete the \(selection.count) " +
                         "selected quotes? This action cannot be undone!"
                     )
                 }

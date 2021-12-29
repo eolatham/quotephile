@@ -4,11 +4,13 @@ struct BulkMoveQuotesView: View {
     @Environment(\.managedObjectContext) private var context
 
     var quotes: Set<Quote>
+    var afterMove: (() -> Void)? = nil
 
     var body: some View {
         _BulkMoveQuotesView(
             quotes: quotes,
-            collectionOptions: DatabaseFunctions.fetchQuoteCollections(context: context)
+            collectionOptions: DatabaseFunctions.fetchQuoteCollections(context: context),
+            afterMove: afterMove
         )
     }
 }
@@ -19,12 +21,18 @@ struct _BulkMoveQuotesView: View {
 
     var quotes: Set<Quote>
     var collectionOptions: [QuoteCollection]
+    var afterMove: (() -> Void)?
 
     @State private var selectedCollection: QuoteCollection
 
-    init(quotes: Set<Quote>, collectionOptions: [QuoteCollection]) {
+    init(
+        quotes: Set<Quote>,
+        collectionOptions: [QuoteCollection],
+        afterMove: (() -> Void)? = nil
+    ) {
         self.quotes = quotes
         self.collectionOptions = collectionOptions
+        self.afterMove = afterMove
         _selectedCollection = State<QuoteCollection>(initialValue: collectionOptions.first!)
     }
 
@@ -46,6 +54,7 @@ struct _BulkMoveQuotesView: View {
                                 quotes: quotes,
                                 newCollection: selectedCollection
                             )
+                            if afterMove != nil { afterMove!() }
                             presentation.wrappedValue.dismiss()
                         },
                         label: {
