@@ -76,6 +76,10 @@ struct CustomListView<
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if inSelectionMode {
                     Button { invertSelection() } label: { Text("Invert") }
+                    Button {
+                        selectedEntities = []
+                        inSelectionMode = false
+                    } label: { Text("Done") }
                 } else {
                     CustomListSortSelectView<Entity>(
                         selectedSort: $selectedSort,
@@ -87,12 +91,8 @@ struct CustomListView<
                     if editParentSheetContentViewBuilder != nil {
                         Button { showEditParentView = true } label: { Text("Edit") }
                     }
-                }
-                Button {
-                    if inSelectionMode { selectedEntities = [] }
-                    inSelectionMode.toggle()
-                } label: {
-                    Text(inSelectionMode ? "Done" : "Select")
+                    Button { inSelectionMode = true } label: { Text("Select") }
+                    .disabled(entities.isEmpty)
                 }
             }
             ToolbarItemGroup(placement: .bottomBar) {
