@@ -45,17 +45,13 @@ struct CustomListView<
                 constantListPrefixViewBuilder!()
             }
             ForEach(entities) { section in
-                Section(header: Text(section.id)) {
-                    ForEach(section, id: \.self) { entity in
-                        CustomListItemView(
-                            entity: entity,
-                            selectedEntities: $selectedEntities,
-                            inSelectionMode: inSelectionMode,
-                            rowViewBuilder: entityRowViewBuilder,
-                            pageViewBuilder: entityPageViewBuilder
-                        )
-                    }
-                }
+                CustomListSectionView(
+                    section: section,
+                    selectedEntities: $selectedEntities,
+                    inSelectionMode: inSelectionMode,
+                    entityRowViewBuilder: entityRowViewBuilder,
+                    entityPageViewBuilder: entityPageViewBuilder
+                )
             }
             if constantListSuffixViewBuilder != nil {
                 constantListSuffixViewBuilder!()
@@ -132,6 +128,92 @@ struct CustomListView<
     }
 }
 
+struct CustomListSelectionIcon: View {
+    var isSelected: Bool
+
+    var body: some View {
+        Image(
+            systemName: isSelected
+                ? "checkmark.circle.fill"
+                : "checkmark.circle"
+        )
+    }
+}
+
+struct CustomListSectionView<
+    Entity: NSManagedObject,
+    EntityRowView: View,
+    EntityPageView: View
+>: View {
+    var section: SectionedFetchResults<String, Entity>.Section
+    @Binding var selectedEntities: Set<Entity>
+    var inSelectionMode: Bool
+    var entityRowViewBuilder: (Entity) -> EntityRowView
+    var entityPageViewBuilder: (Entity) -> EntityPageView
+
+    private var isSelected: Bool {
+        for entity in section {
+            if !selectedEntities.contains(entity) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private func selectSection() {
+        section.forEach({ entity in selectedEntities.update(with: entity) })
+    }
+
+    private func unselectSection() {
+        section.forEach({ entity in selectedEntities.remove(entity) })
+    }
+
+    var body: some View {
+        Section(
+            header: CustomListSectionHeaderView(
+                headerText: section.id,
+                inSelectionMode: inSelectionMode,
+                isSelected: isSelected,
+                buttonAction: {
+                    if isSelected { unselectSection() }
+                    else { selectSection() }
+                }
+            )
+        ) {
+            ForEach(section, id: \.self) { entity in
+                CustomListItemView(
+                    entity: entity,
+                    selectedEntities: $selectedEntities,
+                    inSelectionMode: inSelectionMode,
+                    rowViewBuilder: entityRowViewBuilder,
+                    pageViewBuilder: entityPageViewBuilder
+                )
+            }
+        }
+    }
+}
+
+struct CustomListSectionHeaderView: View {
+    var headerText: String
+    var inSelectionMode: Bool
+    var isSelected: Bool
+    var buttonAction: () -> Void
+
+    var body: some View {
+        if inSelectionMode {
+            HStack {
+                Button(
+                    action: buttonAction,
+                    label: {
+                        CustomListSelectionIcon(isSelected: isSelected)
+                        Text(headerText)
+                    }
+                )
+            }.foregroundColor(isSelected ? .accentColor : .secondary)
+        } else { Text(headerText).foregroundColor(.secondary) }
+    }
+}
+
 struct CustomListItemView<
     Entity: NSManagedObject,
     RowView: View,
@@ -143,6 +225,8 @@ struct CustomListItemView<
 
     let rowView: RowView
     let pageView: PageView
+
+    private let isSelected: Bool
 
     init(
         entity: Entity,
@@ -156,22 +240,16 @@ struct CustomListItemView<
         self.inSelectionMode = inSelectionMode
         self.rowView = rowViewBuilder(entity)
         self.pageView = pageViewBuilder(entity)
+        self.isSelected = selectedEntities.wrappedValue.contains(entity)
     }
 
     var body: some View {
-        let isSelected: Bool = selectedEntities.contains(entity)
         if inSelectionMode {
             HStack {
                 Button {
                     if isSelected { selectedEntities.remove(entity) }
                     else { selectedEntities.update(with: entity) }
-                } label: {
-                    Image(
-                        systemName: isSelected
-                            ? "checkmark.circle.fill"
-                            : "checkmark.circle"
-                    )
-                }
+                } label: { CustomListSelectionIcon(isSelected: isSelected) }
                 rowView
             }.foregroundColor(isSelected ? .accentColor : .primary)
         } else { NavigationLink { pageView } label: { rowView } }
@@ -193,4 +271,3 @@ struct CustomListSortSelectView<E>: View {
         .pickerStyle(.inline)
     }
 }
-
