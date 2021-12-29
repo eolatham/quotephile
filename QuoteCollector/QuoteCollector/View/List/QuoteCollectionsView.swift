@@ -75,11 +75,13 @@ struct _QuoteCollectionsView: View {
                         quoteCollections: quoteCollections
                     )
                 },
-                bulkDeleteAlertMessage: (
-                    "Deleting the selected quote collections " +
-                    "will also delete all of their quotes. " +
-                    "This action cannot be undone!"
-                )
+                bulkDeleteAlertMessage: { selected in
+                    return (
+                        "Deleting the \(selected.count) selected quote " +
+                        "collections will also delete all of their " +
+                        "quotes. This action cannot be undone!"
+                    )
+                }
             )
             .navigationTitle("Quote Collections")
             .onChange(

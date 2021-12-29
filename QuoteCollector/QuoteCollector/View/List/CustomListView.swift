@@ -29,7 +29,7 @@ struct CustomListView<
     var bulkEditSheetContentViewBuilder: ((Set<Entity>) -> BulkEditSheetContentView)? = nil
     var bulkMoveSheetContentViewBuilder: ((Set<Entity>) -> BulkMoveSheetContentView)? = nil
     var bulkDeleteFunction: ((Set<Entity>) -> Void)? = nil
-    var bulkDeleteAlertMessage: String = "This action cannot be undone!"
+    var bulkDeleteAlertMessage: ((Set<Entity>)) -> String = { _ in return "This action cannot be undone!" }
 
     @State private var selectedEntities: Set<Entity> = []
     @State private var inSelectionMode: Bool = false
@@ -135,7 +135,7 @@ struct CustomListView<
             // Only renders when bulkDeleteFunction != nil
             Alert(
                 title: Text("Are you sure?"),
-                message: Text(bulkDeleteAlertMessage),
+                message: Text(bulkDeleteAlertMessage(selectedEntities)),
                 primaryButton: .destructive(Text("Yes, delete")) {
                     withAnimation {
                         bulkDeleteFunction!(selectedEntities)

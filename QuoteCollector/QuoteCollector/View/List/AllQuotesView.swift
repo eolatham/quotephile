@@ -72,10 +72,12 @@ struct _AllQuotesView: View {
                     quotes: quotes
                 )
             },
-            bulkDeleteAlertMessage: (
-                "Are you sure you want to delete the selected " +
-                "quotes? This action cannot be undone!"
-            )
+            bulkDeleteAlertMessage: { selected in
+                return (
+                    "Are you sure you want to delete the \(selected.count) " +
+                    "selected quotes? This action cannot be undone!"
+                )
+            }
         )
         .navigationTitle("All Quotes")
         .onChange(
