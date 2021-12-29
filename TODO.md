@@ -1,6 +1,6 @@
 # TODO
 
-- Clear selected entities after bulk delete and bulk move
+- Exit selection mode after bulk moves and deletes
 - Fix bug where changing quote collection name kills quote collection view
   - This happens because changing the name sometimes changes the sections in the underlying sectioned fetch request (and quote collection views are dynamically rendered based on that)
 - Add ability to bulk-import quotes into a quote collection from the clipboard or from a text file

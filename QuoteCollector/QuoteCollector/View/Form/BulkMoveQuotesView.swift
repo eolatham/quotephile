@@ -3,7 +3,7 @@ import SwiftUI
 struct BulkMoveQuotesView: View {
     @Environment(\.managedObjectContext) private var context
 
-    let quotes: Set<Quote>
+    var quotes: Set<Quote>
 
     var body: some View {
         _BulkMoveQuotesView(
@@ -17,8 +17,8 @@ struct _BulkMoveQuotesView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation
 
-    let quotes: Set<Quote>
-    let collectionOptions: [QuoteCollection]
+    var quotes: Set<Quote>
+    var collectionOptions: [QuoteCollection]
 
     @State private var selectedCollection: QuoteCollection
 
