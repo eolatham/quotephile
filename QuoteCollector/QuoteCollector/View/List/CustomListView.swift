@@ -57,7 +57,7 @@ struct CustomListView<
             if !inSelectionMode && constantListPrefixViewBuilder != nil {
                 constantListPrefixViewBuilder!()
             }
-            ForEach(entities) { section in
+            ForEach(entities, id: \.id) { section in
                 CustomListSectionView(
                     section: section,
                     selectedEntities: $selectedEntities,

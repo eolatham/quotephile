@@ -12,6 +12,40 @@ struct DatabaseFunctions {
         catch { print("Save error: \(error)") }
     }
 
+    static func assertUniqueQuoteText(context: NSManagedObjectContext, text: String) throws {
+        let fetchRequest: NSFetchRequest<Quote> = Quote.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "text LIKE %@", text)
+        let quotes: [Quote]
+        do { quotes = try context.fetch(fetchRequest) }
+        catch { quotes = [] }
+        if !quotes.isEmpty {
+            throw ValidationError.withMessage(ErrorMessage.quoteExists)
+        }
+    }
+
+    static func assertUniqueQuoteCollectionName(context: NSManagedObjectContext, name: String) throws {
+        let fetchRequest: NSFetchRequest<QuoteCollection> = QuoteCollection.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name LIKE %@", name)
+        let quoteCollections: [QuoteCollection]
+        do { quoteCollections = try context.fetch(fetchRequest) }
+        catch { quoteCollections = [] }
+        if !quoteCollections.isEmpty {
+            throw ValidationError.withMessage(ErrorMessage.quoteCollectionExists)
+        }
+    }
+
+    /**
+     * Returns all existing quote collections sorted by name.
+     */
+    static func fetchQuoteCollections(context: NSManagedObjectContext) -> [QuoteCollection] {
+        let fetchRequest: NSFetchRequest<QuoteCollection> = QuoteCollection.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \QuoteCollection.name, ascending: true)]
+        let quoteCollections: [QuoteCollection]
+        do { quoteCollections = try context.fetch(fetchRequest) }
+        catch { quoteCollections = [] }
+        return quoteCollections
+    }
+
     /**
      * For adding or editing a quote.
      * Formats and validates values before saving.
@@ -25,8 +59,12 @@ struct DatabaseFunctions {
         let now = Date.now
         let newQuote: Quote
         if quote != nil {
+            if values.text != quote!.text! {
+                try assertUniqueQuoteText(context: context, text: values.text)
+            }
             newQuote = quote!
         } else {
+            try assertUniqueQuoteText(context: context, text: values.text)
             newQuote = Quote(context: context)
             newQuote.dateCreated = now
             newQuote.id = UUID()
@@ -68,8 +106,18 @@ struct DatabaseFunctions {
         let now = Date.now
         let newQuoteCollection: QuoteCollection
         if quoteCollection != nil {
+            if values.name != quoteCollection!.name! {
+                try assertUniqueQuoteCollectionName(
+                    context: context,
+                    name: values.name
+                )
+            }
             newQuoteCollection = quoteCollection!
         } else {
+            try assertUniqueQuoteCollectionName(
+                context: context,
+                name: values.name
+            )
             newQuoteCollection = QuoteCollection(context: context)
             newQuoteCollection.dateCreated = now
             newQuoteCollection.id = UUID()
@@ -159,17 +207,5 @@ struct DatabaseFunctions {
     ) {
         quotes.forEach({ quote in quote.collection = newCollection })
         updateContext(context: context)
-    }
-
-    /**
-     * Returns all existing quote collections sorted by name.
-     */
-    static func fetchQuoteCollections(context: NSManagedObjectContext) -> [QuoteCollection] {
-        let fetchRequest: NSFetchRequest<QuoteCollection> = QuoteCollection.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \QuoteCollection.name, ascending: true)]
-        let quoteCollections: [QuoteCollection]
-        do { quoteCollections = try context.fetch(fetchRequest) }
-        catch { quoteCollections = [] }
-        return quoteCollections
     }
 }
