@@ -6,7 +6,7 @@ import SwiftUI
  * contexts seem to be memoized to avoid recomputing them when the view is recreated.
  */
 struct QuoteCollectionView: View {
-    @ObservedObject var quoteCollection: QuoteCollection
+    @StateObject var quoteCollection: QuoteCollection
 
     var body: some View {
         if quoteCollection.exists {
@@ -21,7 +21,7 @@ struct QuoteCollectionView: View {
 struct _QuoteCollectionView: View {
     @Environment(\.managedObjectContext) private var context
 
-    @ObservedObject var quoteCollection: QuoteCollection
+    @StateObject var quoteCollection: QuoteCollection
     @State var selectedSort: Sort<Quote>
 
     @State private var searchTerm: String = ""
@@ -85,9 +85,14 @@ struct _QuoteCollectionView: View {
                 addEntitySheetContentViewBuilder: {
                     AddQuoteView(quoteCollection: quoteCollection)
                 },
-                editParentSheetContentViewBuilder: {
-                    EditQuoteCollectionView(quoteCollection: quoteCollection)
-                },
+//                This is currently commented out because changing the name of a quote collection
+//                can change the sections of the fetch request data in the root quote collections
+//                list view, which kills the changed quote collection view because quote
+//                collection views are rendered dynamically based on the fetch request
+//                data. For some reason, this problem does not occur with quotes...
+//                editParentSheetContentViewBuilder: {
+//                    EditQuoteCollectionView(quoteCollection: quoteCollection)
+//                },
                 bulkEditSheetContentViewBuilder: { selection, exitSelectionMode in
                     BulkEditQuotesView(quotes: selection)
                 },
