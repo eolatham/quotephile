@@ -40,6 +40,15 @@ struct CustomListView<
     @State private var showBulkMoveView: Bool = false
     @State private var showBulkDeleteAlert: Bool = false
 
+    private func enterSelectionMode() {
+        inSelectionMode = true
+    }
+
+    private func exitSelectionMode() {
+        inSelectionMode = false
+        selectedEntities = []
+    }
+
     private func invertSelection() {
         entities.forEach({ section in
             section.forEach({ entity in
@@ -76,10 +85,7 @@ struct CustomListView<
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if inSelectionMode {
                     Button { invertSelection() } label: { Text("Invert") }
-                    Button {
-                        selectedEntities = []
-                        inSelectionMode = false
-                    } label: { Text("Done") }
+                    Button { exitSelectionMode() } label: { Text("Done") }
                 } else {
                     CustomListSortSelectView<Entity>(
                         selectedSort: $selectedSort,
@@ -91,7 +97,7 @@ struct CustomListView<
                     if editParentSheetContentViewBuilder != nil {
                         Button { showEditParentView = true } label: { Text("Edit") }
                     }
-                    Button { inSelectionMode = true } label: { Text("Select") }
+                    Button { enterSelectionMode() } label: { Text("Select") }
                     .disabled(entities.isEmpty)
                 }
             }
@@ -119,7 +125,7 @@ struct CustomListView<
             inSelectionMode ? "\(selectedEntities.count) Selected" : title
         )
         .sheet(isPresented: $showAddEntityView ) {
-            // Only renders when addEntitiesheetContentViewBuilder != nil
+            // Only renders when addEntitySheetContentViewBuilder != nil
             addEntitySheetContentViewBuilder!()
         }
         .sheet(isPresented: $showEditParentView ) {
@@ -142,7 +148,7 @@ struct CustomListView<
                 primaryButton: .destructive(Text("Yes, delete")) {
                     withAnimation {
                         bulkDeleteFunction!(selectedEntities)
-                        selectedEntities = []
+                        exitSelectionMode()
                     }
                 },
                 secondaryButton: .cancel(Text("No, cancel"))
