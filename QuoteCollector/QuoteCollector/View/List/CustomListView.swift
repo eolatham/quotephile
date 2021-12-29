@@ -65,12 +65,6 @@ struct CustomListView<
         .searchable(text: $searchQuery)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button {
-                    if inSelectionMode { selectedEntities.removeAll() }
-                    inSelectionMode.toggle()
-                } label: {
-                    Text(inSelectionMode ? "Done" : "Select")
-                }
                 if inSelectionMode {
                     let disabled: Bool = selectedEntities.isEmpty
                     if bulkEditSheetContentViewBuilder != nil {
@@ -96,6 +90,12 @@ struct CustomListView<
                     if editParentSheetContentViewBuilder != nil {
                         Button { showEditParentView = true } label: { Text("Edit") }
                     }
+                }
+                Button {
+                    if inSelectionMode { selectedEntities = [] }
+                    inSelectionMode.toggle()
+                } label: {
+                    Text(inSelectionMode ? "Done" : "Select")
                 }
             }
         }
@@ -123,7 +123,7 @@ struct CustomListView<
                 primaryButton: .destructive(Text("Yes, delete")) {
                     withAnimation {
                         bulkDeleteFunction!(selectedEntities)
-                        selectedEntities.removeAll()
+                        selectedEntities = []
                     }
                 },
                 secondaryButton: .cancel(Text("No, cancel"))
