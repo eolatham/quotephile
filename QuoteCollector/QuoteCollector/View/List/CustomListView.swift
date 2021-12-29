@@ -16,6 +16,7 @@ struct CustomListView<
     BulkEditSheetContentView: View,
     BulkMoveSheetContentView: View
 >: View {
+    var title: String
     @SectionedFetchRequest var entities: SectionedFetchResults<String, Entity>
     @Binding var searchQuery: String
     @Binding var selectedSort: Sort<Entity>
@@ -74,19 +75,6 @@ struct CustomListView<
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if inSelectionMode {
-                    let disabled: Bool = selectedEntities.isEmpty
-                    if bulkEditSheetContentViewBuilder != nil {
-                        Button { showBulkEditView = true }
-                            label: { Text("Edit") }.disabled(disabled)
-                    }
-                    if bulkMoveSheetContentViewBuilder != nil {
-                        Button { showBulkMoveView = true }
-                            label: { Text("Move") }.disabled(disabled)
-                    }
-                    if bulkDeleteFunction != nil {
-                        Button { showBulkDeleteAlert = true }
-                            label: { Text("Delete") }.disabled(disabled)
-                    }
                     Button { invertSelection() } label: { Text("Invert") }
                 } else {
                     CustomListSortSelectView<Entity>(
@@ -109,12 +97,25 @@ struct CustomListView<
             }
             ToolbarItemGroup(placement: .bottomBar) {
                 if inSelectionMode {
-                    Text("\(selectedEntities.count) selected")
-                        .font(.headline)
-                        .foregroundColor(.accentColor)
+                    let disabled: Bool = selectedEntities.isEmpty
+                    if bulkEditSheetContentViewBuilder != nil {
+                        Button { showBulkEditView = true }
+                            label: { Text("Edit") }.disabled(disabled)
+                    }
+                    if bulkMoveSheetContentViewBuilder != nil {
+                        Button { showBulkMoveView = true }
+                            label: { Text("Move") }.disabled(disabled)
+                    }
+                    if bulkDeleteFunction != nil {
+                        Button { showBulkDeleteAlert = true }
+                            label: { Text("Delete") }.disabled(disabled)
+                    }
                 }
             }
         }
+        .navigationTitle(
+            inSelectionMode ? "\(selectedEntities.count) Selected" : title
+        )
         .sheet(isPresented: $showAddEntityView ) {
             // Only renders when addEntitiesheetContentViewBuilder != nil
             addEntitySheetContentViewBuilder!()

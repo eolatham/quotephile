@@ -45,6 +45,7 @@ struct _AllQuotesView: View {
             BulkEditQuotesView,
             BulkMoveQuotesView
         >(
+            title: "All Quotes",
             entities: SectionedFetchRequest<String, Quote>(
                 sectionIdentifier: selectedSort.section,
                 sortDescriptors: selectedSort.descriptors,
@@ -79,7 +80,6 @@ struct _AllQuotesView: View {
                 )
             }
         )
-        .navigationTitle("All Quotes")
         .onChange(
             of: selectedSort,
             perform: { _ in

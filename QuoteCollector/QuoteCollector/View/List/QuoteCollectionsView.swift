@@ -44,6 +44,7 @@ struct _QuoteCollectionsView: View {
                 EmptyView,
                 EmptyView
             >(
+                title: "Quote Collections",
                 entities: SectionedFetchRequest<String, QuoteCollection>(
                     sectionIdentifier: selectedSort.section,
                     sortDescriptors: selectedSort.descriptors,
@@ -83,7 +84,6 @@ struct _QuoteCollectionsView: View {
                     )
                 }
             )
-            .navigationTitle("Quote Collections")
             .onChange(
                 of: selectedSort,
                 perform: { _ in
