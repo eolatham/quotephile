@@ -10,12 +10,30 @@ struct AddQuoteView: View {
     var quoteCollection: QuoteCollection
     var quote: Quote?
 
-    @State private var text: String = ""
-    @State private var authorFirstName: String = ""
-    @State private var authorLastName: String = ""
-    @State private var tags: String = ""
-    @State private var isError: Bool = false
-    @State private var errorMessage: String? = nil
+    @State private var text: String
+    @State private var authorFirstName: String
+    @State private var authorLastName: String
+    @State private var tags: String
+    @State private var isError: Bool
+    @State private var errorMessage: String?
+
+    init(quoteCollection: QuoteCollection, quote: Quote? = nil) {
+        self.quoteCollection = quoteCollection
+        self.quote = quote
+        if quote != nil {
+            _text = State<String>(initialValue: quote!.text!)
+            _authorFirstName = State<String>(initialValue: quote!.authorFirstName!)
+            _authorLastName = State<String>(initialValue: quote!.authorLastName!)
+            _tags = State<String>(initialValue: quote!.tags!)
+        } else {
+            _text = State<String>(initialValue: "")
+            _authorFirstName = State<String>(initialValue: "")
+            _authorLastName = State<String>(initialValue: "")
+            _tags = State<String>(initialValue: "")
+        }
+        _isError = State<Bool>(initialValue: false)
+        _errorMessage = State<String?>(initialValue: nil)
+    }
 
     var body: some View {
         NavigationView {
@@ -88,14 +106,6 @@ struct AddQuoteView: View {
                         }
                     )
                 )
-            }
-        }
-        .onAppear {
-            if quote != nil {
-                text = quote!.text!
-                authorFirstName = quote!.authorFirstName!
-                authorLastName = quote!.authorLastName!
-                tags = quote!.tags!
             }
         }
     }

@@ -9,9 +9,20 @@ struct AddQuoteCollectionView: View {
 
     var quoteCollection: QuoteCollection?
 
-    @State private var name: String = ""
-    @State private var isError: Bool = false
-    @State private var errorMessage: String? = nil
+    @State private var name: String
+    @State private var isError: Bool
+    @State private var errorMessage: String?
+
+    init(quoteCollection: QuoteCollection? = nil) {
+        self.quoteCollection = quoteCollection
+        if quoteCollection != nil {
+            _name = State<String>(initialValue: quoteCollection!.name!)
+        } else {
+            _name = State<String>(initialValue: "")
+        }
+        _isError = State<Bool>(initialValue: false)
+        _errorMessage = State<String?>(initialValue: nil)
+    }
 
     var body: some View {
         NavigationView {
@@ -64,11 +75,6 @@ struct AddQuoteCollectionView: View {
                         }
                     )
                 )
-            }
-        }
-        .onAppear {
-            if quoteCollection != nil {
-                name = quoteCollection!.name!
             }
         }
     }
