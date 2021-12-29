@@ -54,7 +54,7 @@ struct CustomListView<
 
     var body: some View {
         List {
-            if constantListPrefixViewBuilder != nil {
+            if !inSelectionMode && constantListPrefixViewBuilder != nil {
                 constantListPrefixViewBuilder!()
             }
             ForEach(entities) { section in
@@ -66,7 +66,7 @@ struct CustomListView<
                     entityPageViewBuilder: entityPageViewBuilder
                 )
             }
-            if constantListSuffixViewBuilder != nil {
+            if !inSelectionMode && constantListSuffixViewBuilder != nil {
                 constantListSuffixViewBuilder!()
             }
         }
@@ -97,18 +97,20 @@ struct CustomListView<
             }
             ToolbarItemGroup(placement: .bottomBar) {
                 if inSelectionMode {
-                    let disabled: Bool = selectedEntities.isEmpty
-                    if bulkEditSheetContentViewBuilder != nil {
-                        Button { showBulkEditView = true }
-                            label: { Text("Edit") }.disabled(disabled)
-                    }
-                    if bulkMoveSheetContentViewBuilder != nil {
-                        Button { showBulkMoveView = true }
-                            label: { Text("Move") }.disabled(disabled)
-                    }
-                    if bulkDeleteFunction != nil {
-                        Button { showBulkDeleteAlert = true }
-                            label: { Text("Delete") }.disabled(disabled)
+                    HStack {
+                        let disabled: Bool = selectedEntities.isEmpty
+                        if bulkEditSheetContentViewBuilder != nil {
+                            Button { showBulkEditView = true }
+                                label: { Text("Edit") }.disabled(disabled)
+                        }
+                        if bulkMoveSheetContentViewBuilder != nil {
+                            Button { showBulkMoveView = true }
+                                label: { Text("Move") }.disabled(disabled)
+                        }
+                        if bulkDeleteFunction != nil {
+                            Button { showBulkDeleteAlert = true }
+                                label: { Text("Delete") }.disabled(disabled)
+                        }
                     }
                 }
             }
