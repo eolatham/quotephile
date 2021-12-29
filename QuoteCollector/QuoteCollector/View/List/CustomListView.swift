@@ -39,6 +39,18 @@ struct CustomListView<
     @State private var showBulkMoveView: Bool = false
     @State private var showBulkDeleteAlert: Bool = false
 
+    private func invertSelection() {
+        entities.forEach({ section in
+            section.forEach({ entity in
+                if selectedEntities.contains(entity) {
+                    selectedEntities.remove(entity)
+                } else {
+                    selectedEntities.update(with: entity)
+                }
+            })
+        })
+    }
+
     var body: some View {
         List {
             if constantListPrefixViewBuilder != nil {
@@ -75,6 +87,7 @@ struct CustomListView<
                         Button { showBulkDeleteAlert = true }
                             label: { Text("Delete") }.disabled(disabled)
                     }
+                    Button { invertSelection() } label: { Text("Invert") }
                 } else {
                     CustomListSortSelectView<Entity>(
                         selectedSort: $selectedSort,
