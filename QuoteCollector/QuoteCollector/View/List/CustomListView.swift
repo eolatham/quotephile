@@ -107,6 +107,13 @@ struct CustomListView<
                     Text(inSelectionMode ? "Done" : "Select")
                 }
             }
+            ToolbarItemGroup(placement: .bottomBar) {
+                if inSelectionMode {
+                    Text("\(selectedEntities.count) selected")
+                        .font(.headline)
+                        .foregroundColor(.accentColor)
+                }
+            }
         }
         .sheet(isPresented: $showAddEntityView ) {
             // Only renders when addEntitiesheetContentViewBuilder != nil
