@@ -1,16 +1,20 @@
 import SwiftUI
 
+/**
+ * This wrapping is necessary because initializing state (selectedSort in this case)
+ * with an inline function call produces unreliable results; function calls in such
+ * contexts seem to be memoized to avoid recomputing them when the view is recreated.
+ */
 struct QuoteCollectionView: View {
     @ObservedObject var quoteCollection: QuoteCollection
 
     var body: some View {
-        _QuoteCollectionView(
-            quoteCollection: quoteCollection,
-            selectedSort: QuoteSort.getUserDefault(quoteCollection: quoteCollection)
-        )
-        // This wrapping is necessary because initializing state (selectedSort in this case)
-        // with an inline function call produces unreliable results; function calls in such
-        // contexts seem to be memoized to avoid recomputing them when the view is recreated.
+        if quoteCollection.exists {
+            _QuoteCollectionView(
+                quoteCollection: quoteCollection,
+                selectedSort: QuoteSort.getUserDefault(quoteCollection: quoteCollection)
+            )
+        } else { EmptyView() }
     }
 }
 
