@@ -5,37 +5,55 @@ struct QuoteSort {
         Sort<Quote>(
             id: 0,
             name: "Tags ↑",
-            descriptors: [SortDescriptor(\Quote.tags, order: .forward)],
+            descriptors: [
+                SortDescriptor(\Quote.tags, order: .forward),
+                SortDescriptor(\Quote.dateCreated, order: .reverse)
+            ],
             section: \Quote.tagsAscending
         ),
         Sort<Quote>(
             id: 1,
             name: "Tags ↓",
-            descriptors: [SortDescriptor(\Quote.tags, order: .reverse)],
+            descriptors: [
+                SortDescriptor(\Quote.tags, order: .reverse),
+                SortDescriptor(\Quote.dateCreated, order: .reverse)
+            ],
             section: \Quote.tagsDescending
         ),
         Sort<Quote>(
             id: 2,
             name: "Author First Name ↑",
-            descriptors: [SortDescriptor(\Quote.authorFirstName, order: .forward)],
+            descriptors: [
+                SortDescriptor(\Quote.authorFirstName, order: .forward),
+                SortDescriptor(\Quote.dateCreated, order: .reverse)
+            ],
             section: \Quote.authorFirstNameAscending
         ),
         Sort<Quote>(
             id: 3,
             name: "Author First Name ↓",
-            descriptors: [SortDescriptor(\Quote.authorFirstName, order: .reverse)],
+            descriptors: [
+                SortDescriptor(\Quote.authorFirstName, order: .reverse),
+                SortDescriptor(\Quote.dateCreated, order: .reverse)
+            ],
             section: \Quote.authorFirstNameDescending
         ),
         Sort<Quote>(
             id: 4,
             name: "Author Last Name ↑",
-            descriptors: [SortDescriptor(\Quote.authorLastName, order: .forward)],
+            descriptors: [
+                SortDescriptor(\Quote.authorLastName, order: .forward),
+                SortDescriptor(\Quote.dateCreated, order: .reverse)
+            ],
             section: \Quote.authorLastNameAscending
         ),
         Sort<Quote>(
             id: 5,
             name: "Author Last Name ↓",
-            descriptors: [SortDescriptor(\Quote.authorLastName, order: .reverse)],
+            descriptors: [
+                SortDescriptor(\Quote.authorLastName, order: .reverse),
+                SortDescriptor(\Quote.dateCreated, order: .reverse)
+            ],
             section: \Quote.authorLastNameDescending
         ),
         Sort<Quote>(
