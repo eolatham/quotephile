@@ -41,13 +41,13 @@ struct AddQuoteView: View {
                 Section(header: Text("TEXT")) {
                     TextEditor(text: $text)
                 }
-                Section(header: Text("AUTHOR")) {
-                    TextField("First Name (optional)", text: $authorFirstName)
+                Section(header: Text("AUTHOR (optional)")) {
+                    TextField("First Name", text: $authorFirstName)
                         .lineLimit(1)
-                    TextField("Last Name (optional)", text: $authorLastName)
+                    TextField("Last Name", text: $authorLastName)
                         .lineLimit(1)
                 }
-                Section(header: Text("TAGS")) {
+                Section(header: Text("TAGS (optional)")) {
                     TextField("Tags (comma-separated)", text: $tags)
                         .lineLimit(1)
                 }
