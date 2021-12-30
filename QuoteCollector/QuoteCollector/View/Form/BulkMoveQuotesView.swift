@@ -57,17 +57,12 @@ struct _BulkMoveQuotesView: View {
                             if afterMove != nil { afterMove!() }
                             presentation.wrappedValue.dismiss()
                         },
-                        label: {
-                            Text(
-                                "Move \(quotes.count) selected " +
-                                "\(quotes.count == 1 ? "quote" : "quotes")"
-                            ).font(.headline)
-                        }
+                        label: { Text("Save").font(.headline) }
                     )
                     .foregroundColor(.accentColor)
                 }
             }
-            .navigationTitle("Move Quotes")
+            .navigationTitle(quotes.count == 1 ? "Move Quote" : "Move \(quotes.count) Quotes")
             .toolbar(
                 content: {
                     ToolbarItem(placement: .cancellationAction) {

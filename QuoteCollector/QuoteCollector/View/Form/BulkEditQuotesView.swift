@@ -57,17 +57,12 @@ struct BulkEditQuotesView: View {
                             )
                             presentation.wrappedValue.dismiss()
                         },
-                        label: {
-                            Text(
-                                "Update \(quotes.count) selected " +
-                                "\(quotes.count == 1 ? "quote" : "quotes")"
-                            ).font(.headline)
-                        }
+                        label: { Text("Save").font(.headline) }
                     )
                     .foregroundColor(.accentColor)
                 }
             }
-            .navigationTitle("Edit Quotes")
+            .navigationTitle(quotes.count == 1 ? "Edit Quote" : "Edit \(quotes.count) Quotes")
             .toolbar(
                 content: {
                     ToolbarItem(placement: .cancellationAction) {

@@ -62,7 +62,8 @@ struct _QuoteCollectionView: View {
                 EmptyView,
                 EmptyView,
                 AddQuoteView,
-                EditQuoteCollectionView,
+                EditQuoteView,
+                MoveQuoteView,
                 BulkEditQuotesView,
                 BulkMoveQuotesView
             >(
@@ -82,32 +83,36 @@ struct _QuoteCollectionView: View {
                 entityPageViewBuilder: { quote in
                     QuoteView(quote: quote)
                 },
-                addEntitySheetContentViewBuilder: {
+                addEntitySheetViewBuilder: {
                     AddQuoteView(quoteCollection: quoteCollection)
                 },
-//                This is currently commented out because changing the name of a quote collection
-//                can change the sections of the fetch request data in the root quote collections
-//                list view, which kills the changed quote collection view because quote
-//                collection views are rendered dynamically based on the fetch request
-//                data. For some reason, this problem does not occur with quotes...
-//                editParentSheetContentViewBuilder: {
-//                    EditQuoteCollectionView(quoteCollection: quoteCollection)
-//                },
-                bulkEditSheetContentViewBuilder: { selection, exitSelectionMode in
-                    BulkEditQuotesView(quotes: selection)
+                singleEditSheetViewBuilder: { quote in
+                    EditQuoteView(quote: quote)
                 },
-                bulkMoveSheetContentViewBuilder: { selection, exitSelectionMode in
-                    BulkMoveQuotesView(quotes: selection, afterMove: exitSelectionMode)
+                singleMoveSheetViewBuilder: { quote in
+                    MoveQuoteView(quote: quote)
                 },
-                bulkDeleteFunction: { selection in
-                    DatabaseFunctions.deleteQuotes(
-                        context: context,
-                        quotes: selection
+                singleDeleteFunction: { quote in
+                    DatabaseFunctions.deleteQuote(context: context, quotes: quote)
+                },
+                singleDeleteAlertMessage: { _ in
+                    return (
+                        "Are you sure you want to delete this quote? " +
+                        "This action cannot be undone!"
                     )
                 },
-                bulkDeleteAlertMessage: { selection in
+                bulkEditSheetViewBuilder: { quotes, _ in
+                    BulkEditQuotesView(quotes: quotes)
+                },
+                bulkMoveSheetViewBuilder: { quotes, exitSelectionMode in
+                    BulkMoveQuotesView(quotes: quotes, afterMove: exitSelectionMode)
+                },
+                bulkDeleteFunction: { quotes in
+                    DatabaseFunctions.deleteQuotes(context: context, quotes: quotes)
+                },
+                bulkDeleteAlertMessage: { quotes in
                     return (
-                        "Are you sure you want to delete the \(selection.count) " +
+                        "Are you sure you want to delete the \(quotes.count) " +
                         "selected quotes? This action cannot be undone!"
                     )
                 }
