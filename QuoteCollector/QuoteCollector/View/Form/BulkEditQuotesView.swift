@@ -17,21 +17,21 @@ struct BulkEditQuotesView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("AUTHOR")) {
+                Section(header: Text("AUTHOR (optional)")) {
                     Toggle(isOn: $replaceAuthorFirstName) { Text("Replace author first name") }
                         .tint(.accentColor)
                     if replaceAuthorFirstName {
-                        TextField("First Name (optional)", text: $authorFirstName)
+                        TextField("First Name", text: $authorFirstName)
                             .lineLimit(1)
                     }
                     Toggle(isOn: $replaceAuthorLastName) { Text("Replace author last name") }
                         .tint(.accentColor)
                     if replaceAuthorLastName {
-                        TextField("Last Name (optional)", text: $authorLastName)
+                        TextField("Last Name", text: $authorLastName)
                             .lineLimit(1)
                     }
                 }
-                Section(header: Text("TAGS")) {
+                Section(header: Text("TAGS (optional)")) {
                     Toggle(isOn: $editTags) { Text("Edit tags") }
                         .tint(.accentColor)
                     if editTags {
