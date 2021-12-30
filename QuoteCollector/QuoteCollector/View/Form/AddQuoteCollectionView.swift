@@ -28,7 +28,7 @@ struct AddQuoteCollectionView: View {
         NavigationView {
             Form {
                 Section(header: Text("NAME")) {
-                    TextField("", text: $name).lineLimit(1)
+                    TextField("Name", text: $name).lineLimit(1)
                 }
                 Section {
                     Button(

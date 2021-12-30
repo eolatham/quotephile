@@ -72,7 +72,6 @@ struct QuoteView: View {
                 }
             }
         }
-        .navigationTitle("View Quote")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button { showEditQuoteView = true } label: { Text("Edit") }
