@@ -67,7 +67,7 @@ struct _QuoteCollectionView: View {
                 BulkEditQuotesView,
                 BulkMoveQuotesView
             >(
-                title: quoteCollection.name!,
+                title: quoteCollection.title!,
                 entities: SectionedFetchRequest<String, Quote>(
                     sectionIdentifier: selectedSort.section,
                     sortDescriptors: selectedSort.descriptors,

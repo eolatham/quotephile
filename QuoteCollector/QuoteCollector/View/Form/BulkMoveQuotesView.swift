@@ -49,7 +49,7 @@ struct _BulkMoveQuotesView: View {
                         Section(header: Text("DESTINATION")) {
                             Picker("Pick a quote collection...", selection: $selectedDestination) {
                                 ForEach(destinationOptions) { option in
-                                    Text(option.name!).tag(option as QuoteCollection?)
+                                    Text(option.title!).tag(option as QuoteCollection?)
                                 }
                             }
                         }

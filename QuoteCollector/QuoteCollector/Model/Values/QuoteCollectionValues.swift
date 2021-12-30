@@ -1,23 +1,19 @@
 class QuoteCollectionValues: Values {
-    var name: String
+    var title: String
+    var subtitle: String
 
-    init(name: String) {
-        self.name = name
+    init(title: String, subtitle: String = "") {
+        self.title = title
+        self.subtitle = subtitle
     }
 
     func formatAndValidate() throws {
         // Format
-        name = QuoteCollectionValues.formatName(name: name)
+        title = Utility.trimWhitespace(string: title)
+        subtitle = Utility.trimWhitespace(string: subtitle)
         // Validate
-        if name.isEmpty {
-            throw ValidationError.withMessage(ErrorMessage.nameEmpty)
+        if title.isEmpty {
+            throw ValidationError.withMessage(ErrorMessage.titleEmpty)
         }
-    }
-
-    /**
-     * Trims leading and trailing whitespace from the given string.
-     */
-    static func formatName(name: String) -> String {
-        return Utility.trimWhitespace(string: name)
     }
 }

@@ -28,7 +28,7 @@ struct _QuoteCollectionsView: View {
 
     private var predicate: NSPredicate? {
         searchTerm.isEmpty ? nil : NSPredicate(
-            format: "name CONTAINS[cd] %@",
+            format: "title CONTAINS[cd] %@",
             searchTerm
         )
     }

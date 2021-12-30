@@ -17,11 +17,12 @@
         <attribute name="dateChanged" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="name" attributeType="String" minValueString="1" spotlightIndexingEnabled="YES"/>
+        <attribute name="subtitle" attributeType="String" defaultValueString="" spotlightIndexingEnabled="YES"/>
+        <attribute name="title" attributeType="String" minValueString="1" spotlightIndexingEnabled="YES"/>
         <relationship name="quotes" toMany="YES" deletionRule="Cascade" destinationEntity="Quote" inverseName="collection" inverseEntity="Quote"/>
     </entity>
     <elements>
         <element name="Quote" positionX="-63" positionY="-18" width="128" height="194"/>
-        <element name="QuoteCollection" positionX="-54" positionY="-9" width="128" height="104"/>
+        <element name="QuoteCollection" positionX="-54" positionY="-9" width="128" height="119"/>
     </elements>
 </model>

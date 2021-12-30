@@ -9,16 +9,19 @@ struct AddQuoteCollectionView: View {
 
     var quoteCollection: QuoteCollection?
 
-    @State private var name: String
+    @State private var title: String
+    @State private var subtitle: String
     @State private var isError: Bool
     @State private var errorMessage: String?
 
     init(quoteCollection: QuoteCollection? = nil) {
         self.quoteCollection = quoteCollection
         if quoteCollection != nil {
-            _name = State<String>(initialValue: quoteCollection!.name!)
+            _title = State<String>(initialValue: quoteCollection!.title!)
+            _subtitle = State<String>(initialValue: quoteCollection!.subtitle!)
         } else {
-            _name = State<String>(initialValue: "")
+            _title = State<String>(initialValue: "")
+            _subtitle = State<String>(initialValue: "")
         }
         _isError = State<Bool>(initialValue: false)
         _errorMessage = State<String?>(initialValue: nil)
@@ -27,8 +30,11 @@ struct AddQuoteCollectionView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("NAME")) {
-                    TextField("", text: $name).lineLimit(1)
+                Section(header: Text("TITLE")) {
+                    TextField("Title", text: $title).lineLimit(1)
+                }
+                Section(header: Text("SUBTITLE (optional)")) {
+                    TextField("Subtitle", text: $subtitle).lineLimit(1)
                 }
                 Section {
                     Button(
@@ -37,7 +43,10 @@ struct AddQuoteCollectionView: View {
                                 try _ = DatabaseFunctions.addQuoteCollection(
                                     context: context,
                                     quoteCollection: quoteCollection,
-                                    values: QuoteCollectionValues(name: name)
+                                    values: QuoteCollectionValues(
+                                        title: title,
+                                        subtitle: subtitle
+                                    )
                                 )
                                 presentation.wrappedValue.dismiss()
                             } catch ValidationError.withMessage(let message) {

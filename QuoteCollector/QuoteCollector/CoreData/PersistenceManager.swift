@@ -23,7 +23,7 @@ struct PersistenceManager {
         for i in 1..<6 {
             let quoteCollection = try! DatabaseFunctions.addQuoteCollection(
                 context: context,
-                values: QuoteCollectionValues(name: "Quote Collection #\(i)")
+                values: QuoteCollectionValues(title: "Quote Collection #\(i)")
             )
             for j in 1..<11 {
                 let quote = try! DatabaseFunctions.addQuote(
