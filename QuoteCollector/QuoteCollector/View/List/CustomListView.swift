@@ -96,6 +96,7 @@ struct CustomListView<
                 constantListSuffixViewBuilder!()
             }
         }
+        .id(inSelectionMode)
         .listStyle(.insetGrouped)
         .searchable(text: $searchQuery)
         .toolbar {
