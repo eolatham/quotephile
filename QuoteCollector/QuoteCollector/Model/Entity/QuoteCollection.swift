@@ -2,13 +2,13 @@ import CoreData
 
 @objc(QuoteCollection)
 class QuoteCollection: NSManagedObject {
-    @objc var exists: Bool { title != nil }
-    @objc var titleFirstCharacterAscending: String {
-        title!.first!.uppercased()
+    @objc var exists: Bool { name != nil }
+    @objc var nameFirstCharacterAscending: String {
+        name!.first!.uppercased()
     }
-    @objc var titleFirstCharacterDescending: String {
+    @objc var nameFirstCharacterDescending: String {
         // Add space to avoid crash upon switching sort mode
-        title!.first!.uppercased() + " "
+        name!.first!.uppercased() + " "
     }
     @objc var monthCreatedAscending: String {
         Utility.dateToMonthString(date:dateCreated!)

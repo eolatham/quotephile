@@ -23,9 +23,9 @@ struct DatabaseFunctions {
         }
     }
 
-    static func assertUniqueQuoteCollectionTitle(context: NSManagedObjectContext, title: String) throws {
+    static func assertUniqueQuoteCollectionName(context: NSManagedObjectContext, name: String) throws {
         let fetchRequest: NSFetchRequest<QuoteCollection> = QuoteCollection.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "title LIKE %@", title)
+        fetchRequest.predicate = NSPredicate(format: "name LIKE %@", name)
         let quoteCollections: [QuoteCollection]
         do { quoteCollections = try context.fetch(fetchRequest) }
         catch { quoteCollections = [] }
@@ -35,11 +35,11 @@ struct DatabaseFunctions {
     }
 
     /**
-     * Returns all existing quote collections sorted by title.
+     * Returns all existing quote collections sorted by name.
      */
     static func fetchQuoteCollections(context: NSManagedObjectContext) -> [QuoteCollection] {
         let fetchRequest: NSFetchRequest<QuoteCollection> = QuoteCollection.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \QuoteCollection.title, ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \QuoteCollection.name, ascending: true)]
         let quoteCollections: [QuoteCollection]
         do { quoteCollections = try context.fetch(fetchRequest) }
         catch { quoteCollections = [] }
@@ -106,25 +106,24 @@ struct DatabaseFunctions {
         let now = Date.now
         let newQuoteCollection: QuoteCollection
         if quoteCollection != nil {
-            if values.title != quoteCollection!.title! {
-                try assertUniqueQuoteCollectionTitle(
+            if values.name != quoteCollection!.name! {
+                try assertUniqueQuoteCollectionName(
                     context: context,
-                    title: values.title
+                    name: values.name
                 )
             }
             newQuoteCollection = quoteCollection!
         } else {
-            try assertUniqueQuoteCollectionTitle(
+            try assertUniqueQuoteCollectionName(
                 context: context,
-                title: values.title
+                name: values.name
             )
             newQuoteCollection = QuoteCollection(context: context)
             newQuoteCollection.dateCreated = now
             newQuoteCollection.id = UUID()
         }
         newQuoteCollection.dateChanged = now
-        newQuoteCollection.title = values.title
-        newQuoteCollection.subtitle = values.subtitle
+        newQuoteCollection.name = values.name
         updateContext(context: context)
         return newQuoteCollection
     }

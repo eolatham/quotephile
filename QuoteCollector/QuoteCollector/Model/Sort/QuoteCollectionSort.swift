@@ -4,22 +4,22 @@ struct QuoteCollectionSort {
     static let sorts: [Sort<QuoteCollection>] = [
         Sort<QuoteCollection>(
             id: 0,
-            name: "Title ↑",
-            descriptors: [SortDescriptor(\QuoteCollection.title, order: .forward)],
-            section: \QuoteCollection.titleFirstCharacterAscending
+            name: "Name ↑",
+            descriptors: [SortDescriptor(\QuoteCollection.name, order: .forward)],
+            section: \QuoteCollection.nameFirstCharacterAscending
         ),
         Sort<QuoteCollection>(
             id: 1,
-            name: "Title ↓",
-            descriptors: [SortDescriptor(\QuoteCollection.title, order: .reverse)],
-            section: \QuoteCollection.titleFirstCharacterDescending
+            name: "Name ↓",
+            descriptors: [SortDescriptor(\QuoteCollection.name, order: .reverse)],
+            section: \QuoteCollection.nameFirstCharacterDescending
         ),
         Sort<QuoteCollection>(
             id: 2,
             name: "Date Created ↑",
             descriptors: [
                 SortDescriptor(\QuoteCollection.dateCreated, order: .forward),
-                SortDescriptor(\QuoteCollection.title, order: .forward)
+                SortDescriptor(\QuoteCollection.name, order: .forward)
             ],
             section: \QuoteCollection.monthCreatedAscending
         ),
@@ -28,7 +28,7 @@ struct QuoteCollectionSort {
             name: "Date Created ↓",
             descriptors: [
                 SortDescriptor(\QuoteCollection.dateCreated, order: .reverse),
-                SortDescriptor(\QuoteCollection.title, order: .forward)
+                SortDescriptor(\QuoteCollection.name, order: .forward)
             ],
             section: \QuoteCollection.monthCreatedDescending
         ),
@@ -37,7 +37,7 @@ struct QuoteCollectionSort {
             name: "Date Changed ↑",
             descriptors: [
                 SortDescriptor(\QuoteCollection.dateChanged, order: .forward),
-                SortDescriptor(\QuoteCollection.title, order: .forward)
+                SortDescriptor(\QuoteCollection.name, order: .forward)
             ],
             section: \QuoteCollection.monthChangedAscending
         ),
@@ -46,7 +46,7 @@ struct QuoteCollectionSort {
             name: "Date Changed ↓",
             descriptors: [
                 SortDescriptor(\QuoteCollection.dateChanged, order: .reverse),
-                SortDescriptor(\QuoteCollection.title, order: .forward)
+                SortDescriptor(\QuoteCollection.name, order: .forward)
             ],
             section: \QuoteCollection.monthChangedDescending
         )
