@@ -26,29 +26,16 @@ struct _BulkMoveQuotesView: View {
 
     var quotes: Set<Quote>
     var destinationOptions: [QuoteCollection]
-    var customTitle: String?
-    var afterMove: ((QuoteCollection) -> Void)?
+    var customTitle: String? = nil
+    var afterMove: ((QuoteCollection) -> Void)? = nil
 
-    @State private var selectedDestination: QuoteCollection?
-
-    init(
-        quotes: Set<Quote>,
-        destinationOptions: [QuoteCollection],
-        customTitle: String? = nil,
-        afterMove: ((QuoteCollection) -> Void)? = nil
-    ) {
-        self.quotes = quotes
-        self.destinationOptions = destinationOptions
-        self.customTitle = customTitle
-        self.afterMove = afterMove
-        _selectedDestination = State<QuoteCollection?>(initialValue: destinationOptions.first)
-    }
+    @State private var selectedDestination: QuoteCollection? = nil
+    @State private var showAlert: Bool = false
 
     var body: some View {
         NavigationView {
             VStack {
                 if destinationOptions.isEmpty {
-                    // This never actually happens, but is here just in case
                     Text(
                         "There are no quote collections to move to... " +
                         "Please add one and try again."
@@ -58,8 +45,6 @@ struct _BulkMoveQuotesView: View {
                     .padding()
                     Spacer()
                 } else {
-                    // Only renders when !destinationOptions.isEmpty && selectedDestination != nil
-                    // (because of initialization logic)
                     Form {
                         Section(header: Text("DESTINATION")) {
                             Picker("Pick a quote collection...", selection: $selectedDestination) {
@@ -71,13 +56,16 @@ struct _BulkMoveQuotesView: View {
                         Section {
                             Button(
                                 action: {
-                                    DatabaseFunctions.moveQuotes(
-                                        context: context,
-                                        quotes: quotes,
-                                        newCollection: selectedDestination!
-                                    )
-                                    if afterMove != nil { afterMove!(selectedDestination!) }
-                                    presentation.wrappedValue.dismiss()
+                                    if selectedDestination == nil { showAlert = true }
+                                    else {
+                                        DatabaseFunctions.moveQuotes(
+                                            context: context,
+                                            quotes: quotes,
+                                            newCollection: selectedDestination!
+                                        )
+                                        if afterMove != nil { afterMove!(selectedDestination!) }
+                                        presentation.wrappedValue.dismiss()
+                                    }
                                 },
                                 label: { Text("Save").font(.headline) }
                             )
@@ -98,6 +86,13 @@ struct _BulkMoveQuotesView: View {
                     }
                 }
             )
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Error"),
+                    message: Text("No destination is selected!"),
+                    dismissButton: .default(Text("Dismiss"))
+                )
+            }
         }
     }
 }
