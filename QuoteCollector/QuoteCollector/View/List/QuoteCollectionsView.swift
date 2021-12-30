@@ -1,13 +1,15 @@
 import SwiftUI
 
+/**
+ * This wrapping is necessary because initializing state (selectedSort in this case)
+ * with an inline function call produces unreliable results; function calls in such
+ * contexts seem to be memoized to avoid recomputing them when the view is recreated.
+ */
 struct QuoteCollectionsView: View {
     var body: some View {
         _QuoteCollectionsView(
             selectedSort: QuoteCollectionSort.getUserDefault()
         )
-        // This wrapping is necessary because initializing state (selectedSort in this case)
-        // with an inline function call produces unreliable results; function calls in such
-        // contexts seem to be memoized to avoid recomputing them when the view is recreated.
     }
 }
 
@@ -40,6 +42,7 @@ struct _QuoteCollectionsView: View {
                 NavigationLink,
                 EmptyView,
                 AddQuoteCollectionView,
+                EditQuoteCollectionView,
                 EmptyView,
                 EmptyView,
                 EmptyView
@@ -67,20 +70,34 @@ struct _QuoteCollectionsView: View {
                         Text("All Quotes").font(.headline)
                     }
                 },
-                addEntitySheetContentViewBuilder: {
+                addEntitySheetViewBuilder: {
                     AddQuoteCollectionView()
                 },
-                bulkDeleteFunction: { selection in
-                    DatabaseFunctions.deleteQuoteCollections(
+                singleEditSheetViewBuilder: { quoteCollection in
+                    EditQuoteCollectionView(quoteCollection: quoteCollection)
+                },
+                singleDeleteFunction: { quoteCollection in
+                    DatabaseFunctions.deleteQuoteCollection(
                         context: context,
-                        quoteCollections: selection
+                        quoteCollection: quoteCollection
                     )
                 },
-                bulkDeleteAlertMessage: { selection in
+                singleDeleteAlertMessage: { _ in
                     return (
-                        "Deleting the \(selection.count) selected quote " +
-                        "collections will also delete all of their " +
-                        "quotes. This action cannot be undone!"
+                        "Deleting this quote collection will also delete " +
+                        "all of its quotes. This action cannot be undone!"
+                    )
+                },
+                bulkDeleteFunction: { quoteCollections in
+                    DatabaseFunctions.deleteQuoteCollections(
+                        context: context,
+                        quoteCollections: quoteCollections
+                    )
+                },
+                bulkDeleteAlertMessage: { _ in
+                    return (
+                        "Deleting the selected quote collections will also " +
+                        "delete all of their quotes. This action cannot be undone!"
                     )
                 }
             )

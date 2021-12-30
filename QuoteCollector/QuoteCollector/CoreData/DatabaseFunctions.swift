@@ -143,11 +143,27 @@ struct DatabaseFunctions {
         )
     }
 
+    static func deleteQuote(
+        context: NSManagedObjectContext,
+        quote: Quote
+    ) {
+        context.delete(quote)
+        updateContext(context: context)
+    }
+
     static func deleteQuotes(
         context: NSManagedObjectContext,
         quotes: Set<Quote>
     ) {
         quotes.forEach(context.delete)
+        updateContext(context: context)
+    }
+
+    static func deleteQuoteCollection(
+        context: NSManagedObjectContext,
+        quoteCollection: QuoteCollection
+    ) {
+        context.delete(quoteCollection)
         updateContext(context: context)
     }
 

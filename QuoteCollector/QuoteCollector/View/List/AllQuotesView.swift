@@ -43,7 +43,8 @@ struct _AllQuotesView: View {
             EmptyView,
             EmptyView,
             EmptyView,
-            EmptyView,
+            EditQuoteView,
+            MoveQuoteView,
             BulkEditQuotesView,
             BulkMoveQuotesView
         >(
@@ -63,22 +64,34 @@ struct _AllQuotesView: View {
             entityPageViewBuilder: { quote in
                 QuoteView(quote: quote)
             },
-            bulkEditSheetContentViewBuilder: { selection, exitSelectionMode in
-                BulkEditQuotesView(quotes: selection)
+            singleEditSheetViewBuilder: { quote in
+                EditQuoteView(quote: quote)
             },
-            bulkMoveSheetContentViewBuilder: { selection, exitSelectionMode in
-                BulkMoveQuotesView(quotes: selection)
+            singleMoveSheetViewBuilder: { quote in
+                MoveQuoteView(quote: quote)
             },
-            bulkDeleteFunction: { selection in
-                DatabaseFunctions.deleteQuotes(
-                    context: context,
-                    quotes: selection
+            singleDeleteFunction: { quote in
+                DatabaseFunctions.deleteQuote(context: context, quote: quote)
+            },
+            singleDeleteAlertMessage: { _ in
+                return (
+                    "Are you sure you want to delete this quote? " +
+                    "This action cannot be undone!"
                 )
             },
-            bulkDeleteAlertMessage: { selection in
+            bulkEditSheetViewBuilder: { quotes, _ in
+                BulkEditQuotesView(quotes: quotes)
+            },
+            bulkMoveSheetViewBuilder: { quotes, _ in
+                BulkMoveQuotesView(quotes: quotes)
+            },
+            bulkDeleteFunction: { quotes in
+                DatabaseFunctions.deleteQuotes(context: context, quotes: quotes)
+            },
+            bulkDeleteAlertMessage: { _ in
                 return (
-                    "Are you sure you want to delete the \(selection.count) " +
-                    "selected quotes? This action cannot be undone!"
+                    "Are you sure you want to delete the selected " +
+                    "quotes? This action cannot be undone!"
                 )
             }
         )

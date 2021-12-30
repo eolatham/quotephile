@@ -79,10 +79,7 @@ struct QuoteView: View {
             }
         }
         .sheet(isPresented: $showEditQuoteView) {
-            EditQuoteView(
-                quoteCollection: quote.collection!,
-                quote: quote
-            )
+            EditQuoteView(quote: quote)
         }
     }
 }

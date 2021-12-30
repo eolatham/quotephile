@@ -93,7 +93,7 @@ struct _QuoteCollectionView: View {
                     MoveQuoteView(quote: quote)
                 },
                 singleDeleteFunction: { quote in
-                    DatabaseFunctions.deleteQuote(context: context, quotes: quote)
+                    DatabaseFunctions.deleteQuote(context: context, quote: quote)
                 },
                 singleDeleteAlertMessage: { _ in
                     return (
@@ -110,10 +110,10 @@ struct _QuoteCollectionView: View {
                 bulkDeleteFunction: { quotes in
                     DatabaseFunctions.deleteQuotes(context: context, quotes: quotes)
                 },
-                bulkDeleteAlertMessage: { quotes in
+                bulkDeleteAlertMessage: { _ in
                     return (
-                        "Are you sure you want to delete the \(quotes.count) " +
-                        "selected quotes? This action cannot be undone!"
+                        "Are you sure you want to delete the selected " +
+                        "quotes? This action cannot be undone!"
                     )
                 }
             )
