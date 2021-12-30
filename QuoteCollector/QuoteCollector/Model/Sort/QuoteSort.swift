@@ -133,4 +133,12 @@ struct QuoteSort {
         let key = userDefaultKey(quoteCollection: quoteCollection)
         UserDefaults.standard.set(sort.id, forKey: key)
     }
+
+    /**
+     * Deletes the persisted user default quote sort for the given quote collection.
+     */
+    static func deleteUserDefault(quoteCollection: QuoteCollection) {
+        let key = userDefaultKey(quoteCollection: quoteCollection)
+        UserDefaults.standard.removeObject(forKey: key)
+    }
 }

@@ -163,6 +163,7 @@ struct DatabaseFunctions {
         context: NSManagedObjectContext,
         quoteCollection: QuoteCollection
     ) {
+        QuoteSort.deleteUserDefault(quoteCollection: quoteCollection)
         context.delete(quoteCollection)
         updateContext(context: context)
     }
@@ -171,7 +172,10 @@ struct DatabaseFunctions {
         context: NSManagedObjectContext,
         quoteCollections: Set<QuoteCollection>
     ) {
-        quoteCollections.forEach(context.delete)
+        for quoteCollection in quoteCollections {
+            QuoteSort.deleteUserDefault(quoteCollection: quoteCollection)
+            context.delete(quoteCollection)
+        }
         updateContext(context: context)
     }
 
