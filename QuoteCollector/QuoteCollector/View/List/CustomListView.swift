@@ -288,19 +288,21 @@ struct CustomListItemView<
                 }.foregroundColor(isSelected ? .accentColor : .primary)
             } else {
                 NavigationLink { pageView } label: { rowView }
-                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                    if editSheetViewBuilder != nil {
-                        Button { showEditView = true } label: { Text("Edit") }
-                        .tint(.accentColor)
-                    }
-                    if moveSheetViewBuilder != nil {
-                        Button { showMoveView = true } label: { Text("Move") }
-                        .tint(.orange)
-                    }
-                    if deleteFunction != nil {
-                        Button { showDeleteAlert = true } label: { Text("Delete") }
-                        .tint(.red)
-                    }
+            }
+        }
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            if !inSelectionMode {
+                if deleteFunction != nil {
+                    Button { showDeleteAlert = true } label: { Text("Delete") }
+                    .tint(.red)
+                }
+                if moveSheetViewBuilder != nil {
+                    Button { showMoveView = true } label: { Text("Move") }
+                    .tint(.orange)
+                }
+                if editSheetViewBuilder != nil {
+                    Button { showEditView = true } label: { Text("Edit") }
+                    .tint(.accentColor)
                 }
             }
         }

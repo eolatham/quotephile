@@ -4,12 +4,14 @@ struct BulkMoveQuotesView: View {
     @Environment(\.managedObjectContext) private var context
 
     var quotes: Set<Quote>
+    var customTitle: String? = nil
     var afterMove: (() -> Void)? = nil
 
     var body: some View {
         _BulkMoveQuotesView(
             quotes: quotes,
             collectionOptions: DatabaseFunctions.fetchQuoteCollections(context: context),
+            customTitle: customTitle,
             afterMove: afterMove
         )
     }
@@ -21,6 +23,7 @@ struct _BulkMoveQuotesView: View {
 
     var quotes: Set<Quote>
     var collectionOptions: [QuoteCollection]
+    var customTitle: String?
     var afterMove: (() -> Void)?
 
     @State private var selectedCollection: QuoteCollection
@@ -28,10 +31,12 @@ struct _BulkMoveQuotesView: View {
     init(
         quotes: Set<Quote>,
         collectionOptions: [QuoteCollection],
+        customTitle: String? = nil,
         afterMove: (() -> Void)? = nil
     ) {
         self.quotes = quotes
         self.collectionOptions = collectionOptions
+        self.customTitle = customTitle
         self.afterMove = afterMove
         _selectedCollection = State<QuoteCollection>(initialValue: collectionOptions.first!)
     }
@@ -63,8 +68,9 @@ struct _BulkMoveQuotesView: View {
                 }
             }
             .navigationTitle(
-                "Move \(quotes.count) " +
-                (quotes.count == 1 ? "Quote" : "Quotes")
+                customTitle != nil
+                    ? customTitle!
+                    : "Move \(quotes.count) \(quotes.count == 1 ? "Quote" : "Quotes")"
             )
             .toolbar(
                 content: {
