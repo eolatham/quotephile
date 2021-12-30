@@ -62,7 +62,10 @@ struct BulkEditQuotesView: View {
                     .foregroundColor(.accentColor)
                 }
             }
-            .navigationTitle(quotes.count == 1 ? "Edit Quote" : "Edit \(quotes.count) Quotes")
+            .navigationTitle(
+                "Edit \(quotes.count) " +
+                (quotes.count == 1 ? "Quote" : "Quotes")
+            )
             .toolbar(
                 content: {
                     ToolbarItem(placement: .cancellationAction) {

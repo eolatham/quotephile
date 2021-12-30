@@ -62,7 +62,10 @@ struct _BulkMoveQuotesView: View {
                     .foregroundColor(.accentColor)
                 }
             }
-            .navigationTitle(quotes.count == 1 ? "Move Quote" : "Move \(quotes.count) Quotes")
+            .navigationTitle(
+                "Move \(quotes.count) " +
+                (quotes.count == 1 ? "Quote" : "Quotes")
+            )
             .toolbar(
                 content: {
                     ToolbarItem(placement: .cancellationAction) {

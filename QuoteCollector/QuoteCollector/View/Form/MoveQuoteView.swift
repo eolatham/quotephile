@@ -4,6 +4,6 @@ struct MoveQuoteView: View {
     var quote: Quote
 
     var body: some View {
-        BulkMoveQuotesView(quotes: [quote])
+        BulkMoveQuotesView(quotes: [quote]).navigationTitle("Move Quote")
     }
 }
