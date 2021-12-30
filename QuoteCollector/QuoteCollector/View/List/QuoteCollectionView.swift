@@ -105,7 +105,16 @@ struct _QuoteCollectionView: View {
                     BulkEditQuotesView(quotes: quotes)
                 },
                 bulkMoveSheetViewBuilder: { quotes, exitSelectionMode in
-                    BulkMoveQuotesView(quotes: quotes, afterMove: exitSelectionMode)
+                    BulkMoveQuotesView(
+                        quotes: quotes,
+                        afterMove: { destination in
+                            if destination != quoteCollection {
+                                // Selected quotes have disappeared from view,
+                                // so we should exit selection mode
+                                exitSelectionMode()
+                            }
+                        }
+                    )
                 },
                 bulkDeleteFunction: { quotes in
                     DatabaseFunctions.deleteQuotes(context: context, quotes: quotes)

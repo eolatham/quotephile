@@ -1,7 +1,7 @@
 import SwiftUI
 
 /**
- * For adding and editing quotes.
+ * For adding and editing individual quotes.
  */
 struct AddQuoteView: View {
     @Environment(\.managedObjectContext) private var context
