@@ -64,11 +64,8 @@ struct _QuoteCollectionsView: View {
                     QuoteCollectionView(quoteCollection: quoteCollection)
                 },
                 constantListPrefixViewBuilder: {
-                    NavigationLink {
-                        AllQuotesView()
-                    } label: {
-                        Text("All Quotes").font(.headline)
-                    }
+                    NavigationLink { AllQuotesView() }
+                    label: { Text("All Quotes").font(.headline) }
                 },
                 addEntitySheetViewBuilder: {
                     AddQuoteCollectionView()
