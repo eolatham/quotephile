@@ -37,7 +37,7 @@ struct QuoteView: View {
                     .frame(maxWidth: .infinity)
                     .fixedSize(horizontal: false, vertical: true) // Ensure text wraps
                     .padding()
-                Text("Tap and hold quote to copy or share!")
+                Text("Tap and hold quote to copy or share")
                     .font(.caption)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)

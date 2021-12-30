@@ -33,29 +33,13 @@
 		B6B5707F277AA64C00ECBB26 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B5707E277AA64C00ECBB26 /* Error.swift */; };
 		B6B57081277AC06700ECBB26 /* Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B57080277AC06700ECBB26 /* Values.swift */; };
 		B6BB64C0276FD07E00FA15F2 /* QuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BB64BF276FD07E00FA15F2 /* QuoteView.swift */; };
+		B6D32414277E4794008B1554 /* BulkAddQuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D32413277E4794008B1554 /* BulkAddQuotesView.swift */; };
 		B6F1AA242763ECB6004D054F /* QuoteCollectionSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F1AA232763ECB6004D054F /* QuoteCollectionSort.swift */; };
 		B6F1AA262763ECC4004D054F /* QuoteCollectionValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F1AA252763ECC4004D054F /* QuoteCollectionValues.swift */; };
 		B6F1AA282763EE48004D054F /* QuoteValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F1AA272763EE48004D054F /* QuoteValues.swift */; };
 		B6F1AA2B2763F055004D054F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F1AA2A2763F055004D054F /* Utility.swift */; };
 		B6F1AA2D2763F344004D054F /* QuoteSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F1AA2C2763F344004D054F /* QuoteSort.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B645C4B8275FCDC100AE1810 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B645C49A275FCDC000AE1810 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B645C4A1275FCDC000AE1810;
-			remoteInfo = QuoteCollector;
-		};
-		B645C4C2275FCDC200AE1810 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B645C49A275FCDC000AE1810 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B645C4A1275FCDC000AE1810;
-			remoteInfo = QuoteCollector;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B63AE461276E314300FCDFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -65,8 +49,6 @@
 		B645C4A9275FCDC100AE1810 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B645C4AC275FCDC100AE1810 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B645C4AE275FCDC100AE1810 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
-		B645C4B7275FCDC100AE1810 /* QuoteCollectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuoteCollectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B645C4C1275FCDC200AE1810 /* QuoteCollectorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuoteCollectorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B645C4DC275FDEBC00AE1810 /* QuoteCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollection.swift; sourceTree = "<group>"; };
 		B645C4DE275FDEBC00AE1810 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		B645C4EC275FEA0700AE1810 /* QuoteCollectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionRowView.swift; sourceTree = "<group>"; };
@@ -88,6 +70,7 @@
 		B6B5707E277AA64C00ECBB26 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		B6B57080277AC06700ECBB26 /* Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
 		B6BB64BF276FD07E00FA15F2 /* QuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteView.swift; sourceTree = "<group>"; };
+		B6D32413277E4794008B1554 /* BulkAddQuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkAddQuotesView.swift; sourceTree = "<group>"; };
 		B6F1AA232763ECB6004D054F /* QuoteCollectionSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionSort.swift; sourceTree = "<group>"; };
 		B6F1AA252763ECC4004D054F /* QuoteCollectionValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionValues.swift; sourceTree = "<group>"; };
 		B6F1AA272763EE48004D054F /* QuoteValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteValues.swift; sourceTree = "<group>"; };
@@ -97,20 +80,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		B645C49F275FCDC000AE1810 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B645C4B4275FCDC100AE1810 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B645C4BE275FCDC200AE1810 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -132,8 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				B645C4A2275FCDC000AE1810 /* QuoteCollector.app */,
-				B645C4B7275FCDC100AE1810 /* QuoteCollectorTests.xctest */,
-				B645C4C1275FCDC200AE1810 /* QuoteCollectorUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -210,6 +177,7 @@
 				B686F6CF2766745100FC8573 /* AddQuoteView.swift */,
 				B69E1ABA277A4C59002A0150 /* EditQuoteView.swift */,
 				B697D30B277D3C7A00BABE22 /* MoveQuoteView.swift */,
+				B6D32413277E4794008B1554 /* BulkAddQuotesView.swift */,
 				B6B5707A277A5F0700ECBB26 /* BulkEditQuotesView.swift */,
 				B6B5707C277A5F2000ECBB26 /* BulkMoveQuotesView.swift */,
 				B687317627644B21001FE9A0 /* AddQuoteCollectionView.swift */,
@@ -309,42 +277,6 @@
 			productReference = B645C4A2275FCDC000AE1810 /* QuoteCollector.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B645C4B6275FCDC100AE1810 /* QuoteCollectorTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B645C4CE275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "QuoteCollectorTests" */;
-			buildPhases = (
-				B645C4B3275FCDC100AE1810 /* Sources */,
-				B645C4B4275FCDC100AE1810 /* Frameworks */,
-				B645C4B5275FCDC100AE1810 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B645C4B9275FCDC100AE1810 /* PBXTargetDependency */,
-			);
-			name = QuoteCollectorTests;
-			productName = QuoteCollectorTests;
-			productReference = B645C4B7275FCDC100AE1810 /* QuoteCollectorTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		B645C4C0275FCDC200AE1810 /* QuoteCollectorUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B645C4D1275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "QuoteCollectorUITests" */;
-			buildPhases = (
-				B645C4BD275FCDC200AE1810 /* Sources */,
-				B645C4BE275FCDC200AE1810 /* Frameworks */,
-				B645C4BF275FCDC200AE1810 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B645C4C3275FCDC200AE1810 /* PBXTargetDependency */,
-			);
-			name = QuoteCollectorUITests;
-			productName = QuoteCollectorUITests;
-			productReference = B645C4C1275FCDC200AE1810 /* QuoteCollectorUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -357,14 +289,6 @@
 				TargetAttributes = {
 					B645C4A1275FCDC000AE1810 = {
 						CreatedOnToolsVersion = 13.1;
-					};
-					B645C4B6275FCDC100AE1810 = {
-						CreatedOnToolsVersion = 13.1;
-						TestTargetID = B645C4A1275FCDC000AE1810;
-					};
-					B645C4C0275FCDC200AE1810 = {
-						CreatedOnToolsVersion = 13.1;
-						TestTargetID = B645C4A1275FCDC000AE1810;
 					};
 				};
 			};
@@ -382,8 +306,6 @@
 			projectRoot = "";
 			targets = (
 				B645C4A1275FCDC000AE1810 /* QuoteCollector */,
-				B645C4B6275FCDC100AE1810 /* QuoteCollectorTests */,
-				B645C4C0275FCDC200AE1810 /* QuoteCollectorUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -395,20 +317,6 @@
 			files = (
 				B645C4AD275FCDC100AE1810 /* Preview Assets.xcassets in Resources */,
 				B645C4AA275FCDC100AE1810 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B645C4B5275FCDC100AE1810 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B645C4BF275FCDC200AE1810 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +334,7 @@
 				B645C4AF275FCDC100AE1810 /* PersistenceManager.swift in Sources */,
 				B69E1ABD277A4C91002A0150 /* EditQuoteCollectionView.swift in Sources */,
 				B6F1AA282763EE48004D054F /* QuoteValues.swift in Sources */,
+				B6D32414277E4794008B1554 /* BulkAddQuotesView.swift in Sources */,
 				B645C4A8275FCDC000AE1810 /* ContentView.swift in Sources */,
 				B6B57081277AC06700ECBB26 /* Values.swift in Sources */,
 				B6B5707F277AA64C00ECBB26 /* Error.swift in Sources */,
@@ -451,34 +360,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B645C4B3275FCDC100AE1810 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B645C4BD275FCDC200AE1810 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B645C4B9275FCDC100AE1810 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B645C4A1275FCDC000AE1810 /* QuoteCollector */;
-			targetProxy = B645C4B8275FCDC100AE1810 /* PBXContainerItemProxy */;
-		};
-		B645C4C3275FCDC200AE1810 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B645C4A1275FCDC000AE1810 /* QuoteCollector */;
-			targetProxy = B645C4C2275FCDC200AE1810 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B645C4C9275FCDC200AE1810 /* Debug */ = {
@@ -655,98 +537,6 @@
 			};
 			name = Release;
 		};
-		B645C4CF275FCDC200AE1810 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eolatham.QuoteCollectorTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuoteCollector.app/QuoteCollector";
-			};
-			name = Debug;
-		};
-		B645C4D0275FCDC200AE1810 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eolatham.QuoteCollectorTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuoteCollector.app/QuoteCollector";
-			};
-			name = Release;
-		};
-		B645C4D2275FCDC200AE1810 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eolatham.QuoteCollectorUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = QuoteCollector;
-			};
-			name = Debug;
-		};
-		B645C4D3275FCDC200AE1810 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eolatham.QuoteCollectorUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = QuoteCollector;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -764,24 +554,6 @@
 			buildConfigurations = (
 				B645C4CC275FCDC200AE1810 /* Debug */,
 				B645C4CD275FCDC200AE1810 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B645C4CE275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "QuoteCollectorTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B645C4CF275FCDC200AE1810 /* Debug */,
-				B645C4D0275FCDC200AE1810 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B645C4D1275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "QuoteCollectorUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B645C4D2275FCDC200AE1810 /* Debug */,
-				B645C4D3275FCDC200AE1810 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
