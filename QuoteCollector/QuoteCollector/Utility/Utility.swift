@@ -5,14 +5,14 @@ struct Utility {
         return date.formatted(.dateTime.month(.wide).year())
     }
 
-    static func trimWhitespace(string: String) -> String {
+    static func cleanWhitespace(string: String) -> String {
         return string
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .split(separator: " ")
             .joined(separator: " ")
     }
 
-    static func trimWhitespace(string: Substring) -> String {
+    static func cleanWhitespace(string: Substring) -> String {
         return string
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .split(separator: " ")

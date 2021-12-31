@@ -44,14 +44,14 @@ class QuoteValues: Values {
      * Trims leading and trailing whitespace from the given string.
      */
     static func formatText(text: String) -> String {
-        return Utility.trimWhitespace(string: text)
+        return Utility.cleanWhitespace(string: text)
     }
 
     /**
      * Trims leading and trailing whitespace from the given string.
      */
     static func formatAuthor(author: String) -> String {
-        return Utility.trimWhitespace(string: author)
+        return Utility.cleanWhitespace(string: author)
     }
 
     /**
@@ -61,7 +61,7 @@ class QuoteValues: Values {
     static func tagsStringToFormattedSet(tagsString: String) -> Set<String> {
         var formattedSet: Set<String> = Set()
         for tag in tagsString.split(separator: ",") {
-            let formattedTag = Utility.trimWhitespace(string: tag).capitalized
+            let formattedTag = Utility.cleanWhitespace(string: tag).capitalized
             if formattedTag.count > 0 { formattedSet.update(with: formattedTag) }
         }
         return formattedSet

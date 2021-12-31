@@ -19,16 +19,16 @@ struct BulkAddQuotesFormView: View {
                         InstructionsTextView(
                             text: (
                                 "Enter or paste a list of quotes below, with one quote " +
-                                "per line and authors attributed after em dashes."
+                                "per line and authors attributed after two long dashes."
                             )
                         )
                         Spacer()
                         ExampleTextView(text: "Example:")
                         ExampleTextView(
                             text: (
-                                "This is a good quote. —Author Name\n" +
-                                "This is another good one. —Author Name\n" +
-                                "And this one is anonymous.\n" +
+                                "A good quote. ——Author Name\n" +
+                                "Another good one. ——Author Name\n" +
+                                "And an anonymous one.\n" +
                                 "..."
                             ),
                             italic: true
@@ -67,6 +67,7 @@ struct BulkAddQuotesFormView: View {
                         action: {
                             DatabaseFunctions.bulkAddQuotes(
                                 context: context,
+                                quoteCollection: quoteCollection,
                                 quotes: quotes,
                                 fallbackAuthorFirstName: fallbackAuthorFirstName,
                                 fallbackAuthorLastName: fallbackAuthorLastName,

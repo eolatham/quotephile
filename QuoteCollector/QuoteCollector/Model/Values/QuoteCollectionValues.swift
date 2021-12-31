@@ -18,6 +18,6 @@ class QuoteCollectionValues: Values {
      * Trims leading and trailing whitespace from the given string.
      */
     static func formatName(name: String) -> String {
-        return Utility.trimWhitespace(string: name)
+        return Utility.cleanWhitespace(string: name)
     }
 }

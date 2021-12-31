@@ -180,29 +180,67 @@ struct DatabaseFunctions {
     }
 
     /**
-     * Adds a quote for each line of text in `quotes`.
+     * Adds a quote to `quoteCollection` for each line of text in `quotes`.
      * - `quotes` is expected to be formatted as a line-delimitted list of quotes
-     * with authors attributed after em dashes, like the following example:
+     * with authors attributed after two long dashes, like the following example:
      * ```
      * """
-     * This is a good quote. —Author Name
-     * This is another good one. —Author Name
+     * This is a good quote. ——Author Name
+     * This is another good one. ——Author Name
      * And this one is anonymous.
      * ...
      * """
      * ```
+     * - Empty lines and duplicate quotes in `quotes` are ignored.
      * - `fallbackAuthorFirstName` and `fallbackAuthorLastName` are used
      *   to assign author values for quotes that do not have authors attributed in the text.
      * - `tags` are assigned to all added quotes.
      */
     static func bulkAddQuotes(
         context: NSManagedObjectContext,
+        quoteCollection: QuoteCollection,
         quotes: String,
         fallbackAuthorFirstName: String = "",
         fallbackAuthorLastName: String = "",
         tags: String = ""
     ) {
-        // TODO: implement this
+        let pattern = "(.+?)(?:$|——\\s*(\\S+)(.*))"
+        let regex = try! NSRegularExpression(pattern: pattern)
+        for line in quotes.split(separator: "\n") {
+            let line = String(line).trimmingCharacters(in: .whitespaces)
+            if line.isEmpty { continue }
+            let range = NSRange(location: 0, length: line.utf16.count)
+            let match = regex.firstMatch(in: line, options: [], range: range)
+            if match == nil { continue }
+            let values = QuoteValues(
+                collection: quoteCollection,
+                text: "",
+                authorFirstName: fallbackAuthorFirstName,
+                authorLastName: fallbackAuthorLastName,
+                tags: tags
+            )
+            if let textRange = Range(match!.range(at: 1), in: line) {
+                values.text = Utility.cleanWhitespace(
+                    string: String(line[textRange])
+                )
+            }
+            if let authorFirstNameRange = Range(match!.range(at: 2), in: line) {
+                values.authorFirstName = String(line[authorFirstNameRange])
+            }
+            if let authorLastNameRange = Range(match!.range(at: 3), in: line) {
+                values.authorLastName = Utility.cleanWhitespace(
+                    string: String(line[authorLastNameRange])
+                )
+            }
+            do {
+                try _ = addQuote(context: context, values: values)
+            } catch {
+                print(
+                    "Skipping malformed or duplicate quote: \(values)\n" +
+                    "Details: \(error)"
+                )
+            }
+        }
     }
 
     static func bulkEditQuotes(
