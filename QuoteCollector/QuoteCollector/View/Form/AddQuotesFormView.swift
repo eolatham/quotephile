@@ -6,9 +6,13 @@ struct AddQuotesFormView: View {
     var body: some View {
         TabView {
             SingleAddQuoteFormView(quoteCollection: quoteCollection)
-                .tabItem { Text("Single").font(.headline) }
+            .tabItem {
+                Label("Single", systemImage: "1.circle").font(.title)
+            }.labelStyle(.titleAndIcon)
             BulkAddQuotesFormView(quoteCollection: quoteCollection)
-                .tabItem { Text("Bulk").font(.headline) }
+            .tabItem {
+                Label("Bulk", systemImage: "infinity.circle").font(.title)
+            }.labelStyle(.titleAndIcon)
         }
     }
 }

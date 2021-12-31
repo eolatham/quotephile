@@ -79,7 +79,7 @@ struct BulkAddQuotesFormView: View {
                     )
                 }
             }
-            .navigationTitle("Bulk Add Quotes")
+            .navigationTitle("Add Quotes")
             .toolbar(
                 content: {
                     ToolbarItem(placement: .cancellationAction) {
