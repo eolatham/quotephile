@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BulkEditQuotesView: View {
+struct BulkEditQuotesFormView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation
 
@@ -57,7 +57,7 @@ struct BulkEditQuotesView: View {
                             )
                             presentation.wrappedValue.dismiss()
                         },
-                        label: { SubmitButtonText() }
+                        label: { SubmitButtonTextView() }
                     )
                 }
             }

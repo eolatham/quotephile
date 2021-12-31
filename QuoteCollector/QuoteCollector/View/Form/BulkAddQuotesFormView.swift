@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BulkAddQuotesView: View {
+struct BulkAddQuotesFormView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation
 
@@ -16,15 +16,15 @@ struct BulkAddQuotesView: View {
             Form {
                 Section(header: Text("QUOTES")) {
                     VStack(alignment: .leading, spacing: 5) {
-                        InstructionsText(
+                        InstructionsTextView(
                             text: (
                                 "Enter or paste a list of quotes below, with one quote " +
                                 "per line and authors attributed after em dashes."
                             )
                         )
                         Spacer()
-                        ExampleText(text: "Example:")
-                        ExampleText(
+                        ExampleTextView(text: "Example:")
+                        ExampleTextView(
                             text: (
                                 "This is a good quote. —Author Name\n" +
                                 "This is another good one. —Author Name\n" +
@@ -38,7 +38,7 @@ struct BulkAddQuotesView: View {
                 }
                 Section(header: Text("FALLBACK AUTHOR (optional)")) {
                     VStack(alignment: .leading) {
-                        InstructionsText(
+                        InstructionsTextView(
                             text: (
                                 "Specify a fallback author to assign to input " +
                                 "quotes that have no attributed author."
@@ -52,7 +52,7 @@ struct BulkAddQuotesView: View {
                 }
                 Section(header: Text("TAGS (optional)")) {
                     VStack(alignment: .leading) {
-                        InstructionsText(
+                        InstructionsTextView(
                             text: (
                                 "Specify any tags that you want to " +
                                 "apply to all input quotes."
@@ -74,7 +74,7 @@ struct BulkAddQuotesView: View {
                             )
                             presentation.wrappedValue.dismiss()
                         },
-                        label: { SubmitButtonText() }
+                        label: { SubmitButtonTextView() }
                     )
                 }
             }

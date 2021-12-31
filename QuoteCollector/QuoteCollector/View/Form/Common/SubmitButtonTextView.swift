@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SubmitButtonText: View {
+struct SubmitButtonTextView: View {
     var text: String = "Save"
 
     var body: some View {

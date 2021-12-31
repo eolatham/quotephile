@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ExampleText: View {
+struct ExampleTextView: View {
     var text: String
     var italic: Bool = false
 

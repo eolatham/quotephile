@@ -284,7 +284,7 @@ struct CustomListItemView<
                     Button {
                         if isSelected { selectedEntities.remove(entity) }
                         else { selectedEntities.update(with: entity) }
-                    } label: { CustomListSelectionIcon(isSelected: isSelected) }
+                    } label: { CustomListSelectionIconView(isSelected: isSelected) }
                     rowView
                 }.foregroundColor(isSelected ? .accentColor : .primary)
             } else {
@@ -359,7 +359,7 @@ struct CustomListSectionHeaderView: View {
                 Button(
                     action: buttonAction,
                     label: {
-                        CustomListSelectionIcon(isSelected: isSelected)
+                        CustomListSelectionIconView(isSelected: isSelected)
                         Text(headerText)
                     }
                 )
@@ -368,7 +368,7 @@ struct CustomListSectionHeaderView: View {
     }
 }
 
-struct CustomListSelectionIcon: View {
+struct CustomListSelectionIconView: View {
     var isSelected: Bool
 
     var body: some View {

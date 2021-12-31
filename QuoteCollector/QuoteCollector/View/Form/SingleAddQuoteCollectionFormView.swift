@@ -3,7 +3,7 @@ import SwiftUI
 /**
  * For adding and editing individual quote collections.
  */
-struct AddQuoteCollectionView: View {
+struct SingleAddQuoteCollectionFormView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation
 
@@ -48,7 +48,7 @@ struct AddQuoteCollectionView: View {
                                 errorMessage = ErrorMessage.default
                             }
                         },
-                        label: { SubmitButtonText() }
+                        label: { SubmitButtonTextView() }
                     )
                 }
             }

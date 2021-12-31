@@ -61,11 +61,11 @@ struct _QuoteCollectionView: View {
                 QuoteView,
                 EmptyView,
                 EmptyView,
-                AddQuoteView,
-                EditQuoteView,
-                MoveQuoteView,
-                BulkEditQuotesView,
-                BulkMoveQuotesView
+                SingleAddQuoteFormView,
+                SingleEditQuoteFormView,
+                SingleMoveQuoteFormView,
+                BulkEditQuotesFormView,
+                BulkMoveQuotesFormView
             >(
                 title: quoteCollection.name!,
                 entities: SectionedFetchRequest<String, Quote>(
@@ -84,13 +84,13 @@ struct _QuoteCollectionView: View {
                     QuoteView(quote: quote)
                 },
                 addEntitySheetViewBuilder: {
-                    AddQuoteView(quoteCollection: quoteCollection)
+                    SingleAddQuoteFormView(quoteCollection: quoteCollection)
                 },
                 singleEditSheetViewBuilder: { quote in
-                    EditQuoteView(quote: quote)
+                    SingleEditQuoteFormView(quote: quote)
                 },
                 singleMoveSheetViewBuilder: { quote in
-                    MoveQuoteView(quote: quote)
+                    SingleMoveQuoteFormView(quote: quote)
                 },
                 singleDeleteFunction: { quote in
                     DatabaseFunctions.deleteQuote(context: context, quote: quote)
@@ -102,10 +102,10 @@ struct _QuoteCollectionView: View {
                     )
                 },
                 bulkEditSheetViewBuilder: { quotes, _ in
-                    BulkEditQuotesView(quotes: quotes)
+                    BulkEditQuotesFormView(quotes: quotes)
                 },
                 bulkMoveSheetViewBuilder: { quotes, exitSelectionMode in
-                    BulkMoveQuotesView(
+                    BulkMoveQuotesFormView(
                         quotes: quotes,
                         afterMove: { destination in
                             if destination != quoteCollection {

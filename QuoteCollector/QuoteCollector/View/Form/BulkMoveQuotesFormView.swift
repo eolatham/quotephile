@@ -3,7 +3,7 @@ import SwiftUI
 /**
  * For moving quotes between quote collections.
  */
-struct BulkMoveQuotesView: View {
+struct BulkMoveQuotesFormView: View {
     @Environment(\.managedObjectContext) private var context
 
     var quotes: Set<Quote>
@@ -67,7 +67,7 @@ struct _BulkMoveQuotesView: View {
                                         presentation.wrappedValue.dismiss()
                                     }
                                 },
-                                label: { SubmitButtonText() }
+                                label: { SubmitButtonTextView() }
                             )
                         }
                     }

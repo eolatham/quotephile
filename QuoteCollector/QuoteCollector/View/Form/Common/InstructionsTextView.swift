@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct InstructionsText: View {
+struct InstructionsTextView: View {
     var text: String
 
     var body: some View {

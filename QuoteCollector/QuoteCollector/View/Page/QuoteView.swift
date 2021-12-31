@@ -78,7 +78,7 @@ struct QuoteView: View {
             }
         }
         .sheet(isPresented: $showEditQuoteView) {
-            EditQuoteView(quote: quote)
+            SingleEditQuoteFormView(quote: quote)
         }
     }
 }

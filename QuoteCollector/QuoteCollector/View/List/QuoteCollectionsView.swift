@@ -41,8 +41,8 @@ struct _QuoteCollectionsView: View {
                 QuoteCollectionView,
                 NavigationLink,
                 EmptyView,
-                AddQuoteCollectionView,
-                EditQuoteCollectionView,
+                SingleAddQuoteCollectionFormView,
+                SingleEditQuoteCollectionFormView,
                 EmptyView,
                 EmptyView,
                 EmptyView
@@ -68,10 +68,10 @@ struct _QuoteCollectionsView: View {
                     label: { Text("All Quotes").font(.headline) }
                 },
                 addEntitySheetViewBuilder: {
-                    AddQuoteCollectionView()
+                    SingleAddQuoteCollectionFormView()
                 },
                 singleEditSheetViewBuilder: { quoteCollection in
-                    EditQuoteCollectionView(quoteCollection: quoteCollection)
+                    SingleEditQuoteCollectionFormView(quoteCollection: quoteCollection)
                 },
                 singleDeleteFunction: { quoteCollection in
                     DatabaseFunctions.deleteQuoteCollection(

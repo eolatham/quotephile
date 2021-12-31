@@ -43,10 +43,10 @@ struct _AllQuotesView: View {
             EmptyView,
             EmptyView,
             EmptyView,
-            EditQuoteView,
-            MoveQuoteView,
-            BulkEditQuotesView,
-            BulkMoveQuotesView
+            SingleEditQuoteFormView,
+            SingleMoveQuoteFormView,
+            BulkEditQuotesFormView,
+            BulkMoveQuotesFormView
         >(
             title: "All Quotes",
             entities: SectionedFetchRequest<String, Quote>(
@@ -65,10 +65,10 @@ struct _AllQuotesView: View {
                 QuoteView(quote: quote)
             },
             singleEditSheetViewBuilder: { quote in
-                EditQuoteView(quote: quote)
+                SingleEditQuoteFormView(quote: quote)
             },
             singleMoveSheetViewBuilder: { quote in
-                MoveQuoteView(quote: quote)
+                SingleMoveQuoteFormView(quote: quote)
             },
             singleDeleteFunction: { quote in
                 DatabaseFunctions.deleteQuote(context: context, quote: quote)
@@ -80,10 +80,10 @@ struct _AllQuotesView: View {
                 )
             },
             bulkEditSheetViewBuilder: { quotes, _ in
-                BulkEditQuotesView(quotes: quotes)
+                BulkEditQuotesFormView(quotes: quotes)
             },
             bulkMoveSheetViewBuilder: { quotes, _ in
-                BulkMoveQuotesView(quotes: quotes)
+                BulkMoveQuotesFormView(quotes: quotes)
             },
             bulkDeleteFunction: { quotes in
                 DatabaseFunctions.deleteQuotes(context: context, quotes: quotes)
