@@ -31,6 +31,7 @@ struct BulkAddQuotesFormView: View {
                                 "And an anonymous one.\n" +
                                 "..."
                             ),
+                            small: true,
                             italic: true
                         )
                     }.padding([.top, .bottom], 10)
