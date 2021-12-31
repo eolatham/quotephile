@@ -1,6 +1,11 @@
 import SwiftUI
 
 struct BulkAddQuotesView: View {
+    @Environment(\.managedObjectContext) private var context
+    @Environment(\.presentationMode) private var presentation
+
+    var quoteCollection: QuoteCollection
+
     @State private var quotes: String = ""
     @State private var fallbackAuthorFirstName: String = ""
     @State private var fallbackAuthorLastName: String = ""
@@ -59,18 +64,21 @@ struct BulkAddQuotesView: View {
                 }
                 Section {
                     Button(
-                        action: { },
+                        action: {
+                            DatabaseFunctions.bulkAddQuotes(
+                                context: context,
+                                quotes: quotes,
+                                fallbackAuthorFirstName: fallbackAuthorFirstName,
+                                fallbackAuthorLastName: fallbackAuthorLastName,
+                                tags: tags
+                            )
+                            presentation.wrappedValue.dismiss()
+                        },
                         label: { SubmitButtonText() }
                     )
                 }
             }
             .navigationTitle("Bulk Add Quotes")
         }
-    }
-}
-
-struct BulkAddQuotesView_Previews: PreviewProvider {
-    static var previews: some View {
-        BulkAddQuotesView()
     }
 }

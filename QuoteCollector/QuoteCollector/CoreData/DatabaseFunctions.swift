@@ -179,7 +179,33 @@ struct DatabaseFunctions {
         updateContext(context: context)
     }
 
-    static func editQuotes(
+    /**
+     * Adds a quote for each line of text in `quotes`.
+     * - `quotes` is expected to be formatted as a line-delimitted list of quotes
+     * with authors attributed after em dashes, like the following example:
+     * ```
+     * """
+     * This is a good quote. —Author Name
+     * This is another good one. —Author Name
+     * And this one is anonymous.
+     * ...
+     * """
+     * ```
+     * - `fallbackAuthorFirstName` and `fallbackAuthorLastName` are used
+     *   to assign author values for quotes that do not have authors attributed in the text.
+     * - `tags` are assigned to all added quotes.
+     */
+    static func bulkAddQuotes(
+        context: NSManagedObjectContext,
+        quotes: String,
+        fallbackAuthorFirstName: String = "",
+        fallbackAuthorLastName: String = "",
+        tags: String = ""
+    ) {
+        // TODO: implement this
+    }
+
+    static func bulkEditQuotes(
         context: NSManagedObjectContext,
         quotes: Set<Quote>,
         newAuthorFirstName: String? = nil,
@@ -220,7 +246,7 @@ struct DatabaseFunctions {
         updateContext(context: context)
     }
 
-    static func moveQuotes(
+    static func bulkMoveQuotes(
         context: NSManagedObjectContext,
         quotes: Set<Quote>,
         newCollection: QuoteCollection

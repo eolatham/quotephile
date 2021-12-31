@@ -47,7 +47,7 @@ struct BulkEditQuotesView: View {
                 Section {
                     Button(
                         action: {
-                            DatabaseFunctions.editQuotes(
+                            DatabaseFunctions.bulkEditQuotes(
                                 context: context,
                                 quotes: quotes,
                                 newAuthorFirstName: replaceAuthorFirstName ? authorFirstName : nil,

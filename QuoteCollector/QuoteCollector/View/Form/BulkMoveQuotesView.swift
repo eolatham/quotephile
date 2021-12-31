@@ -58,7 +58,7 @@ struct _BulkMoveQuotesView: View {
                                 action: {
                                     if selectedDestination == nil { showAlert = true }
                                     else {
-                                        DatabaseFunctions.moveQuotes(
+                                        DatabaseFunctions.bulkMoveQuotes(
                                             context: context,
                                             quotes: quotes,
                                             newCollection: selectedDestination!
