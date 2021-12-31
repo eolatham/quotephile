@@ -82,6 +82,7 @@ struct _BulkMoveQuotesView: View {
                 content: {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Cancel") { presentation.wrappedValue.dismiss() }
+                        .foregroundColor(.accentColor)
                     }
                 }
             )

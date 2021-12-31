@@ -90,6 +90,7 @@ struct SingleAddQuoteFormView: View {
                 content: {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Cancel") { presentation.wrappedValue.dismiss() }
+                        .foregroundColor(.accentColor)
                     }
                 }
             )

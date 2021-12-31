@@ -67,7 +67,7 @@ struct SingleAddQuoteCollectionFormView: View {
                     title: Text("Error"),
                     message: Text(errorMessage!),
                     dismissButton: .default(
-                        Text("Dismiss"),
+                        Text("Dismiss").foregroundColor(.accentColor),
                         action: {
                             isError = false
                             errorMessage = nil
