@@ -2,7 +2,7 @@ import SwiftUI
 
 struct BulkAddQuotesFormView: View {
     @Environment(\.managedObjectContext) private var context
-    @Environment(\.presentationMode) private var presentation
+    @Environment(\.dismiss) private var dismiss
 
     var quoteCollection: QuoteCollection
 
@@ -74,7 +74,7 @@ struct BulkAddQuotesFormView: View {
                                 fallbackAuthorLastName: fallbackAuthorLastName,
                                 tags: tags
                             )
-                            presentation.wrappedValue.dismiss()
+                            dismiss()
                         },
                         label: { SubmitButtonTextView() }
                     )
@@ -84,7 +84,7 @@ struct BulkAddQuotesFormView: View {
             .toolbar(
                 content: {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel") { presentation.wrappedValue.dismiss() }
+                        CancelButtonView(dismiss: dismiss)
                     }
                 }
             )

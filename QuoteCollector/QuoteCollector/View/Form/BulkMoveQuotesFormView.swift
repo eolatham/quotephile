@@ -22,7 +22,7 @@ struct BulkMoveQuotesFormView: View {
 
 struct _BulkMoveQuotesView: View {
     @Environment(\.managedObjectContext) private var context
-    @Environment(\.presentationMode) private var presentation
+    @Environment(\.dismiss) private var dismiss
 
     var quotes: Set<Quote>
     var destinationOptions: [QuoteCollection]
@@ -64,7 +64,7 @@ struct _BulkMoveQuotesView: View {
                                             newCollection: selectedDestination!
                                         )
                                         if afterMove != nil { afterMove!(selectedDestination!) }
-                                        presentation.wrappedValue.dismiss()
+                                        dismiss()
                                     }
                                 },
                                 label: { SubmitButtonTextView() }
@@ -81,8 +81,7 @@ struct _BulkMoveQuotesView: View {
             .toolbar(
                 content: {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel") { presentation.wrappedValue.dismiss() }
-                        .foregroundColor(.accentColor)
+                        CancelButtonView(dismiss: dismiss)
                     }
                 }
             )
@@ -90,7 +89,9 @@ struct _BulkMoveQuotesView: View {
                 Alert(
                     title: Text("Error"),
                     message: Text("No destination is selected!"),
-                    dismissButton: .default(Text("Dismiss"))
+                    dismissButton: .default(
+                        Text("Dismiss").foregroundColor(.accentColor)
+                    )
                 )
             }
         }

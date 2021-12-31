@@ -5,7 +5,7 @@ import SwiftUI
  */
 struct SingleAddQuoteFormView: View {
     @Environment(\.managedObjectContext) private var context
-    @Environment(\.presentationMode) private var presentation
+    @Environment(\.dismiss) private var dismiss
 
     var quoteCollection: QuoteCollection
     var quote: Quote?
@@ -72,7 +72,7 @@ struct SingleAddQuoteFormView: View {
                                     quote: quote,
                                     values: values
                                 )
-                                presentation.wrappedValue.dismiss()
+                                dismiss()
                             } catch ValidationError.withMessage(let message) {
                                 isError = true
                                 errorMessage = message
@@ -89,8 +89,7 @@ struct SingleAddQuoteFormView: View {
             .toolbar(
                 content: {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel") { presentation.wrappedValue.dismiss() }
-                        .foregroundColor(.accentColor)
+                        CancelButtonView(dismiss: dismiss)
                     }
                 }
             )
@@ -99,7 +98,7 @@ struct SingleAddQuoteFormView: View {
                     title: Text("Error"),
                     message: Text(errorMessage!),
                     dismissButton: .default(
-                        Text("Dismiss"),
+                        Text("Dismiss").foregroundColor(.accentColor),
                         action: {
                             isError = false
                             errorMessage = nil

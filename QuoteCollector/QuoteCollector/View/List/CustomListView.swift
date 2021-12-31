@@ -162,7 +162,9 @@ struct CustomListView<
                         exitSelectionMode()
                     }
                 },
-                secondaryButton: .cancel(Text("No, cancel"))
+                secondaryButton: .cancel(
+                    Text("No, cancel").foregroundColor(.accentColor)
+                )
             )
         }
     }
@@ -303,7 +305,7 @@ struct CustomListItemView<
                 }
                 if editSheetViewBuilder != nil {
                     Button { showEditView = true } label: { Text("Edit") }
-                    .tint(.accentColor)
+                    .tint(.blue)
                 }
             }
         }
@@ -321,11 +323,11 @@ struct CustomListItemView<
                 title: Text("Are you sure?"),
                 message: Text(deleteAlertMessage(entity)),
                 primaryButton: .destructive(Text("Yes, delete")) {
-                    withAnimation {
-                        deleteFunction!(entity)
-                    }
+                    withAnimation { deleteFunction!(entity) }
                 },
-                secondaryButton: .cancel(Text("No, cancel"))
+                secondaryButton: .cancel(
+                    Text("No, cancel").foregroundColor(.accentColor)
+                )
             )
         }
     }

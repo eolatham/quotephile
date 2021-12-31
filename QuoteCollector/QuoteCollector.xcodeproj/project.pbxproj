@@ -17,6 +17,7 @@
 		B645C4ED275FEA0700AE1810 /* QuoteCollectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4EC275FEA0700AE1810 /* QuoteCollectionRowView.swift */; };
 		B6843A0F27664D7A00894D44 /* QuoteCollector.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6843A0D27664D7A00894D44 /* QuoteCollector.xcdatamodeld */; };
 		B68544DD277F658400145B57 /* AddQuotesFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68544DC277F658400145B57 /* AddQuotesFormView.swift */; };
+		B68544E1277FC24500145B57 /* CancelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68544E0277FC24500145B57 /* CancelButtonView.swift */; };
 		B686F6C827666EB200FC8573 /* QuoteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B686F6C727666EB200FC8573 /* QuoteCollectionView.swift */; };
 		B686F6CA27666ED200FC8573 /* QuoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B686F6C927666ED200FC8573 /* QuoteRowView.swift */; };
 		B686F6D02766745100FC8573 /* SingleAddQuoteFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B686F6CF2766745100FC8573 /* SingleAddQuoteFormView.swift */; };
@@ -58,6 +59,7 @@
 		B645C4EC275FEA0700AE1810 /* QuoteCollectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionRowView.swift; sourceTree = "<group>"; };
 		B6843A0E27664D7A00894D44 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		B68544DC277F658400145B57 /* AddQuotesFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuotesFormView.swift; sourceTree = "<group>"; };
+		B68544E0277FC24500145B57 /* CancelButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelButtonView.swift; sourceTree = "<group>"; };
 		B686F6C727666EB200FC8573 /* QuoteCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionView.swift; sourceTree = "<group>"; };
 		B686F6C927666ED200FC8573 /* QuoteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteRowView.swift; sourceTree = "<group>"; };
 		B686F6CF2766745100FC8573 /* SingleAddQuoteFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleAddQuoteFormView.swift; sourceTree = "<group>"; };
@@ -216,9 +218,10 @@
 		B6A5AF26277EA079006CFC23 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				B68544E0277FC24500145B57 /* CancelButtonView.swift */,
+				B6A5AF2B277EA0BB006CFC23 /* SubmitButtonTextView.swift */,
 				B6A5AF27277EA099006CFC23 /* InstructionsTextView.swift */,
 				B6A5AF29277EA0AA006CFC23 /* ExampleTextView.swift */,
-				B6A5AF2B277EA0BB006CFC23 /* SubmitButtonTextView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				B6BB64C0276FD07E00FA15F2 /* QuoteView.swift in Sources */,
 				B6F1AA2B2763F055004D054F /* Utility.swift in Sources */,
 				B6B5707B277A5F0700ECBB26 /* BulkEditQuotesFormView.swift in Sources */,
+				B68544E1277FC24500145B57 /* CancelButtonView.swift in Sources */,
 				B6F1AA262763ECC4004D054F /* QuoteCollectionValues.swift in Sources */,
 				B687317727644B21001FE9A0 /* SingleAddQuoteCollectionFormView.swift in Sources */,
 				B687317B2764573D001FE9A0 /* QuoteCollectionsView.swift in Sources */,
