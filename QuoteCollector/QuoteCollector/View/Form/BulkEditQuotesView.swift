@@ -57,9 +57,8 @@ struct BulkEditQuotesView: View {
                             )
                             presentation.wrappedValue.dismiss()
                         },
-                        label: { Text("Save").font(.headline) }
+                        label: { SubmitButtonText() }
                     )
-                    .foregroundColor(.accentColor)
                 }
             }
             .navigationTitle(

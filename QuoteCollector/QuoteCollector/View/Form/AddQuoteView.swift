@@ -81,9 +81,8 @@ struct AddQuoteView: View {
                                 errorMessage = ErrorMessage.default
                             }
                         },
-                        label: { Text("Save").font(.headline) }
+                        label: { SubmitButtonText() }
                     )
-                    .foregroundColor(.accentColor)
                 }
             }
             .navigationTitle(quote == nil ? "Add Quote" : "Edit Quote")

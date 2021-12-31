@@ -1,23 +1,5 @@
 import SwiftUI
 
-struct InstructionsText: View {
-    var text: String
-
-    var body: some View {
-        Text(text).font(.callout).bold()
-    }
-}
-
-struct ExampleText: View {
-    var text: String
-    var italic: Bool = false
-
-    var body: some View {
-        if italic { Text(text).font(.callout).italic() }
-        else { Text(text).font(.callout) }
-    }
-}
-
 struct BulkAddQuotesView: View {
     @State private var quotes: String = ""
     @State private var fallbackAuthorFirstName: String = ""
@@ -78,8 +60,8 @@ struct BulkAddQuotesView: View {
                 Section {
                     Button(
                         action: { },
-                        label: { Text("Save").font(.headline) }
-                    ).foregroundColor(.accentColor)
+                        label: { SubmitButtonText() }
+                    )
                 }
             }
             .navigationTitle("Bulk Add Quotes")
