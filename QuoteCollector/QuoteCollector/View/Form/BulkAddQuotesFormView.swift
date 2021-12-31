@@ -79,6 +79,13 @@ struct BulkAddQuotesFormView: View {
                 }
             }
             .navigationTitle("Bulk Add Quotes")
+            .toolbar(
+                content: {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel") { presentation.wrappedValue.dismiss() }
+                    }
+                }
+            )
         }
     }
 }

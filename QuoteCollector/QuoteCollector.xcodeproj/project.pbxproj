@@ -16,6 +16,7 @@
 		B645C4E2275FDEBC00AE1810 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4DE275FDEBC00AE1810 /* Quote.swift */; };
 		B645C4ED275FEA0700AE1810 /* QuoteCollectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4EC275FEA0700AE1810 /* QuoteCollectionRowView.swift */; };
 		B6843A0F27664D7A00894D44 /* QuoteCollector.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6843A0D27664D7A00894D44 /* QuoteCollector.xcdatamodeld */; };
+		B68544DD277F658400145B57 /* AddQuotesFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68544DC277F658400145B57 /* AddQuotesFormView.swift */; };
 		B686F6C827666EB200FC8573 /* QuoteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B686F6C727666EB200FC8573 /* QuoteCollectionView.swift */; };
 		B686F6CA27666ED200FC8573 /* QuoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B686F6C927666ED200FC8573 /* QuoteRowView.swift */; };
 		B686F6D02766745100FC8573 /* SingleAddQuoteFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B686F6CF2766745100FC8573 /* SingleAddQuoteFormView.swift */; };
@@ -56,6 +57,7 @@
 		B645C4DE275FDEBC00AE1810 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		B645C4EC275FEA0700AE1810 /* QuoteCollectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionRowView.swift; sourceTree = "<group>"; };
 		B6843A0E27664D7A00894D44 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		B68544DC277F658400145B57 /* AddQuotesFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuotesFormView.swift; sourceTree = "<group>"; };
 		B686F6C727666EB200FC8573 /* QuoteCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectionView.swift; sourceTree = "<group>"; };
 		B686F6C927666ED200FC8573 /* QuoteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteRowView.swift; sourceTree = "<group>"; };
 		B686F6CF2766745100FC8573 /* SingleAddQuoteFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleAddQuoteFormView.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				B6A5AF26277EA079006CFC23 /* Common */,
+				B68544DC277F658400145B57 /* AddQuotesFormView.swift */,
 				B686F6CF2766745100FC8573 /* SingleAddQuoteFormView.swift */,
 				B69E1ABA277A4C59002A0150 /* SingleEditQuoteFormView.swift */,
 				B697D30B277D3C7A00BABE22 /* SingleMoveQuoteFormView.swift */,
@@ -213,9 +216,9 @@
 		B6A5AF26277EA079006CFC23 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				B6A5AF2B277EA0BB006CFC23 /* SubmitButtonTextView.swift */,
 				B6A5AF27277EA099006CFC23 /* InstructionsTextView.swift */,
 				B6A5AF29277EA0AA006CFC23 /* ExampleTextView.swift */,
+				B6A5AF2B277EA0BB006CFC23 /* SubmitButtonTextView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				B686F6CA27666ED200FC8573 /* QuoteRowView.swift in Sources */,
 				B69E1ABB277A4C59002A0150 /* SingleEditQuoteFormView.swift in Sources */,
 				B69E1AB9277A4B64002A0150 /* AllQuotesView.swift in Sources */,
+				B68544DD277F658400145B57 /* AddQuotesFormView.swift in Sources */,
 				B645C4ED275FEA0700AE1810 /* QuoteCollectionRowView.swift in Sources */,
 				B69E1AC3277A502C002A0150 /* DatabaseFunctions.swift in Sources */,
 				B686F6D02766745100FC8573 /* SingleAddQuoteFormView.swift in Sources */,

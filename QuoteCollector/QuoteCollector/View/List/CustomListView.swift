@@ -26,7 +26,7 @@ struct CustomListView<
     var entityPageViewBuilder: (Entity) -> EntityPageView
     var constantListPrefixViewBuilder: (() -> ConstantListPrefixView)? = nil
     var constantListSuffixViewBuilder: (() -> ConstantListSuffixView)? = nil
-    var addEntitySheetViewBuilder: (() -> AddEntitySheetView)? = nil
+    var addEntitiesSheetViewBuilder: (() -> AddEntitySheetView)? = nil
     var singleEditSheetViewBuilder: ((_ toEdit: Entity) -> SingleEditSheetView)? = nil
     var singleMoveSheetViewBuilder: ((_ toMove: Entity) -> SingleMoveSheetView)? = nil
     var singleDeleteFunction: ((_ toDelete: Entity) -> Void)? = nil
@@ -48,7 +48,7 @@ struct CustomListView<
 
     @State private var selectedEntities: Set<Entity> = []
     @State private var inSelectionMode: Bool = false
-    @State private var showAddEntityView: Bool = false
+    @State private var showAddEntitiesView: Bool = false
     @State private var showBulkEditView: Bool = false
     @State private var showBulkMoveView: Bool = false
     @State private var showBulkDeleteAlert: Bool = false
@@ -109,8 +109,8 @@ struct CustomListView<
                         selectedSort: $selectedSort,
                         sortOptions: sortOptions
                     )
-                    if addEntitySheetViewBuilder != nil {
-                        Button { showAddEntityView = true } label: { Text("Add") }
+                    if addEntitiesSheetViewBuilder != nil {
+                        Button { showAddEntitiesView = true } label: { Text("Add") }
                     }
                     Button { enterSelectionMode() } label: { Text("Select") }
                     .disabled(entities.isEmpty)
@@ -139,9 +139,9 @@ struct CustomListView<
         .navigationTitle(
             inSelectionMode ? "\(selectedEntities.count) Selected" : title
         )
-        .sheet(isPresented: $showAddEntityView) {
-            // Only renders when addEntitySheetViewBuilder != nil
-            addEntitySheetViewBuilder!()
+        .sheet(isPresented: $showAddEntitiesView) {
+            // Only renders when addEntitiesSheetViewBuilder != nil
+            addEntitiesSheetViewBuilder!()
         }
         .sheet(isPresented: $showBulkEditView) {
             // Only renders when bulkEditSheetViewBuilder != nil

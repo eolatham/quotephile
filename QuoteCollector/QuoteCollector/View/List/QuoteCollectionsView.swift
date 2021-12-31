@@ -67,7 +67,7 @@ struct _QuoteCollectionsView: View {
                     NavigationLink { AllQuotesView() }
                     label: { Text("All Quotes").font(.headline) }
                 },
-                addEntitySheetViewBuilder: {
+                addEntitiesSheetViewBuilder: {
                     SingleAddQuoteCollectionFormView()
                 },
                 singleEditSheetViewBuilder: { quoteCollection in

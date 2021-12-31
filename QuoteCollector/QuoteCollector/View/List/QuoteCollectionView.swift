@@ -61,7 +61,7 @@ struct _QuoteCollectionView: View {
                 QuoteView,
                 EmptyView,
                 EmptyView,
-                SingleAddQuoteFormView,
+                AddQuotesFormView,
                 SingleEditQuoteFormView,
                 SingleMoveQuoteFormView,
                 BulkEditQuotesFormView,
@@ -83,8 +83,8 @@ struct _QuoteCollectionView: View {
                 entityPageViewBuilder: { quote in
                     QuoteView(quote: quote)
                 },
-                addEntitySheetViewBuilder: {
-                    SingleAddQuoteFormView(quoteCollection: quoteCollection)
+                addEntitiesSheetViewBuilder: {
+                    AddQuotesFormView(quoteCollection: quoteCollection)
                 },
                 singleEditSheetViewBuilder: { quote in
                     SingleEditQuoteFormView(quote: quote)
