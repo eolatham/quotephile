@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B618E9392780CEF500F14A1B /* PlainTextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B618E9382780CEF500F14A1B /* PlainTextDocument.swift */; };
 		B645C4A6275FCDC000AE1810 /* QuoteCollectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4A5275FCDC000AE1810 /* QuoteCollectorApp.swift */; };
 		B645C4A8275FCDC000AE1810 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4A7275FCDC000AE1810 /* ContentView.swift */; };
 		B645C4AA275FCDC100AE1810 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B645C4A9275FCDC100AE1810 /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B618E9382780CEF500F14A1B /* PlainTextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextDocument.swift; sourceTree = "<group>"; };
 		B63AE461276E314300FCDFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B645C4A2275FCDC000AE1810 /* QuoteCollector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuoteCollector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B645C4A5275FCDC000AE1810 /* QuoteCollectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectorApp.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B618E9372780CECC00F14A1B /* Document */ = {
+			isa = PBXGroup;
+			children = (
+				B618E9382780CEF500F14A1B /* PlainTextDocument.swift */,
+			);
+			path = Document;
+			sourceTree = "<group>";
+		};
 		B645C499275FCDC000AE1810 = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +154,7 @@
 				B6B57082277AC18D00ECBB26 /* Entity */,
 				B6B57083277AC19C00ECBB26 /* Values */,
 				B6B57084277AC1B000ECBB26 /* Sort */,
+				B618E9372780CECC00F14A1B /* Document */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -365,6 +376,7 @@
 				B6BB64C0276FD07E00FA15F2 /* QuoteView.swift in Sources */,
 				B6F1AA2B2763F055004D054F /* Utility.swift in Sources */,
 				B6B5707B277A5F0700ECBB26 /* BulkEditQuotesFormView.swift in Sources */,
+				B618E9392780CEF500F14A1B /* PlainTextDocument.swift in Sources */,
 				B68544E1277FC24500145B57 /* CancelButtonView.swift in Sources */,
 				B6F1AA262763ECC4004D054F /* QuoteCollectionValues.swift in Sources */,
 				B687317727644B21001FE9A0 /* SingleAddQuoteCollectionFormView.swift in Sources */,

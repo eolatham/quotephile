@@ -45,6 +45,8 @@ struct CustomListView<
     var bulkDeleteFunction: ((_ toDelete: Set<Entity>) -> Void)? = nil
     var bulkDeleteAlertMessage: (_ toDelete: Set<Entity>) -> String
         = { _ in return "This action cannot be undone!" }
+    var bulkExportFunction: ((_ toExport: Set<Entity>) -> PlainTextDocument)? = nil
+    var bulkExportDefaultDocumentName: String = "Export"
 
     @State private var selectedEntities: Set<Entity> = []
     @State private var inSelectionMode: Bool = false
@@ -52,6 +54,8 @@ struct CustomListView<
     @State private var showBulkEditView: Bool = false
     @State private var showBulkMoveView: Bool = false
     @State private var showBulkDeleteAlert: Bool = false
+    @State private var showBulkExporter: Bool = false
+    @State private var bulkExportDocument: PlainTextDocument? = nil
 
     private func enterSelectionMode() {
         inSelectionMode = true
@@ -132,6 +136,14 @@ struct CustomListView<
                             Button { showBulkDeleteAlert = true }
                                 label: { Text("Delete") }.disabled(disabled)
                         }
+                        if bulkExportFunction != nil {
+                            Button {
+                                bulkExportDocument = bulkExportFunction!(
+                                    selectedEntities
+                                )
+                                showBulkExporter = true
+                            } label: { Text("Export") }.disabled(disabled)
+                        }
                     }
                 }
             }
@@ -164,6 +176,19 @@ struct CustomListView<
                 },
                 secondaryButton: .cancel(Text("No, cancel"))
             )
+        }
+        .fileExporter(
+            isPresented: $showBulkExporter,
+            document: bulkExportDocument,
+            contentType: .plainText,
+            defaultFilename: bulkExportDefaultDocumentName
+        ) { result in
+            switch result {
+            case .success(let url):
+                print("Saved export document to \(url)")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }

@@ -80,10 +80,8 @@ struct _QuoteCollectionsView: View {
                     )
                 },
                 singleDeleteAlertMessage: { _ in
-                    return (
-                        "Deleting this quote collection will also delete " +
-                        "all of its quotes. This action cannot be undone!"
-                    )
+                    "Deleting this quote collection will also delete " +
+                    "all of its quotes. This action cannot be undone!"
                 },
                 bulkDeleteFunction: { quoteCollections in
                     DatabaseFunctions.deleteQuoteCollections(
@@ -92,10 +90,8 @@ struct _QuoteCollectionsView: View {
                     )
                 },
                 bulkDeleteAlertMessage: { _ in
-                    return (
-                        "Deleting the selected quote collections will also " +
-                        "delete all of their quotes. This action cannot be undone!"
-                    )
+                    "Deleting the selected quote collections will also " +
+                    "delete all of their quotes. This action cannot be undone!"
                 }
             )
             .onChange(

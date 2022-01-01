@@ -74,10 +74,8 @@ struct _AllQuotesView: View {
                 DatabaseFunctions.deleteQuote(context: context, quote: quote)
             },
             singleDeleteAlertMessage: { _ in
-                return (
-                    "Are you sure you want to delete this quote? " +
-                    "This action cannot be undone!"
-                )
+                "Are you sure you want to delete this quote? " +
+                "This action cannot be undone!"
             },
             bulkEditSheetViewBuilder: { quotes, _ in
                 BulkEditQuotesFormView(quotes: quotes)
@@ -89,11 +87,13 @@ struct _AllQuotesView: View {
                 DatabaseFunctions.deleteQuotes(context: context, quotes: quotes)
             },
             bulkDeleteAlertMessage: { _ in
-                return (
-                    "Are you sure you want to delete the selected " +
-                    "quotes? This action cannot be undone!"
-                )
-            }
+                "Are you sure you want to delete the selected " +
+                "quotes? This action cannot be undone!"
+            },
+            bulkExportFunction: { quotes in
+                PlainTextDocument.quoteList(quotes: quotes)
+            },
+            bulkExportDefaultDocumentName: "Exported Quotes"
         )
         .onChange(
             of: selectedSort,

@@ -1,9 +1,8 @@
 # TODO
 
-- Add ability to bulk-export quotes to a text file
-  - Render as a selection option with a quote collection view
-  - Line-delimitted display format (same as bulk add input format)
-- Evaluate app performance with thousands of quotes
+- Ignore "anonymous" author attributes in bulk add quotes logic
+- Make bulk add quotes logic more efficient (buffered)
+- Add progress bar to bulk add quotes
 - Review/polish code
 - Decide name: QuoteCollector or Quote Collector?
 - Add features list to README

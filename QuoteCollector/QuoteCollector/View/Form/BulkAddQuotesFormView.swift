@@ -35,7 +35,7 @@ struct BulkAddQuotesFormView: View {
                             italic: true
                         )
                     }.padding([.top, .bottom], 10)
-                    TextEditor(text: $quotes)
+                    TextEditor(text: $quotes).frame(maxHeight: 500)
                 }
                 Section(header: Text("FALLBACK AUTHOR (optional)")) {
                     VStack(alignment: .leading) {

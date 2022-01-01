@@ -5,6 +5,7 @@ class Quote: NSManagedObject {
     @objc var exists: Bool { text != nil }
     @objc var length: Int { text!.count }
     @objc var rawText: String { text! }
+    @objc var exportText: String { "\(rawText) ——\(author)" }
     @objc var displayText: String {
         var s: String = text!
         if displayQuotationMarks { s = "“" + s + "”" }
