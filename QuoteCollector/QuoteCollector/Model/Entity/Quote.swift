@@ -7,7 +7,7 @@ class Quote: NSManagedObject {
     @objc var rawText: String { text! }
     @objc var exportText: String { "\(rawText) ——\(author)" }
     @objc var displayText: String {
-        var s: String = text!
+        var s: String = rawText
         if displayQuotationMarks { s = "“" + s + "”" }
         if displayAuthor {
             s = s + (displayAuthorOnNewLine ? "\n" : " ") + "—" + author

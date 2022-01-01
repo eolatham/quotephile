@@ -226,12 +226,16 @@ struct DatabaseFunctions {
             }
             if let authorFirstNameRange = Range(match!.range(at: 2), in: line) {
                 values.authorFirstName = String(line[authorFirstNameRange])
+                values.authorLastName = ""
             }
             if let authorLastNameRange = Range(match!.range(at: 3), in: line) {
                 values.authorLastName = Utility.cleanWhitespace(
                     string: String(line[authorLastNameRange])
                 )
             }
+            // No need to keep a literal anonymous author attribute
+            if values.authorFirstName.lowercased() == "anonymous" &&
+               values.authorLastName == "" { values.authorFirstName = "" }
             do {
                 try _ = addQuote(context: context, values: values)
             } catch {

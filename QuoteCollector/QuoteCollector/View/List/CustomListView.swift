@@ -84,17 +84,19 @@ struct CustomListView<
                 constantListPrefixViewBuilder!()
             }
             ForEach(entities, id: \.id) { section in
-                CustomListSectionView(
-                    section: section,
-                    selectedEntities: $selectedEntities,
-                    inSelectionMode: inSelectionMode,
-                    entityRowViewBuilder: entityRowViewBuilder,
-                    entityPageViewBuilder: entityPageViewBuilder,
-                    singleEditSheetViewBuilder: singleEditSheetViewBuilder,
-                    singleMoveSheetViewBuilder: singleMoveSheetViewBuilder,
-                    singleDeleteFunction: singleDeleteFunction,
-                    singleDeleteAlertMessage: singleDeleteAlertMessage
-                )
+                withAnimation {
+                    CustomListSectionView(
+                        section: section,
+                        selectedEntities: $selectedEntities,
+                        inSelectionMode: inSelectionMode,
+                        entityRowViewBuilder: entityRowViewBuilder,
+                        entityPageViewBuilder: entityPageViewBuilder,
+                        singleEditSheetViewBuilder: singleEditSheetViewBuilder,
+                        singleMoveSheetViewBuilder: singleMoveSheetViewBuilder,
+                        singleDeleteFunction: singleDeleteFunction,
+                        singleDeleteAlertMessage: singleDeleteAlertMessage
+                    )
+                }
             }
             if !inSelectionMode && constantListSuffixViewBuilder != nil {
                 constantListSuffixViewBuilder!()
