@@ -1,7 +1,5 @@
 # TODO
 
-- Ignore "anonymous" author attributes in bulk add quotes logic
-- Make bulk add quotes logic more efficient (buffered)
 - Add progress bar to bulk add quotes
 - Review/polish code
 - Decide name: QuoteCollector or Quote Collector?

@@ -7,7 +7,7 @@ enum EditMode: String {
 }
 
 struct DatabaseFunctions {
-    static func updateContext(context: NSManagedObjectContext) {
+    static func commitChanges(context: NSManagedObjectContext) {
         do { try context.save() }
         catch { print("Save error: \(error)") }
     }
@@ -53,7 +53,8 @@ struct DatabaseFunctions {
     static func addQuote(
         context: NSManagedObjectContext,
         quote: Quote? = nil,
-        values: QuoteValues
+        values: QuoteValues,
+        commitChangesImmediately: Bool = true
     ) throws -> Quote {
         try values.formatAndValidate()
         let now = Date.now
@@ -78,7 +79,7 @@ struct DatabaseFunctions {
         newQuote.displayQuotationMarks = values.displayQuotationMarks
         newQuote.displayAuthor = values.displayAuthor
         newQuote.displayAuthorOnNewLine = values.displayAuthorOnNewLine
-        updateContext(context: context)
+        if commitChangesImmediately { commitChanges(context: context) }
         return newQuote
     }
 
@@ -124,7 +125,7 @@ struct DatabaseFunctions {
         }
         newQuoteCollection.dateChanged = now
         newQuoteCollection.name = values.name
-        updateContext(context: context)
+        commitChanges(context: context)
         return newQuoteCollection
     }
 
@@ -148,7 +149,7 @@ struct DatabaseFunctions {
         quote: Quote
     ) {
         context.delete(quote)
-        updateContext(context: context)
+        commitChanges(context: context)
     }
 
     static func deleteQuotes(
@@ -156,7 +157,7 @@ struct DatabaseFunctions {
         quotes: Set<Quote>
     ) {
         quotes.forEach(context.delete)
-        updateContext(context: context)
+        commitChanges(context: context)
     }
 
     static func deleteQuoteCollection(
@@ -165,7 +166,7 @@ struct DatabaseFunctions {
     ) {
         QuoteSort.deleteUserDefault(quoteCollection: quoteCollection)
         context.delete(quoteCollection)
-        updateContext(context: context)
+        commitChanges(context: context)
     }
 
     static func deleteQuoteCollections(
@@ -176,7 +177,7 @@ struct DatabaseFunctions {
             QuoteSort.deleteUserDefault(quoteCollection: quoteCollection)
             context.delete(quoteCollection)
         }
-        updateContext(context: context)
+        commitChanges(context: context)
     }
 
     /**
@@ -204,47 +205,66 @@ struct DatabaseFunctions {
         fallbackAuthorLastName: String = "",
         tags: String = ""
     ) {
-        let pattern = "(.+?)(?:$|——\\s*(\\S+)(.*))"
-        let regex = try! NSRegularExpression(pattern: pattern)
-        for line in quotes.split(separator: "\n") {
-            let line = String(line).trimmingCharacters(in: .whitespaces)
-            if line.isEmpty { continue }
-            let range = NSRange(location: 0, length: line.utf16.count)
-            let match = regex.firstMatch(in: line, options: [], range: range)
-            if match == nil { continue }
-            let values = QuoteValues(
-                collection: quoteCollection,
-                text: "",
-                authorFirstName: fallbackAuthorFirstName,
-                authorLastName: fallbackAuthorLastName,
-                tags: tags
-            )
-            if let textRange = Range(match!.range(at: 1), in: line) {
-                values.text = Utility.cleanWhitespace(
-                    string: String(line[textRange])
-                )
-            }
-            if let authorFirstNameRange = Range(match!.range(at: 2), in: line) {
-                values.authorFirstName = String(line[authorFirstNameRange])
-                values.authorLastName = ""
-            }
-            if let authorLastNameRange = Range(match!.range(at: 3), in: line) {
-                values.authorLastName = Utility.cleanWhitespace(
-                    string: String(line[authorLastNameRange])
-                )
-            }
-            // No need to keep a literal anonymous author attribute
-            if values.authorFirstName.lowercased() == "anonymous" &&
-               values.authorLastName == "" { values.authorFirstName = "" }
-            do {
-                try _ = addQuote(context: context, values: values)
-            } catch {
-                print(
-                    "Skipping malformed or duplicate quote: \(values)\n" +
-                    "Details: \(error)"
-                )
+        var text: String = ""
+        var authorFirstName: String = ""
+        var authorLastName: String = ""
+        var lastCharacterWasLongDash: Bool = false
+        var inAuthorFirstNamePart: Bool = false
+        var inAuthorLastNamePart: Bool = false
+        for c in "\(quotes)\n" {
+            if c == "\n" {
+                if authorLastName.isEmpty {
+                    if authorFirstName.isEmpty {
+                        authorFirstName = fallbackAuthorFirstName
+                        authorLastName = fallbackAuthorLastName
+                    } else if authorFirstName.lowercased() == "anonymous" {
+                        authorFirstName = ""
+                        authorLastName = ""
+                    }
+                }
+                do {
+                    try _ = addQuote(
+                        context: context,
+                        values: QuoteValues(
+                            collection: quoteCollection,
+                            text: text,
+                            authorFirstName: authorFirstName,
+                            authorLastName: authorLastName,
+                            tags: tags
+                        ),
+                        commitChangesImmediately: false // Very important!
+                    )
+                } catch {
+                    print(
+                        "Skipping malformed or duplicate quote. " +
+                        "Details: \(error)"
+                    )
+                }
+                text = ""
+                authorFirstName = ""
+                authorLastName = ""
+                lastCharacterWasLongDash = false
+                inAuthorFirstNamePart = false
+                inAuthorLastNamePart = false
+            } else if inAuthorFirstNamePart {
+                if c.isWhitespace && !authorFirstName.isEmpty {
+                    inAuthorFirstNamePart = false
+                    inAuthorLastNamePart = true
+                } else {
+                    authorFirstName.append(c)
+                }
+            } else if inAuthorLastNamePart {
+                authorLastName.append(c)
+            } else if c == "—" {
+                if lastCharacterWasLongDash {
+                    inAuthorFirstNamePart = true
+                }
+                lastCharacterWasLongDash = true
+            } else {
+                text.append(c)
             }
         }
+        commitChanges(context: context)
     }
 
     static func bulkEditQuotes(
@@ -285,7 +305,7 @@ struct DatabaseFunctions {
                 }
             }
         }
-        updateContext(context: context)
+        commitChanges(context: context)
     }
 
     static func bulkMoveQuotes(
@@ -294,6 +314,6 @@ struct DatabaseFunctions {
         newCollection: QuoteCollection
     ) {
         quotes.forEach({ quote in quote.collection = newCollection })
-        updateContext(context: context)
+        commitChanges(context: context)
     }
 }

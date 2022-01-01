@@ -47,20 +47,20 @@ struct QuoteView: View {
                 .tint(.accentColor)
                 .onChange(of: displayQuotationMarks) { newValue in
                     quote.displayQuotationMarks = newValue
-                    DatabaseFunctions.updateContext(context: context)
+                    DatabaseFunctions.commitChanges(context: context)
                 }
                 Toggle(isOn: $displayAuthor) { Text("Display author") }
                 .tint(.accentColor)
                 .onChange(of: displayAuthor) { newValue in
                     quote.displayAuthor = newValue
-                    DatabaseFunctions.updateContext(context: context)
+                    DatabaseFunctions.commitChanges(context: context)
                 }
                 if quote.displayAuthor {
                     Toggle(isOn: $displayAuthorOnNewLine) { Text("Display author on new line") }
                     .tint(.accentColor)
                     .onChange(of: displayAuthorOnNewLine) { newValue in
                         quote.displayAuthorOnNewLine = newValue
-                        DatabaseFunctions.updateContext(context: context)
+                        DatabaseFunctions.commitChanges(context: context)
                     }
                 }
             }

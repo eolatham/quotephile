@@ -35,7 +35,7 @@ struct PersistenceManager {
                 )
             }
         }
-        DatabaseFunctions.updateContext(context: context)
+        DatabaseFunctions.commitChanges(context: context)
         return manager
     }()
 }
