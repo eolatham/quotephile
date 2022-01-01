@@ -5,6 +5,5 @@ struct CancelButtonView: View {
 
     var body: some View {
         Button("Cancel") { dismiss() }
-        .foregroundColor(.accentColor)
     }
 }

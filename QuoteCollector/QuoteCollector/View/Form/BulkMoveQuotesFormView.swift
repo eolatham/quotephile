@@ -89,9 +89,7 @@ struct _BulkMoveQuotesView: View {
                 Alert(
                     title: Text("Error"),
                     message: Text("No destination is selected!"),
-                    dismissButton: .default(
-                        Text("Dismiss").foregroundColor(.accentColor)
-                    )
+                    dismissButton: .default(Text("Dismiss"))
                 )
             }
         }

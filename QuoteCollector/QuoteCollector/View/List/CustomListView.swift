@@ -162,9 +162,7 @@ struct CustomListView<
                         exitSelectionMode()
                     }
                 },
-                secondaryButton: .cancel(
-                    Text("No, cancel").foregroundColor(.accentColor)
-                )
+                secondaryButton: .cancel(Text("No, cancel"))
             )
         }
     }
@@ -243,58 +241,33 @@ struct CustomListItemView<
     @ObservedObject var entity: Entity
     @Binding var selectedEntities: Set<Entity>
     var inSelectionMode: Bool
-    var rowView: RowView
-    var pageView: PageView
+    var rowViewBuilder: (Entity) -> RowView
+    var pageViewBuilder: (Entity) -> PageView
     var editSheetViewBuilder: ((Entity) -> EditSheetView)?
     var moveSheetViewBuilder: ((Entity) -> MoveSheetView)?
     var deleteFunction: ((Entity) -> Void)?
     var deleteAlertMessage: (Entity) -> String
 
-    private var isSelected: Bool
-
     @State private var showEditView: Bool = false
     @State private var showMoveView: Bool = false
     @State private var showDeleteAlert: Bool = false
 
-    init(
-        entity: Entity,
-        selectedEntities: Binding<Set<Entity>>,
-        inSelectionMode: Bool,
-        @ViewBuilder rowViewBuilder: (Entity) -> RowView,
-        @ViewBuilder pageViewBuilder: (Entity) -> PageView,
-        editSheetViewBuilder: ((Entity) -> EditSheetView)?,
-        moveSheetViewBuilder: ((Entity) -> MoveSheetView)?,
-        deleteFunction: ((Entity) -> Void)?,
-        deleteAlertMessage: @escaping (Entity) -> String
-    ) {
-        self.entity = entity
-        _selectedEntities = selectedEntities
-        self.inSelectionMode = inSelectionMode
-        self.rowView = rowViewBuilder(entity)
-        self.pageView = pageViewBuilder(entity)
-        self.editSheetViewBuilder = editSheetViewBuilder
-        self.moveSheetViewBuilder = moveSheetViewBuilder
-        self.deleteFunction = deleteFunction
-        self.deleteAlertMessage = deleteAlertMessage
-        self.isSelected = selectedEntities.wrappedValue.contains(entity)
-    }
-
     var body: some View {
-        VStack {
-            if inSelectionMode {
+        if inSelectionMode {
+            let isSelected = selectedEntities.contains(entity)
+            Button {
+                if isSelected { selectedEntities.remove(entity) }
+                else { selectedEntities.update(with: entity) }
+            } label: {
                 HStack {
-                    Button {
-                        if isSelected { selectedEntities.remove(entity) }
-                        else { selectedEntities.update(with: entity) }
-                    } label: { CustomListSelectionIconView(isSelected: isSelected) }
-                    rowView
+                    CustomListSelectionIconView(isSelected: isSelected)
+                    rowViewBuilder(entity)
                 }.foregroundColor(isSelected ? .accentColor : .primary)
-            } else {
-                NavigationLink { pageView } label: { rowView }
             }
-        }
-        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-            if !inSelectionMode {
+        } else {
+            NavigationLink { pageViewBuilder(entity) }
+            label: { rowViewBuilder(entity) }
+            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                 if deleteFunction != nil {
                     Button { showDeleteAlert = true } label: { Text("Delete") }
                     .tint(.red)
@@ -308,27 +281,25 @@ struct CustomListItemView<
                     .tint(.blue)
                 }
             }
-        }
-        .sheet(isPresented: $showEditView) {
-            // Only renders when editSheetViewBuilder != nil
-            editSheetViewBuilder!(entity)
-        }
-        .sheet(isPresented: $showMoveView) {
-            // Only renders when moveSheetViewBuilder != nil
-            moveSheetViewBuilder!(entity)
-        }
-        .alert(isPresented: $showDeleteAlert) {
-            // Only renders when deleteFunction != nil
-            Alert(
-                title: Text("Are you sure?"),
-                message: Text(deleteAlertMessage(entity)),
-                primaryButton: .destructive(Text("Yes, delete")) {
-                    withAnimation { deleteFunction!(entity) }
-                },
-                secondaryButton: .cancel(
-                    Text("No, cancel").foregroundColor(.accentColor)
+            .sheet(isPresented: $showEditView) {
+                // Only renders when editSheetViewBuilder != nil
+                editSheetViewBuilder!(entity)
+            }
+            .sheet(isPresented: $showMoveView) {
+                // Only renders when moveSheetViewBuilder != nil
+                moveSheetViewBuilder!(entity)
+            }
+            .alert(isPresented: $showDeleteAlert) {
+                // Only renders when deleteFunction != nil
+                Alert(
+                    title: Text("Are you sure?"),
+                    message: Text(deleteAlertMessage(entity)),
+                    primaryButton: .destructive(Text("Yes, delete")) {
+                        withAnimation { deleteFunction!(entity) }
+                    },
+                    secondaryButton: .cancel(Text("No, cancel"))
                 )
-            )
+            }
         }
     }
 }
