@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B618E9392780CEF500F14A1B /* PlainTextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B618E9382780CEF500F14A1B /* PlainTextDocument.swift */; };
-		B645C4A6275FCDC000AE1810 /* QuoteCollectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4A5275FCDC000AE1810 /* QuoteCollectorApp.swift */; };
+		B645C4A6275FCDC000AE1810 /* QuotephileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4A5275FCDC000AE1810 /* QuotephileApp.swift */; };
 		B645C4A8275FCDC000AE1810 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4A7275FCDC000AE1810 /* ContentView.swift */; };
 		B645C4AA275FCDC100AE1810 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B645C4A9275FCDC100AE1810 /* Assets.xcassets */; };
 		B645C4AD275FCDC100AE1810 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B645C4AC275FCDC100AE1810 /* Preview Assets.xcassets */; };
@@ -16,7 +16,7 @@
 		B645C4E0275FDEBC00AE1810 /* QuoteCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4DC275FDEBC00AE1810 /* QuoteCollection.swift */; };
 		B645C4E2275FDEBC00AE1810 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4DE275FDEBC00AE1810 /* Quote.swift */; };
 		B645C4ED275FEA0700AE1810 /* QuoteCollectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B645C4EC275FEA0700AE1810 /* QuoteCollectionRowView.swift */; };
-		B6843A0F27664D7A00894D44 /* QuoteCollector.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6843A0D27664D7A00894D44 /* QuoteCollector.xcdatamodeld */; };
+		B6843A0F27664D7A00894D44 /* Quotephile.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6843A0D27664D7A00894D44 /* Quotephile.xcdatamodeld */; };
 		B68544DD277F658400145B57 /* AddQuotesFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68544DC277F658400145B57 /* AddQuotesFormView.swift */; };
 		B68544E1277FC24500145B57 /* CancelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68544E0277FC24500145B57 /* CancelButtonView.swift */; };
 		B686F6C827666EB200FC8573 /* QuoteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B686F6C727666EB200FC8573 /* QuoteCollectionView.swift */; };
@@ -50,8 +50,8 @@
 /* Begin PBXFileReference section */
 		B618E9382780CEF500F14A1B /* PlainTextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextDocument.swift; sourceTree = "<group>"; };
 		B63AE461276E314300FCDFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		B645C4A2275FCDC000AE1810 /* QuoteCollector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = QuoteCollector.app; path = "Quote Collector.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B645C4A5275FCDC000AE1810 /* QuoteCollectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectorApp.swift; sourceTree = "<group>"; };
+		B645C4A2275FCDC000AE1810 /* Quotephile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quotephile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B645C4A5275FCDC000AE1810 /* QuotephileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotephileApp.swift; sourceTree = "<group>"; };
 		B645C4A7275FCDC000AE1810 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B645C4A9275FCDC100AE1810 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B645C4AC275FCDC100AE1810 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 		B645C499275FCDC000AE1810 = {
 			isa = PBXGroup;
 			children = (
-				B645C4A4275FCDC000AE1810 /* Quote Collector */,
+				B645C4A4275FCDC000AE1810 /* Quotephile */,
 				B645C4A3275FCDC000AE1810 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -120,12 +120,12 @@
 		B645C4A3275FCDC000AE1810 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B645C4A2275FCDC000AE1810 /* QuoteCollector.app */,
+				B645C4A2275FCDC000AE1810 /* Quotephile.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B645C4A4275FCDC000AE1810 /* Quote Collector */ = {
+		B645C4A4275FCDC000AE1810 /* Quotephile */ = {
 			isa = PBXGroup;
 			children = (
 				B63AE461276E314300FCDFE3 /* Info.plist */,
@@ -137,7 +137,7 @@
 				B6F1AA222763EBBC004D054F /* Resources */,
 				B645C4AB275FCDC100AE1810 /* Preview Content */,
 			);
-			path = "Quote Collector";
+			path = Quotephile;
 			sourceTree = "<group>";
 		};
 		B645C4AB275FCDC100AE1810 /* Preview Content */ = {
@@ -176,7 +176,7 @@
 			children = (
 				B69E1AC2277A502C002A0150 /* DatabaseFunctions.swift */,
 				B645C4AE275FCDC100AE1810 /* PersistenceManager.swift */,
-				B6843A0D27664D7A00894D44 /* QuoteCollector.xcdatamodeld */,
+				B6843A0D27664D7A00894D44 /* Quotephile.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -270,7 +270,7 @@
 		B6F1AA212763EBB7004D054F /* App */ = {
 			isa = PBXGroup;
 			children = (
-				B645C4A5275FCDC000AE1810 /* QuoteCollectorApp.swift */,
+				B645C4A5275FCDC000AE1810 /* QuotephileApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -294,9 +294,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B645C4A1275FCDC000AE1810 /* Quote Collector */ = {
+		B645C4A1275FCDC000AE1810 /* Quotephile */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B645C4CB275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "Quote Collector" */;
+			buildConfigurationList = B645C4CB275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "Quotephile" */;
 			buildPhases = (
 				B645C49E275FCDC000AE1810 /* Sources */,
 				B645C49F275FCDC000AE1810 /* Frameworks */,
@@ -306,9 +306,9 @@
 			);
 			dependencies = (
 			);
-			name = "Quote Collector";
-			productName = "Quote Collector";
-			productReference = B645C4A2275FCDC000AE1810 /* QuoteCollector.app */;
+			name = Quotephile;
+			productName = Quotephile;
+			productReference = B645C4A2275FCDC000AE1810 /* Quotephile.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -326,7 +326,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B645C49D275FCDC000AE1810 /* Build configuration list for PBXProject "Quote Collector" */;
+			buildConfigurationList = B645C49D275FCDC000AE1810 /* Build configuration list for PBXProject "Quotephile" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -339,7 +339,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B645C4A1275FCDC000AE1810 /* Quote Collector */,
+				B645C4A1275FCDC000AE1810 /* Quotephile */,
 			);
 		};
 /* End PBXProject section */
@@ -390,11 +390,11 @@
 				B686F6D02766745100FC8573 /* SingleAddQuoteFormView.swift in Sources */,
 				B645C4E2275FDEBC00AE1810 /* Quote.swift in Sources */,
 				B6B5707D277A5F2000ECBB26 /* BulkMoveQuotesFormView.swift in Sources */,
-				B6843A0F27664D7A00894D44 /* QuoteCollector.xcdatamodeld in Sources */,
+				B6843A0F27664D7A00894D44 /* Quotephile.xcdatamodeld in Sources */,
 				B645C4E0275FDEBC00AE1810 /* QuoteCollection.swift in Sources */,
 				B6F1AA242763ECB6004D054F /* QuoteCollectionSort.swift in Sources */,
 				B6A5AF2A277EA0AA006CFC23 /* ExampleTextView.swift in Sources */,
-				B645C4A6275FCDC000AE1810 /* QuoteCollectorApp.swift in Sources */,
+				B645C4A6275FCDC000AE1810 /* QuotephileApp.swift in Sources */,
 				B6B00A742778D49F00B22C5D /* CustomListView.swift in Sources */,
 				B6A5AF2C277EA0BB006CFC23 /* SubmitButtonTextView.swift in Sources */,
 			);
@@ -526,10 +526,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Quote Collector/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Quotephile/Preview Content\"";
+				DEVELOPMENT_TEAM = K3ZRR3XKQ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Quote Collector/Info.plist";
+				INFOPLIST_FILE = Quotephile/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -540,7 +541,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "eolatham.quote-collector";
+				PRODUCT_BUNDLE_IDENTIFIER = eolatham.quotephile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -555,10 +556,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Quote Collector/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Quotephile/Preview Content\"";
+				DEVELOPMENT_TEAM = K3ZRR3XKQ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Quote Collector/Info.plist";
+				INFOPLIST_FILE = Quotephile/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -569,7 +571,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "eolatham.quote-collector";
+				PRODUCT_BUNDLE_IDENTIFIER = eolatham.quotephile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -580,7 +582,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B645C49D275FCDC000AE1810 /* Build configuration list for PBXProject "Quote Collector" */ = {
+		B645C49D275FCDC000AE1810 /* Build configuration list for PBXProject "Quotephile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B645C4C9275FCDC200AE1810 /* Debug */,
@@ -589,7 +591,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B645C4CB275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "Quote Collector" */ = {
+		B645C4CB275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "Quotephile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B645C4CC275FCDC200AE1810 /* Debug */,
@@ -601,13 +603,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		B6843A0D27664D7A00894D44 /* QuoteCollector.xcdatamodeld */ = {
+		B6843A0D27664D7A00894D44 /* Quotephile.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				B6843A0E27664D7A00894D44 /* DataModel.xcdatamodel */,
 			);
 			currentVersion = B6843A0E27664D7A00894D44 /* DataModel.xcdatamodel */;
-			path = QuoteCollector.xcdatamodeld;
+			path = Quotephile.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

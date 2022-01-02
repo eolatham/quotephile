@@ -6,7 +6,7 @@ struct PersistenceManager {
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "QuoteCollector")
+        container = NSPersistentContainer(name: "Quotephile")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }

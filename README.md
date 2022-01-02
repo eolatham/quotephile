@@ -1,4 +1,4 @@
-# Quote Collector
+# Quotephile
 
 Author: Eric Latham
 

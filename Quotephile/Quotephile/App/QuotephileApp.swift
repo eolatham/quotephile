@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct QuoteCollectorApp: App {
+struct QuotephileApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
