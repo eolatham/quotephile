@@ -208,9 +208,9 @@ struct DatabaseFunctions {
         var text: String = ""
         var authorFirstName: String = ""
         var authorLastName: String = ""
-        var lastCharacterWasLongDash: Bool = false
-        var inAuthorFirstNamePart: Bool = false
-        var inAuthorLastNamePart: Bool = false
+        var inAuthorDelimiter: Bool = false
+        var inAuthorFirstName: Bool = false
+        var inAuthorLastName: Bool = false
         for c in "\(quotes)\n" {
             if c == "\n" {
                 if authorLastName.isEmpty {
@@ -227,7 +227,7 @@ struct DatabaseFunctions {
                         context: context,
                         values: QuoteValues(
                             collection: quoteCollection,
-                            text: text,
+                            text: text.trimmingCharacters(in: ["—"]),
                             authorFirstName: authorFirstName,
                             authorLastName: authorLastName,
                             tags: tags
@@ -243,24 +243,30 @@ struct DatabaseFunctions {
                 text = ""
                 authorFirstName = ""
                 authorLastName = ""
-                lastCharacterWasLongDash = false
-                inAuthorFirstNamePart = false
-                inAuthorLastNamePart = false
-            } else if inAuthorFirstNamePart {
+                inAuthorDelimiter = false
+                inAuthorFirstName = false
+                inAuthorLastName = false
+            } else if inAuthorFirstName {
                 if c.isWhitespace && !authorFirstName.isEmpty {
-                    inAuthorFirstNamePart = false
-                    inAuthorLastNamePart = true
+                    inAuthorFirstName = false
+                    inAuthorLastName = true
                 } else {
                     authorFirstName.append(c)
                 }
-            } else if inAuthorLastNamePart {
+            } else if inAuthorLastName {
                 authorLastName.append(c)
             } else if c == "—" {
-                if lastCharacterWasLongDash {
-                    inAuthorFirstNamePart = true
+                if inAuthorDelimiter {
+                    // Second consecutive long dash; author is next
+                    inAuthorDelimiter = false
+                    inAuthorFirstName = true
+                } else {
+                    // Single long dash; maybe in author delimitter
+                    inAuthorDelimiter = true
+                    text.append(c)
                 }
-                lastCharacterWasLongDash = true
             } else {
+                inAuthorDelimiter = false
                 text.append(c)
             }
         }
