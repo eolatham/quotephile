@@ -1,6 +1,5 @@
 # TODO
 
-- Display a spinner or text to show that bulk add quotes view is working
 - Make list sections collapsible
 - Review/polish code
 - Add features list to README

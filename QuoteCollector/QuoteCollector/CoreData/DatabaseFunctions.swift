@@ -249,9 +249,11 @@ struct DatabaseFunctions {
             } else if inAuthorFirstName {
                 if c.isWhitespace {
                     if !authorFirstName.isEmpty {
+                        // End of first name
                         inAuthorFirstName = false
                         inAuthorLastName = true
                     }
+                    // Still looking for start of first name
                 } else {
                     authorFirstName.append(c)
                 }

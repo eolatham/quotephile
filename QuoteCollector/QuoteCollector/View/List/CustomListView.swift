@@ -212,6 +212,8 @@ struct CustomListSectionView<
     var singleDeleteFunction: ((Entity) -> Void)?
     var singleDeleteAlertMessage: (Entity) -> String
 
+    @State private var isCollapsed: Bool = false
+
     private var isSelected: Bool {
         for entity in section {
             if !selectedEntities.contains(entity) {
@@ -235,24 +237,28 @@ struct CustomListSectionView<
                 headerText: section.id,
                 inSelectionMode: inSelectionMode,
                 isSelected: isSelected,
-                buttonAction: {
+                selectButtonAction: {
                     if isSelected { unselectSection() }
                     else { selectSection() }
-                }
+                },
+                isCollapsed: isCollapsed,
+                collapseButtonAction: { isCollapsed.toggle() }
             )
         ) {
-            ForEach(section, id: \.self) { entity in
-                CustomListItemView(
-                    entity: entity,
-                    selectedEntities: $selectedEntities,
-                    inSelectionMode: inSelectionMode,
-                    rowViewBuilder: entityRowViewBuilder,
-                    pageViewBuilder: entityPageViewBuilder,
-                    editSheetViewBuilder: singleEditSheetViewBuilder,
-                    moveSheetViewBuilder: singleMoveSheetViewBuilder,
-                    deleteFunction: singleDeleteFunction,
-                    deleteAlertMessage: singleDeleteAlertMessage
-                )
+            if !isCollapsed {
+                ForEach(section, id: \.self) { entity in
+                    CustomListItemView(
+                        entity: entity,
+                        selectedEntities: $selectedEntities,
+                        inSelectionMode: inSelectionMode,
+                        rowViewBuilder: entityRowViewBuilder,
+                        pageViewBuilder: entityPageViewBuilder,
+                        editSheetViewBuilder: singleEditSheetViewBuilder,
+                        moveSheetViewBuilder: singleMoveSheetViewBuilder,
+                        deleteFunction: singleDeleteFunction,
+                        deleteAlertMessage: singleDeleteAlertMessage
+                    )
+                }
             }
         }
     }
@@ -351,20 +357,36 @@ struct CustomListSectionHeaderView: View {
     var headerText: String
     var inSelectionMode: Bool
     var isSelected: Bool
-    var buttonAction: () -> Void
+    var selectButtonAction: () -> Void
+    var isCollapsed: Bool
+    var collapseButtonAction: () -> Void
 
     var body: some View {
         if inSelectionMode {
             HStack {
                 Button(
-                    action: buttonAction,
+                    action: selectButtonAction,
                     label: {
                         CustomListSelectionIconView(isSelected: isSelected)
                         Text(headerText)
+                        Spacer()
                     }
+                ).foregroundColor(isSelected ? .accentColor : .secondary)
+                CustomListSectionCollapseButtonView(
+                    isCollapsed: isCollapsed,
+                    collapseButtonAction: collapseButtonAction
+                ).foregroundColor(.secondary)
+            }
+        } else {
+            HStack {
+                Text(headerText)
+                Spacer()
+                CustomListSectionCollapseButtonView(
+                    isCollapsed: isCollapsed,
+                    collapseButtonAction: collapseButtonAction
                 )
-            }.foregroundColor(isSelected ? .accentColor : .secondary)
-        } else { Text(headerText).foregroundColor(.secondary) }
+            }.foregroundColor(.secondary)
+        }
     }
 }
 
@@ -376,6 +398,24 @@ struct CustomListSelectionIconView: View {
             systemName: isSelected
                 ? "checkmark.circle.fill"
                 : "checkmark.circle"
+        )
+    }
+}
+
+struct CustomListSectionCollapseButtonView: View {
+    var isCollapsed: Bool
+    var collapseButtonAction: () -> Void
+
+    var body: some View {
+        Button(
+            action: collapseButtonAction,
+            label: {
+                Image(
+                    systemName: isCollapsed
+                        ? "arrowtriangle.up.fill"
+                        : "arrowtriangle.down.fill"
+                )
+            }
         )
     }
 }
