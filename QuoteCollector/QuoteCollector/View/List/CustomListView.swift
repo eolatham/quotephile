@@ -50,6 +50,7 @@ struct CustomListView<
 
     @State private var selectedEntities: Set<Entity> = []
     @State private var inSelectionMode: Bool = false
+    @State private var sectionIsCollapsedMap: Dictionary<String, Bool> = [:]
     @State private var showAddEntitiesView: Bool = false
     @State private var showBulkEditView: Bool = false
     @State private var showBulkMoveView: Bool = false
@@ -78,25 +79,33 @@ struct CustomListView<
         })
     }
 
+    private func sectionIsCollapsedBinding(
+        section: SectionedFetchResults<String, Entity>.Element
+    ) -> Binding<Bool> {
+        return Binding(
+            get: { sectionIsCollapsedMap[section.id] ?? false },
+            set: { sectionIsCollapsedMap[section.id] = $0 }
+        )
+    }
+
     var body: some View {
         List {
             if !inSelectionMode && constantListPrefixViewBuilder != nil {
                 constantListPrefixViewBuilder!()
             }
             ForEach(entities, id: \.id) { section in
-                withAnimation {
-                    CustomListSectionView(
-                        section: section,
-                        selectedEntities: $selectedEntities,
-                        inSelectionMode: inSelectionMode,
-                        entityRowViewBuilder: entityRowViewBuilder,
-                        entityPageViewBuilder: entityPageViewBuilder,
-                        singleEditSheetViewBuilder: singleEditSheetViewBuilder,
-                        singleMoveSheetViewBuilder: singleMoveSheetViewBuilder,
-                        singleDeleteFunction: singleDeleteFunction,
-                        singleDeleteAlertMessage: singleDeleteAlertMessage
-                    )
-                }
+                CustomListSectionView(
+                    section: section,
+                    selectedEntities: $selectedEntities,
+                    inSelectionMode: inSelectionMode,
+                    isCollapsed: sectionIsCollapsedBinding(section: section),
+                    entityRowViewBuilder: entityRowViewBuilder,
+                    entityPageViewBuilder: entityPageViewBuilder,
+                    singleEditSheetViewBuilder: singleEditSheetViewBuilder,
+                    singleMoveSheetViewBuilder: singleMoveSheetViewBuilder,
+                    singleDeleteFunction: singleDeleteFunction,
+                    singleDeleteAlertMessage: singleDeleteAlertMessage
+                )
             }
             if !inSelectionMode && constantListSuffixViewBuilder != nil {
                 constantListSuffixViewBuilder!()
@@ -205,14 +214,13 @@ struct CustomListSectionView<
     var section: SectionedFetchResults<String, Entity>.Section
     @Binding var selectedEntities: Set<Entity>
     var inSelectionMode: Bool
+    @Binding var isCollapsed: Bool
     var entityRowViewBuilder: (Entity) -> EntityRowView
     var entityPageViewBuilder: (Entity) -> EntityPageView
     var singleEditSheetViewBuilder: ((Entity) -> SingleEditSheetView)?
     var singleMoveSheetViewBuilder: ((Entity) -> SingleMoveSheetView)?
     var singleDeleteFunction: ((Entity) -> Void)?
     var singleDeleteAlertMessage: (Entity) -> String
-
-    @State private var isCollapsed: Bool = false
 
     private var isSelected: Bool {
         for entity in section {
