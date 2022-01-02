@@ -50,7 +50,7 @@
 /* Begin PBXFileReference section */
 		B618E9382780CEF500F14A1B /* PlainTextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextDocument.swift; sourceTree = "<group>"; };
 		B63AE461276E314300FCDFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		B645C4A2275FCDC000AE1810 /* QuoteCollector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuoteCollector.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B645C4A2275FCDC000AE1810 /* QuoteCollector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = QuoteCollector.app; path = "Quote Collector.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B645C4A5275FCDC000AE1810 /* QuoteCollectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCollectorApp.swift; sourceTree = "<group>"; };
 		B645C4A7275FCDC000AE1810 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B645C4A9275FCDC100AE1810 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 		B645C499275FCDC000AE1810 = {
 			isa = PBXGroup;
 			children = (
-				B645C4A4275FCDC000AE1810 /* QuoteCollector */,
+				B645C4A4275FCDC000AE1810 /* Quote Collector */,
 				B645C4A3275FCDC000AE1810 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -125,7 +125,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B645C4A4275FCDC000AE1810 /* QuoteCollector */ = {
+		B645C4A4275FCDC000AE1810 /* Quote Collector */ = {
 			isa = PBXGroup;
 			children = (
 				B63AE461276E314300FCDFE3 /* Info.plist */,
@@ -137,7 +137,7 @@
 				B6F1AA222763EBBC004D054F /* Resources */,
 				B645C4AB275FCDC100AE1810 /* Preview Content */,
 			);
-			path = QuoteCollector;
+			path = "Quote Collector";
 			sourceTree = "<group>";
 		};
 		B645C4AB275FCDC100AE1810 /* Preview Content */ = {
@@ -294,9 +294,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B645C4A1275FCDC000AE1810 /* QuoteCollector */ = {
+		B645C4A1275FCDC000AE1810 /* Quote Collector */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B645C4CB275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "QuoteCollector" */;
+			buildConfigurationList = B645C4CB275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "Quote Collector" */;
 			buildPhases = (
 				B645C49E275FCDC000AE1810 /* Sources */,
 				B645C49F275FCDC000AE1810 /* Frameworks */,
@@ -306,8 +306,8 @@
 			);
 			dependencies = (
 			);
-			name = QuoteCollector;
-			productName = QuoteCollector;
+			name = "Quote Collector";
+			productName = "Quote Collector";
 			productReference = B645C4A2275FCDC000AE1810 /* QuoteCollector.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -326,7 +326,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B645C49D275FCDC000AE1810 /* Build configuration list for PBXProject "QuoteCollector" */;
+			buildConfigurationList = B645C49D275FCDC000AE1810 /* Build configuration list for PBXProject "Quote Collector" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -339,7 +339,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B645C4A1275FCDC000AE1810 /* QuoteCollector */,
+				B645C4A1275FCDC000AE1810 /* Quote Collector */,
 			);
 		};
 /* End PBXProject section */
@@ -526,10 +526,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"QuoteCollector/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Quote Collector/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QuoteCollector/Info.plist;
+				INFOPLIST_FILE = "Quote Collector/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -540,7 +540,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eolatham.QuoteCollector;
+				PRODUCT_BUNDLE_IDENTIFIER = "eolatham.quote-collector";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -555,10 +555,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"QuoteCollector/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Quote Collector/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QuoteCollector/Info.plist;
+				INFOPLIST_FILE = "Quote Collector/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -569,7 +569,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eolatham.QuoteCollector;
+				PRODUCT_BUNDLE_IDENTIFIER = "eolatham.quote-collector";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -580,7 +580,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B645C49D275FCDC000AE1810 /* Build configuration list for PBXProject "QuoteCollector" */ = {
+		B645C49D275FCDC000AE1810 /* Build configuration list for PBXProject "Quote Collector" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B645C4C9275FCDC200AE1810 /* Debug */,
@@ -589,7 +589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B645C4CB275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "QuoteCollector" */ = {
+		B645C4CB275FCDC200AE1810 /* Build configuration list for PBXNativeTarget "Quote Collector" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B645C4CC275FCDC200AE1810 /* Debug */,
