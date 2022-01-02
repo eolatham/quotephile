@@ -247,9 +247,11 @@ struct DatabaseFunctions {
                 inAuthorFirstName = false
                 inAuthorLastName = false
             } else if inAuthorFirstName {
-                if c.isWhitespace && !authorFirstName.isEmpty {
-                    inAuthorFirstName = false
-                    inAuthorLastName = true
+                if c.isWhitespace {
+                    if !authorFirstName.isEmpty {
+                        inAuthorFirstName = false
+                        inAuthorLastName = true
+                    }
                 } else {
                     authorFirstName.append(c)
                 }
