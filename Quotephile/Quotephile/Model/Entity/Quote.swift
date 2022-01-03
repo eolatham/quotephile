@@ -22,18 +22,14 @@ class Quote: NSManagedObject {
         return name
     }
     @objc var authorFirstNameAscending: String {
-        if !authorFirstName!.isEmpty { return authorFirstName!.uppercased() }
-        else if !authorLastName!.isEmpty { return "NONE" }
-        else { return "ANONYMOUS" }
+        authorFirstName!.isEmpty ? "ANONYMOUS" : authorFirstName!.uppercased()
     }
     @objc var authorFirstNameDescending: String {
         // Add space to avoid crash upon switching sort mode
         authorFirstNameAscending + " "
     }
     @objc var authorLastNameAscending: String {
-        if !authorLastName!.isEmpty { return authorLastName!.uppercased() }
-        else if !authorFirstName!.isEmpty { return "NONE"  }
-        else { return "ANONYMOUS" }
+        authorLastName!.isEmpty ? "ANONYMOUS" : authorLastName!.uppercased()
     }
     @objc var authorLastNameDescending: String {
         // Add space to avoid crash upon switching sort mode
