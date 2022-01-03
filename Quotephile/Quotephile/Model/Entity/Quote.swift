@@ -23,7 +23,7 @@ class Quote: NSManagedObject {
     }
     @objc var authorFirstNameAscending: String {
         if !authorFirstName!.isEmpty { return authorFirstName!.uppercased() }
-        else if !authorLastName!.isEmpty { return authorLastName!.uppercased() }
+        else if !authorLastName!.isEmpty { return "NONE" }
         else { return "ANONYMOUS" }
     }
     @objc var authorFirstNameDescending: String {
@@ -32,7 +32,7 @@ class Quote: NSManagedObject {
     }
     @objc var authorLastNameAscending: String {
         if !authorLastName!.isEmpty { return authorLastName!.uppercased() }
-        else if !authorFirstName!.isEmpty { return authorFirstName!.uppercased() }
+        else if !authorFirstName!.isEmpty { return "NONE"  }
         else { return "ANONYMOUS" }
     }
     @objc var authorLastNameDescending: String {
