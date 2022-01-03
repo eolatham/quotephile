@@ -4,14 +4,5 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>UILaunchScreen</key>
-	<dict>
-		<key>UIColorName</key>
-		<string>LaunchScreenBackgroundColor</string>
-		<key>UIImageName</key>
-		<string>LaunchScreenImage</string>
-		<key>UIImageRespectsSafeAreaInsets</key>
-		<true/>
-	</dict>
 </dict>
 </plist>
