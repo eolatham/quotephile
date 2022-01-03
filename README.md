@@ -83,3 +83,9 @@ Despite my lack of formal education in iOS app development, I was able to put th
 ### Export
 
 - Export a selection of quotes to a text file
+
+## Privacy Policy
+
+- Quotephile does not collect any personal information from users.
+- Quotephile simply provides a convenient interface for managing local data (user-generated quotes) on an iOS device.
+- Content created within Quotephile is saved directly to the device that the app is installed on and is never uploaded, sent, or otherwise shared anywhere else by Quotephile without the user's explicit consent.
