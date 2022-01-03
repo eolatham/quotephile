@@ -8,20 +8,20 @@ class QuoteCollection: NSManagedObject {
     }
     @objc var nameFirstCharacterDescending: String {
         // Add space to avoid crash upon switching sort mode
-        name!.first!.uppercased() + " "
+        nameFirstCharacterAscending + " "
     }
     @objc var monthCreatedAscending: String {
         Utility.dateToMonthString(date:dateCreated!)
     }
     @objc var monthCreatedDescending: String {
         // Add space to avoid crash upon switching sort mode
-        Utility.dateToMonthString(date:dateCreated!) + " "
+        monthCreatedAscending + " "
     }
     @objc var monthChangedAscending: String {
         Utility.dateToMonthString(date:dateChanged!)
     }
     @objc var monthChangedDescending: String {
         // Add space to avoid crash upon switching sort mode
-        Utility.dateToMonthString(date:dateChanged!) + " "
+        monthChangedAscending + " "
     }
 }
