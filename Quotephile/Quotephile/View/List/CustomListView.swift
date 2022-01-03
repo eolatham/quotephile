@@ -79,6 +79,9 @@ struct CustomListView<
         })
     }
 
+    /**
+     * Adapted from [this article](https://dcordero.me/posts/binding-a-swift-dictionary-to-swiftui.html).
+     */
     private func sectionIsCollapsedBinding(
         section: SectionedFetchResults<String, Entity>.Element
     ) -> Binding<Bool> {

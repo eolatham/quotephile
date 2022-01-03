@@ -1,5 +1,8 @@
 import Foundation
 
+/**
+ * Adapted from [this article](https://www.raywenderlich.com/27201015-dynamic-core-data-with-swiftui-tutorial-for-ios).
+ */
 struct QuoteCollectionSort {
     static let sorts: [Sort<QuoteCollection>] = [
         Sort<QuoteCollection>(
