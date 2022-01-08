@@ -1,4 +1,3 @@
 # TODO
 
-- Test backing up and restoring app data with iCloud backup
-  - If successful, add iCloud backup to features list
+- Add the ability to backup and restore the entire app database
