@@ -127,19 +127,21 @@ struct CustomListView<
         .searchable(text: $searchQuery)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
-                if backupFunction != nil {
-                    Button {
-                        fileExportDocument = backupFunction!()
-                        fileExportDefaultDocumentName = backupDefaultDocumentName
-                        showFileExporter = true
-                    } label: { Text("Backup") }
-                }
-                if restoreFunction != nil {
-                    Button {
-                        showAlert = true
-                        showRestoreAlert = true
-                        showBulkDeleteAlert = false
-                    } label: { Text("Restore") }
+                if !inSelectionMode {
+                    if backupFunction != nil {
+                        Button {
+                            fileExportDocument = backupFunction!()
+                            fileExportDefaultDocumentName = backupDefaultDocumentName
+                            showFileExporter = true
+                        } label: { Text("Backup") }
+                    }
+                    if restoreFunction != nil {
+                        Button {
+                            showAlert = true
+                            showRestoreAlert = true
+                            showBulkDeleteAlert = false
+                        } label: { Text("Restore") }
+                    }
                 }
             }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -221,6 +223,7 @@ struct CustomListView<
                     secondaryButton: .cancel(Text("No, cancel"))
                 )
             } else {
+                // Restore alert
                 return Alert(
                     title: Text("Are you sure?"),
                     message: Text(restoreAlertMessage),
