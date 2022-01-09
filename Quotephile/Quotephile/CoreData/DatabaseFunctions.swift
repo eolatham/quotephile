@@ -369,4 +369,18 @@ struct DatabaseFunctions {
         }
         commitChanges(context: context)
     }
+
+    static func backup(context: NSManagedObjectContext) -> PlainTextDocument {
+        let codableCollections = fetchQuoteCollections(context: context).map({ c in c.toCodable() })
+        let encoded = try! JSONEncoder().encode(codableCollections)
+        return PlainTextDocument(text: String(decoding: encoded, as: UTF8.self))
+    }
+
+    static func restore(context: NSManagedObjectContext, backup: PlainTextDocument) {
+        let decoded = try! JSONDecoder().decode([CodableQuoteCollection].self, from: backup.data)
+        for codableQuoteCollection in decoded {
+            let _ = QuoteCollection.fromCodable(context: context, codable: codableQuoteCollection)
+        }
+        commitChanges(context: context)
+    }
 }

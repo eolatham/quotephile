@@ -1,7 +1,56 @@
 import CoreData
 
+struct CodableQuote: Codable {
+    let id: UUID
+    let dateCreated: Date
+    let dateChanged: Date
+    let text: String
+    let authorFirstName: String
+    let authorLastName: String
+    let work: String
+    let tags: String
+    let displayQuotationMarks: Bool
+    let displayAttribution: Bool
+    let displayAttributionOnNewLine: Bool
+}
+
 @objc(Quote)
 class Quote: NSManagedObject {
+    func toCodable() -> CodableQuote {
+        return CodableQuote(
+            id: id!,
+            dateCreated: dateCreated!,
+            dateChanged: dateChanged!,
+            text: text!,
+            authorFirstName: authorFirstName!,
+            authorLastName: authorLastName!,
+            work: work!,
+            tags: tags!,
+            displayQuotationMarks: displayQuotationMarks,
+            displayAttribution: displayAttribution,
+            displayAttributionOnNewLine: displayAttributionOnNewLine
+        )
+    }
+
+    static func fromCodable(
+        context: NSManagedObjectContext,
+        codable: CodableQuote
+    ) -> Quote {
+        let quote = Quote(context: context)
+        quote.id = codable.id
+        quote.dateCreated = codable.dateCreated
+        quote.dateChanged = codable.dateChanged
+        quote.text = codable.text
+        quote.authorFirstName = codable.authorFirstName
+        quote.authorLastName = codable.authorLastName
+        quote.work = codable.work
+        quote.tags = codable.tags
+        quote.displayQuotationMarks = codable.displayQuotationMarks
+        quote.displayAttribution = codable.displayAttribution
+        quote.displayAttributionOnNewLine = codable.displayAttributionOnNewLine
+        return quote
+    }
+
     @objc var exists: Bool { text != nil }
     @objc var length: Int { text!.count }
     @objc var rawText: String { text! }

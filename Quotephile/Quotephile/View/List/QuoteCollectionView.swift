@@ -123,7 +123,10 @@ struct _QuoteCollectionView: View {
                     "quotes? This action cannot be undone!"
                 },
                 bulkExportFunction: { quotes in
-                    PlainTextDocument.quoteList(quotes: quotes)
+                    PlainTextDocument(
+                        text: quotes.map({ quote in quote.exportText })
+                                    .joined(separator: "\n\n")
+                    )
                 },
                 bulkExportDefaultDocumentName: "Exported Quotes"
             )
