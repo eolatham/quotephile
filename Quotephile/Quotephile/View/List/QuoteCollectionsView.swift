@@ -94,7 +94,10 @@ struct _QuoteCollectionsView: View {
                     "delete all of their quotes. This action cannot be undone!"
                 },
                 backupFunction: { DatabaseFunctions.backup(context: context) },
-                backupDefaultDocumentName: "Quotephile Backup"
+                backupDefaultDocumentName: "Quotephile Backup",
+                restoreFunction: { backup in
+                    try DatabaseFunctions.restore(context: context, backup: backup)
+                }
             )
             .onChange(
                 of: selectedSort,

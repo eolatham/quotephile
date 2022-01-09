@@ -49,6 +49,7 @@ struct CustomListView<
     var bulkExportDefaultDocumentName: String = "Export"
     var backupFunction: (() -> PlainTextDocument)? = nil
     var backupDefaultDocumentName: String = "Backup"
+    var restoreFunction: ((PlainTextDocument) throws -> Void)? = nil
 
     @State private var selectedEntities: Set<Entity> = []
     @State private var inSelectionMode: Bool = false
@@ -57,6 +58,7 @@ struct CustomListView<
     @State private var showBulkEditView: Bool = false
     @State private var showBulkMoveView: Bool = false
     @State private var showBulkDeleteAlert: Bool = false
+    @State private var showFileImporter: Bool = false
     @State private var showFileExporter: Bool = false
     @State private var fileExportDocument: PlainTextDocument? = nil
     @State private var fileExportDefaultDocumentName: String? = nil
@@ -128,6 +130,9 @@ struct CustomListView<
                         fileExportDefaultDocumentName = backupDefaultDocumentName
                         showFileExporter = true
                     } label: { Text("Backup") }
+                }
+                if restoreFunction != nil {
+                    Button {  showFileImporter = true } label: { Text("Restore") }
                 }
             }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -203,6 +208,21 @@ struct CustomListView<
                 },
                 secondaryButton: .cancel(Text("No, cancel"))
             )
+        }
+        .fileImporter(
+            // Only renders when restoreFunction != nil
+            isPresented: $showFileImporter,
+            allowedContentTypes: [.plainText],
+            allowsMultipleSelection: false
+        ) { result in
+            do {
+                guard let file: URL = try result.get().first else { return }
+                guard let text = String(data: try Data(contentsOf: file), encoding: .utf8) else { return }
+                try restoreFunction!(PlainTextDocument(text: text))
+            } catch {
+                print("Failed to read file contents...")
+                print(error.localizedDescription)
+            }
         }
         .fileExporter(
             isPresented: $showFileExporter,

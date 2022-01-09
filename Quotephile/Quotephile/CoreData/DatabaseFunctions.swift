@@ -370,14 +370,21 @@ struct DatabaseFunctions {
         commitChanges(context: context)
     }
 
+    /**
+     * Creates a backup file containing all currently saved quote collection data.
+     */
     static func backup(context: NSManagedObjectContext) -> PlainTextDocument {
         let codableCollections = fetchQuoteCollections(context: context).map({ c in c.toCodable() })
         let encoded = try! JSONEncoder().encode(codableCollections)
         return PlainTextDocument(text: String(decoding: encoded, as: UTF8.self))
     }
 
-    static func restore(context: NSManagedObjectContext, backup: PlainTextDocument) {
-        let decoded = try! JSONDecoder().decode([CodableQuoteCollection].self, from: backup.data)
+    /**
+     * Restores quote collections from the given backup file, deleting all existing ones if successful.
+     */
+    static func restore(context: NSManagedObjectContext, backup: PlainTextDocument) throws {
+        let decoded = try JSONDecoder().decode([CodableQuoteCollection].self, from: backup.data)
+        fetchQuoteCollections(context: context).forEach({ qc in context.delete(qc) })
         for codableQuoteCollection in decoded {
             let _ = QuoteCollection.fromCodable(context: context, codable: codableQuoteCollection)
         }
