@@ -45,6 +45,7 @@ struct _QuoteCollectionView: View {
                             NSPredicate(format: "text CONTAINS[cd] %@", searchTerm),
                             NSPredicate(format: "authorFirstName CONTAINS[cd] %@", searchTerm),
                             NSPredicate(format: "authorLastName CONTAINS[cd] %@", searchTerm),
+                            NSPredicate(format: "work CONTAINS[cd] %@", searchTerm),
                             NSPredicate(format: "tags CONTAINS[cd] %@", searchTerm)
                         ]
                     )
