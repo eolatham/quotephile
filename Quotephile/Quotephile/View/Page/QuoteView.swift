@@ -20,9 +20,8 @@ struct QuoteView: View {
 
     private func displayTextFont() -> Font {
         let length = quote.length
-        if length < 100 { return .title }
-        if length < 200 { return .title2 }
-        if length < 300 { return .title3 }
+        if length < 100 { return .title2 }
+        if length < 200 { return .title3 }
         return .body
     }
 
@@ -36,7 +35,8 @@ struct QuoteView: View {
                     .textSelection(.enabled)
                     .frame(maxWidth: .infinity)
                     .fixedSize(horizontal: false, vertical: true) // Ensure text wraps
-                    .padding()
+                    .padding([.top, .bottom], 5)
+                    .padding([.leading, .trailing], 2)
                 Text("Tap and hold quote to copy or share")
                     .font(.caption)
                     .multilineTextAlignment(.center)
