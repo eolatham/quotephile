@@ -97,7 +97,12 @@ struct _QuoteCollectionsView: View {
                 backupDefaultDocumentName: "Quotephile Backup",
                 restoreFunction: { backup in
                     try DatabaseFunctions.restore(context: context, backup: backup)
-                }
+                },
+                restoreAlertMessage: (
+                    "Restoring from a backup will delete all quote collections " +
+                    "and quotes that are not in the selected backup file. " +
+                    "This action cannot be undone!"
+                )
             )
             .onChange(
                 of: selectedSort,

@@ -50,6 +50,7 @@ struct CustomListView<
     var backupFunction: (() -> PlainTextDocument)? = nil
     var backupDefaultDocumentName: String = "Backup"
     var restoreFunction: ((PlainTextDocument) throws -> Void)? = nil
+    var restoreAlertMessage: String = "This action cannot be undone!"
 
     @State private var selectedEntities: Set<Entity> = []
     @State private var inSelectionMode: Bool = false
@@ -58,6 +59,8 @@ struct CustomListView<
     @State private var showBulkEditView: Bool = false
     @State private var showBulkMoveView: Bool = false
     @State private var showBulkDeleteAlert: Bool = false
+    @State private var showRestoreAlert: Bool = false
+    @State private var showAlert: Bool = false
     @State private var showFileImporter: Bool = false
     @State private var showFileExporter: Bool = false
     @State private var fileExportDocument: PlainTextDocument? = nil
@@ -132,7 +135,11 @@ struct CustomListView<
                     } label: { Text("Backup") }
                 }
                 if restoreFunction != nil {
-                    Button {  showFileImporter = true } label: { Text("Restore") }
+                    Button {
+                        showAlert = true
+                        showRestoreAlert = true
+                        showBulkDeleteAlert = false
+                    } label: { Text("Restore") }
                 }
             }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -164,7 +171,11 @@ struct CustomListView<
                                 label: { Text("Move") }.disabled(disabled)
                         }
                         if bulkDeleteFunction != nil {
-                            Button { showBulkDeleteAlert = true }
+                            Button {
+                                showAlert = true
+                                showBulkDeleteAlert = true
+                                showRestoreAlert = false
+                            }
                                 label: { Text("Delete") }.disabled(disabled)
                         }
                         if bulkExportFunction != nil {
@@ -195,19 +206,30 @@ struct CustomListView<
             // Only renders when bulkMoveSheetViewBuilder != nil
             bulkMoveSheetViewBuilder!(selectedEntities, exitSelectionMode)
         }
-        .alert(isPresented: $showBulkDeleteAlert) {
-            // Only renders when bulkDeleteFunction != nil
-            Alert(
-                title: Text("Are you sure?"),
-                message: Text(bulkDeleteAlertMessage(selectedEntities)),
-                primaryButton: .destructive(Text("Yes, delete")) {
-                    withAnimation {
-                        bulkDeleteFunction!(selectedEntities)
-                        exitSelectionMode()
-                    }
-                },
-                secondaryButton: .cancel(Text("No, cancel"))
-            )
+        .alert(isPresented: $showAlert) {
+            if showBulkDeleteAlert {
+                // Only renders when bulkDeleteFunction != nil
+                return Alert(
+                    title: Text("Are you sure?"),
+                    message: Text(bulkDeleteAlertMessage(selectedEntities)),
+                    primaryButton: .destructive(Text("Yes, delete")) {
+                        withAnimation {
+                            bulkDeleteFunction!(selectedEntities)
+                            exitSelectionMode()
+                        }
+                    },
+                    secondaryButton: .cancel(Text("No, cancel"))
+                )
+            } else {
+                return Alert(
+                    title: Text("Are you sure?"),
+                    message: Text(restoreAlertMessage),
+                    primaryButton: .default(Text("Yes, continue")) {
+                        showFileImporter = true
+                    },
+                    secondaryButton: .cancel(Text("No, cancel"))
+                )
+            }
         }
         .fileImporter(
             // Only renders when restoreFunction != nil
