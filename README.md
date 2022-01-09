@@ -23,7 +23,7 @@ Despite my lack of formal education in iOS app development, I was able to put th
 ### Create
 
 - Create a quote collection with a unique name to hold quotes
-- Create a quote with unique text, an author, and tags
+- Create a quote with unique text, an author, a work, and tags
 - Create many quotes at once from a line-delimited list
 
 ### List
@@ -35,12 +35,12 @@ Despite my lack of formal education in iOS app development, I was able to put th
 ### Search
 
 - Search for quote collections by name
-- Search for quotes by text, author, and tags
+- Search for quotes by text, author, work, and tags
 
 ### Sort
 
 - Sort quote collections by name, date created, and date changed
-- Sort quotes by tags, author first name, author last name, date created, and date changed
+- Sort quotes by tags, author first name, author last name, work, date created, and date changed
 - Persist sort settings on a per-view basis
 
 ### Collapse
@@ -55,8 +55,8 @@ Despite my lack of formal education in iOS app development, I was able to put th
 ### Edit
 
 - Rename a quote collection individually
-- Edit a quote individually to change its text, author, or tags
-- Edit a selection of quotes in bulk to overwrite their author values and/or edit their tags
+- Edit a quote individually to change its text, author, work, and tags
+- Edit a selection of quotes in bulk to overwrite their authors and works and edit their tags
   - If editing tags, choose to replace tags, add tags, or remove tags
 
 ### Move
@@ -73,12 +73,12 @@ Despite my lack of formal education in iOS app development, I was able to put th
 
 ### Style
 
-- Customize the style of a quote in display mode by choosing whether or not to surround it with quotation marks, to include its author, and to put the author on a new line
+- Customize the style of a quote in display mode by choosing whether or not to surround it with quotation marks, to include its author and work, and to put the author and work on a new line
 - Persist style settings on a per-quote basis
 
 ### Share
 
-- Copy or share a quote from its display view
+- Copy a quote from its display view
 
 ### Export
 
