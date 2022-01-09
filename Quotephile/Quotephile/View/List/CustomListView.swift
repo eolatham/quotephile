@@ -47,6 +47,8 @@ struct CustomListView<
         = { _ in return "This action cannot be undone!" }
     var bulkExportFunction: ((_ toExport: Set<Entity>) -> PlainTextDocument)? = nil
     var bulkExportDefaultDocumentName: String = "Export"
+    var backupFunction: (() -> PlainTextDocument)? = nil
+    var backupDefaultDocumentName: String = "Backup"
 
     @State private var selectedEntities: Set<Entity> = []
     @State private var inSelectionMode: Bool = false
@@ -55,8 +57,9 @@ struct CustomListView<
     @State private var showBulkEditView: Bool = false
     @State private var showBulkMoveView: Bool = false
     @State private var showBulkDeleteAlert: Bool = false
-    @State private var showBulkExporter: Bool = false
-    @State private var bulkExportDocument: PlainTextDocument? = nil
+    @State private var showFileExporter: Bool = false
+    @State private var fileExportDocument: PlainTextDocument? = nil
+    @State private var fileExportDefaultDocumentName: String? = nil
 
     private func enterSelectionMode() {
         inSelectionMode = true
@@ -118,6 +121,15 @@ struct CustomListView<
         .listStyle(.insetGrouped)
         .searchable(text: $searchQuery)
         .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                if backupFunction != nil {
+                    Button {
+                        fileExportDocument = backupFunction!()
+                        fileExportDefaultDocumentName = backupDefaultDocumentName
+                        showFileExporter = true
+                    } label: { Text("Backup") }
+                }
+            }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if inSelectionMode {
                     Button { invertSelection() } label: { Text("Invert") }
@@ -152,10 +164,11 @@ struct CustomListView<
                         }
                         if bulkExportFunction != nil {
                             Button {
-                                bulkExportDocument = bulkExportFunction!(
+                                fileExportDocument = bulkExportFunction!(
                                     selectedEntities
                                 )
-                                showBulkExporter = true
+                                fileExportDefaultDocumentName = bulkExportDefaultDocumentName
+                                showFileExporter = true
                             } label: { Text("Export") }.disabled(disabled)
                         }
                     }
@@ -192,14 +205,14 @@ struct CustomListView<
             )
         }
         .fileExporter(
-            isPresented: $showBulkExporter,
-            document: bulkExportDocument,
+            isPresented: $showFileExporter,
+            document: fileExportDocument,
             contentType: .plainText,
-            defaultFilename: bulkExportDefaultDocumentName
+            defaultFilename: fileExportDefaultDocumentName
         ) { result in
             switch result {
             case .success(let url):
-                print("Saved export document to \(url)")
+                print("Saved document to \(url)")
             case .failure(let error):
                 print(error.localizedDescription)
             }

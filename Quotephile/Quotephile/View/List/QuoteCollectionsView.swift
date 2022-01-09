@@ -92,7 +92,9 @@ struct _QuoteCollectionsView: View {
                 bulkDeleteAlertMessage: { _ in
                     "Deleting the selected quote collections will also " +
                     "delete all of their quotes. This action cannot be undone!"
-                }
+                },
+                backupFunction: { DatabaseFunctions.backup(context: context) },
+                backupDefaultDocumentName: "Quotephile Backup"
             )
             .onChange(
                 of: selectedSort,
