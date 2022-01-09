@@ -28,6 +28,17 @@ class QuoteValues: Values {
         self.displayAuthorOnNewLine = displayAuthorOnNewLine
     }
 
+    func equals(quote: Quote) -> Bool {
+        return collection == quote.collection! &&
+               text == quote.text! &&
+               authorFirstName == quote.authorFirstName! &&
+               authorLastName == quote.authorLastName! &&
+               tags == quote.tags! &&
+               displayQuotationMarks == quote.displayQuotationMarks &&
+               displayAuthor == quote.displayAuthor &&
+               displayAuthorOnNewLine == quote.displayAuthorOnNewLine
+    }
+
     func formatAndValidate() throws {
         // Format
         text = QuoteValues.formatText(text: text)

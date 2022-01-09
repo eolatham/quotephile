@@ -5,6 +5,10 @@ class QuoteCollectionValues: Values {
         self.name = name
     }
 
+    func equals(quoteCollection: QuoteCollection) -> Bool {
+        return name == quoteCollection.name!
+    }
+
     func formatAndValidate() throws {
         // Format
         name = QuoteCollectionValues.formatName(name: name)

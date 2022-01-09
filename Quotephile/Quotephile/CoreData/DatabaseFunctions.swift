@@ -60,6 +60,9 @@ struct DatabaseFunctions {
         let now = Date.now
         let newQuote: Quote
         if quote != nil {
+            if values.equals(quote: quote!) {
+                return quote!
+            }
             if values.text != quote!.text! {
                 try assertUniqueQuoteText(context: context, text: values.text)
             }
@@ -107,6 +110,9 @@ struct DatabaseFunctions {
         let now = Date.now
         let newQuoteCollection: QuoteCollection
         if quoteCollection != nil {
+            if values.equals(quoteCollection: quoteCollection!) {
+                return quoteCollection!
+            }
             if values.name != quoteCollection!.name! {
                 try assertUniqueQuoteCollectionName(
                     context: context,
@@ -285,6 +291,8 @@ struct DatabaseFunctions {
         tags: String? = nil,
         tagsMode: EditMode = EditMode.replace
     ) {
+        if newAuthorFirstName == nil && newAuthorLastName == nil && tags == nil { return }
+        let now = Date.now
         var formattedNewAuthorFirstName: String? = nil
         var formattedNewAuthorLastName: String? = nil
         var formattedTags: String? = nil
@@ -298,6 +306,7 @@ struct DatabaseFunctions {
             formattedTags = QuoteValues.formatTags(tags: tags!)
         }
         for quote in quotes {
+            quote.dateChanged = now
             if formattedNewAuthorFirstName != nil {
                 quote.authorFirstName = formattedNewAuthorFirstName!
             }
@@ -323,7 +332,13 @@ struct DatabaseFunctions {
         quotes: Set<Quote>,
         newCollection: QuoteCollection
     ) {
-        quotes.forEach({ quote in quote.collection = newCollection })
+        let now = Date.now
+        for quote in quotes {
+            if quote.collection! != newCollection {
+                quote.dateChanged = now
+                quote.collection = newCollection
+            }
+        }
         commitChanges(context: context)
     }
 }
