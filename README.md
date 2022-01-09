@@ -84,6 +84,14 @@ Despite my lack of formal education in iOS app development, I was able to put th
 
 - Export a selection of quotes to a text file
 
+### Backup
+
+- Create a backup file containing all currently saved quote collections
+
+### Restore
+
+- Restore quote collections from a saved backup file
+
 ## Privacy Policy
 
 - Quotephile does not collect any personal information from users.
