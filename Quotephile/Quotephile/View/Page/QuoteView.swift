@@ -6,16 +6,16 @@ struct QuoteView: View {
     @ObservedObject var quote: Quote
 
     @State private var displayQuotationMarks: Bool
-    @State private var displayAuthor: Bool
-    @State private var displayAuthorOnNewLine: Bool
+    @State private var displayAttribution: Bool
+    @State private var displayAttributionOnNewLine: Bool
     @State private var showEditQuoteView: Bool
     @State private var isCopied: Bool
 
     init(quote: Quote) {
         self.quote = quote
         self.displayQuotationMarks = quote.displayQuotationMarks
-        self.displayAuthor = quote.displayAuthor
-        self.displayAuthorOnNewLine = quote.displayAuthorOnNewLine
+        self.displayAttribution = quote.displayAttribution
+        self.displayAttributionOnNewLine = quote.displayAttributionOnNewLine
         self.showEditQuoteView = false
         self.isCopied = false
     }
@@ -56,18 +56,18 @@ struct QuoteView: View {
                     quote.dateChanged = Date.now
                     DatabaseFunctions.commitChanges(context: context)
                 }
-                Toggle(isOn: $displayAuthor) { Text("Display author") }
+                Toggle(isOn: $displayAttribution) { Text("Display attribution") }
                 .tint(.accentColor)
-                .onChange(of: displayAuthor) { newValue in
-                    quote.displayAuthor = newValue
+                .onChange(of: displayAttribution) { newValue in
+                    quote.displayAttribution = newValue
                     quote.dateChanged = Date.now
                     DatabaseFunctions.commitChanges(context: context)
                 }
-                if quote.displayAuthor {
-                    Toggle(isOn: $displayAuthorOnNewLine) { Text("Display author on new line") }
+                if quote.displayAttribution {
+                    Toggle(isOn: $displayAttributionOnNewLine) { Text("Display attribution on new line") }
                     .tint(.accentColor)
-                    .onChange(of: displayAuthorOnNewLine) { newValue in
-                        quote.displayAuthorOnNewLine = newValue
+                    .onChange(of: displayAttributionOnNewLine) { newValue in
+                        quote.displayAttributionOnNewLine = newValue
                         quote.dateChanged = Date.now
                         DatabaseFunctions.commitChanges(context: context)
                     }

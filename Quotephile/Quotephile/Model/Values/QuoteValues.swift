@@ -3,29 +3,32 @@ class QuoteValues: Values {
     var text: String
     var authorFirstName: String
     var authorLastName: String
+    var work: String
     var tags: String
     var displayQuotationMarks: Bool
-    var displayAuthor: Bool
-    var displayAuthorOnNewLine: Bool
+    var displayAttribution: Bool
+    var displayAttributionOnNewLine: Bool
 
     init(
         collection: QuoteCollection,
         text: String,
         authorFirstName: String = "",
         authorLastName: String = "",
+        work: String = "",
         tags: String = "",
         displayQuotationMarks: Bool = true,
-        displayAuthor: Bool = true,
-        displayAuthorOnNewLine: Bool = true
+        displayAttribution: Bool = true,
+        displayAttributionOnNewLine: Bool = true
     ) {
         self.collection = collection
         self.text = text
         self.authorFirstName = authorFirstName
         self.authorLastName = authorLastName
+        self.work = work
         self.tags = tags
         self.displayQuotationMarks = displayQuotationMarks
-        self.displayAuthor = displayAuthor
-        self.displayAuthorOnNewLine = displayAuthorOnNewLine
+        self.displayAttribution = displayAttribution
+        self.displayAttributionOnNewLine = displayAttributionOnNewLine
     }
 
     func equals(quote: Quote) -> Bool {
@@ -33,10 +36,11 @@ class QuoteValues: Values {
                text == quote.text! &&
                authorFirstName == quote.authorFirstName! &&
                authorLastName == quote.authorLastName! &&
+               work == quote.work! &&
                tags == quote.tags! &&
                displayQuotationMarks == quote.displayQuotationMarks &&
-               displayAuthor == quote.displayAuthor &&
-               displayAuthorOnNewLine == quote.displayAuthorOnNewLine
+               displayAttribution == quote.displayAttribution &&
+               displayAttributionOnNewLine == quote.displayAttributionOnNewLine
     }
 
     func formatAndValidate() throws {
@@ -44,6 +48,7 @@ class QuoteValues: Values {
         text = QuoteValues.formatText(text: text)
         authorFirstName = QuoteValues.formatAuthor(author: authorFirstName)
         authorLastName = QuoteValues.formatAuthor(author: authorLastName)
+        work = QuoteValues.formatWork(work: work)
         tags = QuoteValues.formatTags(tags: tags)
         // Validate
         if text.isEmpty {
@@ -63,6 +68,13 @@ class QuoteValues: Values {
      */
     static func formatAuthor(author: String) -> String {
         return Utility.cleanWhitespace(string: author)
+    }
+
+    /**
+     * Trims leading and trailing whitespace from the given string.
+     */
+    static func formatWork(work: String) -> String {
+        return Utility.cleanWhitespace(string: work)
     }
 
     /**

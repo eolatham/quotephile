@@ -13,6 +13,7 @@ struct SingleAddQuoteFormView: View {
     @State private var text: String
     @State private var authorFirstName: String
     @State private var authorLastName: String
+    @State private var work: String
     @State private var tags: String
     @State private var isError: Bool
     @State private var errorMessage: String?
@@ -24,11 +25,13 @@ struct SingleAddQuoteFormView: View {
             _text = State<String>(initialValue: quote!.text!)
             _authorFirstName = State<String>(initialValue: quote!.authorFirstName!)
             _authorLastName = State<String>(initialValue: quote!.authorLastName!)
+            _work = State<String>(initialValue: quote!.work!)
             _tags = State<String>(initialValue: quote!.tags!)
         } else {
             _text = State<String>(initialValue: "")
             _authorFirstName = State<String>(initialValue: "")
             _authorLastName = State<String>(initialValue: "")
+            _work = State<String>(initialValue: "")
             _tags = State<String>(initialValue: "")
         }
         _isError = State<Bool>(initialValue: false)
@@ -42,14 +45,14 @@ struct SingleAddQuoteFormView: View {
                     TextEditor(text: $text)
                 }
                 Section(header: Text("AUTHOR (optional)")) {
-                    TextField("First Name", text: $authorFirstName)
-                        .lineLimit(1)
-                    TextField("Last Name", text: $authorLastName)
-                        .lineLimit(1)
+                    TextField("First Name", text: $authorFirstName).lineLimit(1)
+                    TextField("Last Name", text: $authorLastName).lineLimit(1)
+                }
+                Section(header: Text("WORK (optional)")) {
+                    TextField("Work", text: $work).lineLimit(1)
                 }
                 Section(header: Text("TAGS (optional)")) {
-                    TextField("Tags (comma-separated)", text: $tags)
-                        .lineLimit(1)
+                    TextField("Tags (comma-separated)", text: $tags).lineLimit(1)
                 }
                 Section {
                     Button(
@@ -59,12 +62,13 @@ struct SingleAddQuoteFormView: View {
                                 text: text,
                                 authorFirstName: authorFirstName,
                                 authorLastName: authorLastName,
+                                work: work,
                                 tags: tags
                             )
                             if quote != nil {
                                 values.displayQuotationMarks = quote!.displayQuotationMarks
-                                values.displayAuthor = quote!.displayAuthor
-                                values.displayAuthorOnNewLine = quote!.displayAuthorOnNewLine
+                                values.displayAttribution = quote!.displayAttribution
+                                values.displayAttributionOnNewLine = quote!.displayAttributionOnNewLine
                             }
                             do {
                                 try _ = DatabaseFunctions.addQuote(

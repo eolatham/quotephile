@@ -10,6 +10,8 @@ struct BulkEditQuotesFormView: View {
     @State private var authorFirstName: String = ""
     @State private var replaceAuthorLastName: Bool = false
     @State private var authorLastName: String = ""
+    @State private var replaceWork: Bool = false
+    @State private var work: String = ""
     @State private var editTags: Bool = false
     @State private var tagsEditMode: EditMode = EditMode.replace
     @State private var tags: String = ""
@@ -21,22 +23,26 @@ struct BulkEditQuotesFormView: View {
                     Toggle(isOn: $replaceAuthorFirstName) { Text("Replace author first name") }
                         .tint(.accentColor)
                     if replaceAuthorFirstName {
-                        TextField("First Name", text: $authorFirstName)
-                            .lineLimit(1)
+                        TextField("First Name", text: $authorFirstName).lineLimit(1)
                     }
                     Toggle(isOn: $replaceAuthorLastName) { Text("Replace author last name") }
                         .tint(.accentColor)
                     if replaceAuthorLastName {
-                        TextField("Last Name", text: $authorLastName)
-                            .lineLimit(1)
+                        TextField("Last Name", text: $authorLastName).lineLimit(1)
+                    }
+                }
+                Section(header: Text("WORK (optional)")) {
+                    Toggle(isOn: $replaceWork) { Text("Replace work") }
+                        .tint(.accentColor)
+                    if replaceWork {
+                        TextField("Work", text: $work).lineLimit(1)
                     }
                 }
                 Section(header: Text("TAGS (optional)")) {
                     Toggle(isOn: $editTags) { Text("Edit tags") }
                         .tint(.accentColor)
                     if editTags {
-                        TextField("Tags (comma-separated)", text: $tags)
-                            .lineLimit(1)
+                        TextField("Tags (comma-separated)", text: $tags).lineLimit(1)
                         Picker("Mode", selection: $tagsEditMode) {
                             Text("Replace").tag(EditMode.replace)
                             Text("Add").tag(EditMode.add)
@@ -52,6 +58,7 @@ struct BulkEditQuotesFormView: View {
                                 quotes: quotes,
                                 newAuthorFirstName: replaceAuthorFirstName ? authorFirstName : nil,
                                 newAuthorLastName: replaceAuthorLastName ? authorLastName : nil,
+                                newWork: replaceWork ? work : nil,
                                 tags: editTags ? tags : nil,
                                 tagsMode: tagsEditMode
                             )

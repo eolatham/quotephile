@@ -9,6 +9,7 @@ struct BulkAddQuotesFormView: View {
     @State private var quotes: String = ""
     @State private var fallbackAuthorFirstName: String = ""
     @State private var fallbackAuthorLastName: String = ""
+    @State private var fallbackWork: String = ""
     @State private var tags: String = ""
 
     var body: some View {
@@ -18,15 +19,15 @@ struct BulkAddQuotesFormView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         InstructionsTextView(
                             text: (
-                                "Enter or paste a list of quotes below, with one quote " +
-                                "per line and authors attributed after two long dashes."
+                                "Enter or paste a list of quotes below, with one quote per " +
+                                "line and authors and works attributed after two long dashes."
                             )
                         )
                         Spacer()
                         ExampleTextView(text: "Example:")
                         ExampleTextView(
                             text: (
-                                "A good quote. ——Author Name\n" +
+                                "A good quote. ——Author Name, Work Title\n" +
                                 "Another good one. ——Author Name\n" +
                                 "And an anonymous one.\n" +
                                 "..."
@@ -46,10 +47,19 @@ struct BulkAddQuotesFormView: View {
                             )
                         )
                     }.padding([.top, .bottom], 10)
-                    TextField("First Name", text: $fallbackAuthorFirstName)
-                        .lineLimit(1)
-                    TextField("Last Name", text: $fallbackAuthorLastName)
-                        .lineLimit(1)
+                    TextField("First Name", text: $fallbackAuthorFirstName).lineLimit(1)
+                    TextField("Last Name", text: $fallbackAuthorLastName).lineLimit(1)
+                }
+                Section(header: Text("FALLBACK WORK (optional)")) {
+                    VStack(alignment: .leading) {
+                        InstructionsTextView(
+                            text: (
+                                "Specify a fallback work to assign to input " +
+                                "quotes that have no attributed work."
+                            )
+                        )
+                    }.padding([.top, .bottom], 10)
+                    TextField("Work", text: $fallbackWork).lineLimit(1)
                 }
                 Section(header: Text("TAGS (optional)")) {
                     VStack(alignment: .leading) {
@@ -60,8 +70,7 @@ struct BulkAddQuotesFormView: View {
                             )
                         )
                     }.padding([.top, .bottom], 10)
-                    TextField("Tags (comma-separated)", text: $tags)
-                        .lineLimit(1)
+                    TextField("Tags (comma-separated)", text: $tags).lineLimit(1)
                 }
                 Section {
                     Button(
@@ -72,6 +81,7 @@ struct BulkAddQuotesFormView: View {
                                 quotes: quotes,
                                 fallbackAuthorFirstName: fallbackAuthorFirstName,
                                 fallbackAuthorLastName: fallbackAuthorLastName,
+                                fallbackWork: fallbackWork,
                                 tags: tags
                             )
                             dismiss()

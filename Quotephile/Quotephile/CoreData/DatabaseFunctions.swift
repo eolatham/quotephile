@@ -78,10 +78,11 @@ struct DatabaseFunctions {
         newQuote.text = values.text
         newQuote.authorFirstName = values.authorFirstName
         newQuote.authorLastName = values.authorLastName
+        newQuote.work = values.work
         newQuote.tags = values.tags
         newQuote.displayQuotationMarks = values.displayQuotationMarks
-        newQuote.displayAuthor = values.displayAuthor
-        newQuote.displayAuthorOnNewLine = values.displayAuthorOnNewLine
+        newQuote.displayAttribution = values.displayAttribution
+        newQuote.displayAttributionOnNewLine = values.displayAttributionOnNewLine
         if commitChangesImmediately { commitChanges(context: context) }
         return newQuote
     }
@@ -209,14 +210,17 @@ struct DatabaseFunctions {
         quotes: String,
         fallbackAuthorFirstName: String = "",
         fallbackAuthorLastName: String = "",
+        fallbackWork: String = "",
         tags: String = ""
     ) {
         var text: String = ""
         var authorFirstName: String = ""
         var authorLastName: String = ""
-        var inAuthorDelimiter: Bool = false
+        var work: String = ""
+        var inAttributionDelimiter: Bool = false
         var inAuthorFirstName: Bool = false
         var inAuthorLastName: Bool = false
+        var inWork: Bool = false
         for c in "\(quotes)\n" {
             if c == "\n" {
                 if authorLastName.isEmpty {
@@ -236,6 +240,7 @@ struct DatabaseFunctions {
                             text: text.trimmingCharacters(in: ["—"]),
                             authorFirstName: authorFirstName,
                             authorLastName: authorLastName,
+                            work: work,
                             tags: tags
                         ),
                         commitChangesImmediately: false // Very important!
@@ -249,11 +254,17 @@ struct DatabaseFunctions {
                 text = ""
                 authorFirstName = ""
                 authorLastName = ""
-                inAuthorDelimiter = false
+                work = ""
+                inAttributionDelimiter = false
                 inAuthorFirstName = false
                 inAuthorLastName = false
+                inWork = false
             } else if inAuthorFirstName {
-                if c.isWhitespace {
+                if c == "," {
+                    // End of first name
+                    inAuthorFirstName = false
+                    inWork = true
+                } else if c.isWhitespace {
                     if !authorFirstName.isEmpty {
                         // End of first name
                         inAuthorFirstName = false
@@ -264,19 +275,27 @@ struct DatabaseFunctions {
                     authorFirstName.append(c)
                 }
             } else if inAuthorLastName {
-                authorLastName.append(c)
+                if c == "," {
+                    // End of last name
+                    inAuthorLastName = false
+                    inWork = true
+                } else {
+                    authorLastName.append(c)
+                }
+            } else if inWork {
+                work.append(c)
             } else if c == "—" {
-                if inAuthorDelimiter {
+                if inAttributionDelimiter {
                     // Second consecutive long dash; author is next
-                    inAuthorDelimiter = false
+                    inAttributionDelimiter = false
                     inAuthorFirstName = true
                 } else {
                     // Single long dash; maybe in author delimitter
-                    inAuthorDelimiter = true
+                    inAttributionDelimiter = true
                     text.append(c)
                 }
             } else {
-                inAuthorDelimiter = false
+                inAttributionDelimiter = false
                 text.append(c)
             }
         }
@@ -288,19 +307,25 @@ struct DatabaseFunctions {
         quotes: Set<Quote>,
         newAuthorFirstName: String? = nil,
         newAuthorLastName: String? = nil,
+        newWork: String? = nil,
         tags: String? = nil,
         tagsMode: EditMode = EditMode.replace
     ) {
-        if newAuthorFirstName == nil && newAuthorLastName == nil && tags == nil { return }
+        if newAuthorFirstName == nil && newAuthorLastName == nil
+           && newWork == nil && tags == nil { return }
         let now = Date.now
         var formattedNewAuthorFirstName: String? = nil
         var formattedNewAuthorLastName: String? = nil
+        var formattedNewWork: String? = nil
         var formattedTags: String? = nil
         if newAuthorFirstName != nil {
             formattedNewAuthorFirstName = QuoteValues.formatAuthor(author: newAuthorFirstName!)
         }
         if newAuthorLastName != nil {
             formattedNewAuthorLastName = QuoteValues.formatAuthor(author: newAuthorLastName!)
+        }
+        if newWork != nil {
+            formattedNewWork = QuoteValues.formatWork(work: newWork!)
         }
         if tags != nil {
             formattedTags = QuoteValues.formatTags(tags: tags!)
@@ -312,6 +337,9 @@ struct DatabaseFunctions {
             }
             if formattedNewAuthorLastName != nil {
                 quote.authorLastName = formattedNewAuthorLastName!
+            }
+            if formattedNewWork != nil {
+                quote.work = formattedNewWork!
             }
             if formattedTags != nil {
                 switch tagsMode {

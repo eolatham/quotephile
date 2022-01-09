@@ -61,30 +61,48 @@ struct QuoteSort {
         ),
         Sort<Quote>(
             id: 6,
+            name: "Work ↑",
+            descriptors: [
+                SortDescriptor(\Quote.work, order: .forward),
+                SortDescriptor(\Quote.dateCreated, order: .reverse)
+            ],
+            section: \Quote.workAscending
+        ),
+        Sort<Quote>(
+            id: 7,
+            name: "Work ↓",
+            descriptors: [
+                SortDescriptor(\Quote.work, order: .reverse),
+                SortDescriptor(\Quote.dateCreated, order: .reverse)
+            ],
+            section: \Quote.workDescending
+        ),
+        Sort<Quote>(
+            id: 8,
             name: "Date Created ↑",
             descriptors: [SortDescriptor(\Quote.dateCreated, order: .forward)],
             section: \Quote.monthCreatedAscending
         ),
         Sort<Quote>(
-            id: 7,
+            id: 9,
             name: "Date Created ↓",
             descriptors: [SortDescriptor(\Quote.dateCreated, order: .reverse)],
             section: \Quote.monthCreatedDescending
         ),
         Sort<Quote>(
-            id: 8,
+            id: 10,
             name: "Date Changed ↑",
             descriptors: [SortDescriptor(\Quote.dateChanged, order: .forward)],
             section: \Quote.monthChangedAscending
         ),
         Sort<Quote>(
-            id: 9,
+            id: 11,
             name: "Date Changed ↓",
             descriptors: [SortDescriptor(\Quote.dateChanged, order: .reverse)],
             section: \Quote.monthChangedDescending
         )
     ]
-    static var `default`: Sort<Quote> { sorts[7] }
+    static var `default`: Sort<Quote> { sorts[9] }
 
     /**
      * Helper for the user default methods.
