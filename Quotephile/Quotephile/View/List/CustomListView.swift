@@ -242,7 +242,9 @@ struct CustomListView<
         ) { result in
             do {
                 guard let file: URL = try result.get().first else { return }
+                _ = file.startAccessingSecurityScopedResource()
                 guard let text = String(data: try Data(contentsOf: file), encoding: .utf8) else { return }
+                file.stopAccessingSecurityScopedResource()
                 try restoreFunction!(PlainTextDocument(text: text))
             } catch {
                 print("Failed to read file contents...")
