@@ -33,8 +33,9 @@ struct _QuoteCollectionView: View {
     }
 
     private var predicate: NSPredicate? {
+        let trimmedSearchTerm = searchTerm.trimmingCharacters(in: .whitespaces)
         let collectionPredicate = NSPredicate(format: "collection = %@", quoteCollection)
-        if searchTerm.isEmpty {
+        if trimmedSearchTerm.isEmpty {
             return collectionPredicate
         } else {
             return NSCompoundPredicate(
@@ -42,11 +43,11 @@ struct _QuoteCollectionView: View {
                     collectionPredicate,
                     NSCompoundPredicate(
                         orPredicateWithSubpredicates: [
-                            NSPredicate(format: "text CONTAINS[cd] %@", searchTerm),
-                            NSPredicate(format: "authorFirstName CONTAINS[cd] %@", searchTerm),
-                            NSPredicate(format: "authorLastName CONTAINS[cd] %@", searchTerm),
-                            NSPredicate(format: "work CONTAINS[cd] %@", searchTerm),
-                            NSPredicate(format: "tags CONTAINS[cd] %@", searchTerm)
+                            NSPredicate(format: "text CONTAINS[cd] %@", trimmedSearchTerm),
+                            NSPredicate(format: "authorFirstName CONTAINS[cd] %@", trimmedSearchTerm),
+                            NSPredicate(format: "authorLastName CONTAINS[cd] %@", trimmedSearchTerm),
+                            NSPredicate(format: "work CONTAINS[cd] %@", trimmedSearchTerm),
+                            NSPredicate(format: "tags CONTAINS[cd] %@", trimmedSearchTerm)
                         ]
                     )
                 ]

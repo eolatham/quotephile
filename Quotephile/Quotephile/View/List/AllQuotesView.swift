@@ -25,15 +25,20 @@ struct _AllQuotesView: View {
     }
 
     private var predicate: NSPredicate? {
-        searchTerm.isEmpty ? nil : NSCompoundPredicate(
-            orPredicateWithSubpredicates: [
-                NSPredicate(format: "text CONTAINS[cd] %@", searchTerm),
-                NSPredicate(format: "authorFirstName CONTAINS[cd] %@", searchTerm),
-                NSPredicate(format: "authorLastName CONTAINS[cd] %@", searchTerm),
-                NSPredicate(format: "work CONTAINS[cd] %@", searchTerm),
-                NSPredicate(format: "tags CONTAINS[cd] %@", searchTerm)
-            ]
-        )
+        let trimmedSearchTerm = searchTerm.trimmingCharacters(in: .whitespaces)
+        if trimmedSearchTerm.isEmpty {
+            return nil
+        } else {
+            return NSCompoundPredicate(
+                orPredicateWithSubpredicates: [
+                    NSPredicate(format: "text CONTAINS[cd] %@", trimmedSearchTerm),
+                    NSPredicate(format: "authorFirstName CONTAINS[cd] %@", trimmedSearchTerm),
+                    NSPredicate(format: "authorLastName CONTAINS[cd] %@", trimmedSearchTerm),
+                    NSPredicate(format: "work CONTAINS[cd] %@", trimmedSearchTerm),
+                    NSPredicate(format: "tags CONTAINS[cd] %@", trimmedSearchTerm)
+                ]
+            )
+        }
     }
 
     var body: some View {

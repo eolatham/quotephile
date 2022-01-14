@@ -27,9 +27,10 @@ struct _QuoteCollectionsView: View {
     }
 
     private var predicate: NSPredicate? {
-        searchTerm.isEmpty ? nil : NSPredicate(
+        let trimmedSearchTerm = searchTerm.trimmingCharacters(in: .whitespaces)
+        return trimmedSearchTerm.isEmpty ? nil : NSPredicate(
             format: "name CONTAINS[cd] %@",
-            searchTerm
+            trimmedSearchTerm
         )
     }
 
