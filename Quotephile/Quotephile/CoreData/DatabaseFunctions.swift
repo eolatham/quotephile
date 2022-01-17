@@ -12,6 +12,28 @@ struct DatabaseFunctions {
         catch { print("Save error: \(error)") }
     }
 
+    /**
+     * Ensures that all quotes have correct `authorFullName` values.
+     *
+     * Runs at app startup since version 1.3 because `authorFullName`
+     * was introduced in version 1.3.
+     */
+    static func ensureCorrectAuthorFullNameValues(context: NSManagedObjectContext) {
+        let key: String = "authorFullNameValuesAreInitialized"
+        let alreadyDone: Bool? = UserDefaults.standard.object(forKey: key) as? Bool
+        if alreadyDone == true { return }
+        let fetchRequest: NSFetchRequest<Quote> = Quote.fetchRequest()
+        let quotes: [Quote]
+        do { quotes = try context.fetch(fetchRequest) }
+        catch { quotes = [] }
+        for quote in quotes {
+            quote.authorFullName = Utility.join(
+                strings: [quote.authorFirstName!, quote.authorLastName!]
+            )
+        }
+        UserDefaults.standard.set(true, forKey: key)
+    }
+
     static func assertUniqueQuoteText(context: NSManagedObjectContext, text: String) throws {
         let fetchRequest: NSFetchRequest<Quote> = Quote.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "text LIKE %@", text)

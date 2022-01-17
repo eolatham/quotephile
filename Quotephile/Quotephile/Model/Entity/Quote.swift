@@ -7,6 +7,7 @@ struct CodableQuote: Codable {
     let text: String
     let authorFirstName: String
     let authorLastName: String
+    let authorFullName: String
     let work: String
     let tags: String
     let displayQuotationMarks: Bool
@@ -25,6 +26,7 @@ class Quote: NSManagedObject {
             text: text!,
             authorFirstName: authorFirstName!,
             authorLastName: authorLastName!,
+            authorFullName: authorFullName!,
             work: work!,
             tags: tags!,
             displayQuotationMarks: displayQuotationMarks,
@@ -45,6 +47,7 @@ class Quote: NSManagedObject {
         quote.text = codable.text
         quote.authorFirstName = codable.authorFirstName
         quote.authorLastName = codable.authorLastName
+        quote.authorFullName = codable.authorFullName
         quote.work = codable.work
         quote.tags = codable.tags
         quote.displayQuotationMarks = codable.displayQuotationMarks
