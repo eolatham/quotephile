@@ -10,8 +10,9 @@ struct CodableQuote: Codable {
     let work: String
     let tags: String
     let displayQuotationMarks: Bool
-    let displayAttribution: Bool
-    let displayAttributionOnNewLine: Bool
+    let displayAuthor: Bool
+    let displayWork: Bool
+    let displayAuthorAndWorkOnNewLine: Bool
 }
 
 @objc(Quote)
@@ -27,8 +28,9 @@ class Quote: NSManagedObject {
             work: work!,
             tags: tags!,
             displayQuotationMarks: displayQuotationMarks,
-            displayAttribution: displayAttribution,
-            displayAttributionOnNewLine: displayAttributionOnNewLine
+            displayAuthor: displayAuthor,
+            displayWork: displayWork,
+            displayAuthorAndWorkOnNewLine: displayAuthorAndWorkOnNewLine
         )
     }
 
@@ -46,30 +48,35 @@ class Quote: NSManagedObject {
         quote.work = codable.work
         quote.tags = codable.tags
         quote.displayQuotationMarks = codable.displayQuotationMarks
-        quote.displayAttribution = codable.displayAttribution
-        quote.displayAttributionOnNewLine = codable.displayAttributionOnNewLine
+        quote.displayAuthor = codable.displayAuthor
+        quote.displayWork = codable.displayWork
+        quote.displayAuthorAndWorkOnNewLine = codable.displayAuthorAndWorkOnNewLine
         return quote
     }
 
     @objc var exists: Bool { text != nil }
     @objc var length: Int { text!.count }
     @objc var rawText: String { text! }
-    @objc var exportText: String { "\(rawText) ——\(attribution)" }
+    @objc var author: String {
+        var a = authorFullName!.trimmingCharacters(in: .whitespaces)
+        if a.isEmpty { a = "Anonymous" }
+        return a
+    }
+    @objc var authorAndWork: String {
+        work!.isEmpty ? author : "\(author), \(work!)"
+    }
+    @objc var exportText: String { "\(rawText) ——\(authorAndWork)" }
     @objc var displayText: String {
-        var s: String = rawText
-        if displayQuotationMarks { s = "“" + s + "”" }
-        if displayAttribution {
-            s = s + (displayAttributionOnNewLine ? "\n" : " ") + "—" + attribution
+        var s: String = displayQuotationMarks ? "“\(rawText)”" : rawText
+        let delimiter: String = displayAuthorAndWorkOnNewLine ? "\n—" : " —"
+        if displayAuthor && displayWork {
+            s += delimiter + authorAndWork
+        } else if displayAuthor {
+            s += delimiter + author
+        } else if displayWork && !work!.isEmpty {
+            s += delimiter + work!
         }
         return s
-    }
-    @objc var attribution: String {
-        var authorName = [authorFirstName!, authorLastName!]
-            .joined(separator: " ")
-            .trimmingCharacters(in: .whitespaces)
-        if authorName.isEmpty { authorName = "Anonymous" }
-        if work!.isEmpty { return authorName }
-        else { return "\(authorName), \(work!)" }
     }
     @objc var authorFirstNameAscending: String {
         authorFirstName!.isEmpty ? "NONE" : authorFirstName!.uppercased()

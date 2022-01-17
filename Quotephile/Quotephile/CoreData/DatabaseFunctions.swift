@@ -78,11 +78,15 @@ struct DatabaseFunctions {
         newQuote.text = values.text
         newQuote.authorFirstName = values.authorFirstName
         newQuote.authorLastName = values.authorLastName
+        newQuote.authorFullName = Utility.join(
+            strings: [values.authorFirstName, values.authorLastName]
+        )
         newQuote.work = values.work
         newQuote.tags = values.tags
         newQuote.displayQuotationMarks = values.displayQuotationMarks
-        newQuote.displayAttribution = values.displayAttribution
-        newQuote.displayAttributionOnNewLine = values.displayAttributionOnNewLine
+        newQuote.displayAuthor = values.displayAuthor
+        newQuote.displayWork = values.displayWork
+        newQuote.displayAuthorAndWorkOnNewLine = values.displayAuthorAndWorkOnNewLine
         if commitChangesImmediately { commitChanges(context: context) }
         return newQuote
     }
@@ -351,6 +355,9 @@ struct DatabaseFunctions {
                     quote.tags = QuoteValues.removeTags(remove: formattedTags!, from: quote.tags!)
                 }
             }
+            quote.authorFullName = Utility.join(
+                strings: [quote.authorFirstName!, quote.authorLastName!]
+            )
         }
         commitChanges(context: context)
     }

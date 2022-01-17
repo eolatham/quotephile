@@ -6,16 +6,18 @@ struct QuoteView: View {
     @ObservedObject var quote: Quote
 
     @State private var displayQuotationMarks: Bool
-    @State private var displayAttribution: Bool
-    @State private var displayAttributionOnNewLine: Bool
+    @State private var displayAuthor: Bool
+    @State private var displayWork: Bool
+    @State private var displayAuthorAndWorkOnNewLine: Bool
     @State private var showEditQuoteView: Bool
     @State private var isCopied: Bool
 
     init(quote: Quote) {
         self.quote = quote
         self.displayQuotationMarks = quote.displayQuotationMarks
-        self.displayAttribution = quote.displayAttribution
-        self.displayAttributionOnNewLine = quote.displayAttributionOnNewLine
+        self.displayAuthor = quote.displayAuthor
+        self.displayWork = quote.displayWork
+        self.displayAuthorAndWorkOnNewLine = quote.displayAuthorAndWorkOnNewLine
         self.showEditQuoteView = false
         self.isCopied = false
     }
@@ -56,21 +58,26 @@ struct QuoteView: View {
                     quote.dateChanged = Date.now
                     DatabaseFunctions.commitChanges(context: context)
                 }
-                Toggle(isOn: $displayAttribution) { Text("Display attribution") }
+                Toggle(isOn: $displayAuthor) { Text("Display author") }
                 .tint(.accentColor)
-                .onChange(of: displayAttribution) { newValue in
-                    quote.displayAttribution = newValue
+                .onChange(of: displayAuthor) { newValue in
+                    quote.displayAuthor = newValue
                     quote.dateChanged = Date.now
                     DatabaseFunctions.commitChanges(context: context)
                 }
-                if quote.displayAttribution {
-                    Toggle(isOn: $displayAttributionOnNewLine) { Text("Display attribution on new line") }
-                    .tint(.accentColor)
-                    .onChange(of: displayAttributionOnNewLine) { newValue in
-                        quote.displayAttributionOnNewLine = newValue
-                        quote.dateChanged = Date.now
-                        DatabaseFunctions.commitChanges(context: context)
-                    }
+                Toggle(isOn: $displayWork) { Text("Display work") }
+                .tint(.accentColor)
+                .onChange(of: displayWork) { newValue in
+                    quote.displayWork = newValue
+                    quote.dateChanged = Date.now
+                    DatabaseFunctions.commitChanges(context: context)
+                }
+                Toggle(isOn: $displayAuthorAndWorkOnNewLine) { Text("Display author and work on new line") }
+                .tint(.accentColor)
+                .onChange(of: displayAuthorAndWorkOnNewLine) { newValue in
+                    quote.displayAuthorAndWorkOnNewLine = newValue
+                    quote.dateChanged = Date.now
+                    DatabaseFunctions.commitChanges(context: context)
                 }
             }
             if quote.tags!.count > 0 {

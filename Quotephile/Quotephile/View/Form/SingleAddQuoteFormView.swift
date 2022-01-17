@@ -67,8 +67,9 @@ struct SingleAddQuoteFormView: View {
                             )
                             if quote != nil {
                                 values.displayQuotationMarks = quote!.displayQuotationMarks
-                                values.displayAttribution = quote!.displayAttribution
-                                values.displayAttributionOnNewLine = quote!.displayAttributionOnNewLine
+                                values.displayAuthor = quote!.displayAuthor
+                                values.displayWork = quote!.displayWork
+                                values.displayAuthorAndWorkOnNewLine = quote!.displayAuthorAndWorkOnNewLine
                             }
                             do {
                                 try _ = DatabaseFunctions.addQuote(

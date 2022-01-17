@@ -6,8 +6,9 @@ class QuoteValues: Values {
     var work: String
     var tags: String
     var displayQuotationMarks: Bool
-    var displayAttribution: Bool
-    var displayAttributionOnNewLine: Bool
+    var displayAuthor: Bool
+    var displayWork: Bool
+    var displayAuthorAndWorkOnNewLine: Bool
 
     init(
         collection: QuoteCollection,
@@ -17,8 +18,9 @@ class QuoteValues: Values {
         work: String = "",
         tags: String = "",
         displayQuotationMarks: Bool = true,
-        displayAttribution: Bool = true,
-        displayAttributionOnNewLine: Bool = true
+        displayAuthor: Bool = true,
+        displayWork: Bool = true,
+        displayAuthorAndWorkOnNewLine: Bool = true
     ) {
         self.collection = collection
         self.text = text
@@ -27,8 +29,9 @@ class QuoteValues: Values {
         self.work = work
         self.tags = tags
         self.displayQuotationMarks = displayQuotationMarks
-        self.displayAttribution = displayAttribution
-        self.displayAttributionOnNewLine = displayAttributionOnNewLine
+        self.displayAuthor = displayAuthor
+        self.displayWork = displayWork
+        self.displayAuthorAndWorkOnNewLine = displayAuthorAndWorkOnNewLine
     }
 
     func equals(quote: Quote) -> Bool {
@@ -39,8 +42,9 @@ class QuoteValues: Values {
                work == quote.work! &&
                tags == quote.tags! &&
                displayQuotationMarks == quote.displayQuotationMarks &&
-               displayAttribution == quote.displayAttribution &&
-               displayAttributionOnNewLine == quote.displayAttributionOnNewLine
+               displayAuthor == quote.displayAuthor &&
+               displayWork == quote.displayWork &&
+               displayAuthorAndWorkOnNewLine == quote.displayAuthorAndWorkOnNewLine
     }
 
     func formatAndValidate() throws {

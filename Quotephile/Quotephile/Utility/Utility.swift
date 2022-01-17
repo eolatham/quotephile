@@ -19,14 +19,9 @@ struct Utility {
             .joined(separator: " ")
     }
 
-    static func join(strings: [String?], separator: String = "\n") -> String {
-        var joined = ""
-        for s in strings {
-            if s != nil {
-                if joined.isEmpty { joined = s! }
-                else { joined = joined + separator + s! }
-            }
-        }
-        return joined
+    static func join(strings: [String], separator: String = " ") -> String {
+        return strings
+            .joined(separator: separator)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

@@ -10,7 +10,7 @@ struct QuoteRowView: View {
                     .font(.body)
                     .lineLimit(1)
                     .truncationMode(.tail)
-                Text(quote.attribution)
+                Text(quote.authorAndWork)
                     .font(.caption)
                     .lineLimit(1)
                     .truncationMode(.tail)

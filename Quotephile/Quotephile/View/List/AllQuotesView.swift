@@ -32,8 +32,7 @@ struct _AllQuotesView: View {
             return NSCompoundPredicate(
                 orPredicateWithSubpredicates: [
                     NSPredicate(format: "text CONTAINS[cd] %@", trimmedSearchTerm),
-                    NSPredicate(format: "authorFirstName CONTAINS[cd] %@", trimmedSearchTerm),
-                    NSPredicate(format: "authorLastName CONTAINS[cd] %@", trimmedSearchTerm),
+                    NSPredicate(format: "authorFullName CONTAINS[cd] %@", trimmedSearchTerm),
                     NSPredicate(format: "work CONTAINS[cd] %@", trimmedSearchTerm),
                     NSPredicate(format: "tags CONTAINS[cd] %@", trimmedSearchTerm)
                 ]
