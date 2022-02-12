@@ -52,11 +52,16 @@ Despite my lack of formal education in iOS app development, I was able to put th
 - Select quotes or quote collections individually and by section
 - Invert the current selection of quotes or quote collections
 
+### Style
+
+- Customize the style of a quote in display mode by choosing whether or not to surround it with quotation marks, to include its author and work, and to put the author and work on a new line
+- Persist style settings on a per-quote basis
+
 ### Edit
 
 - Rename a quote collection individually
-- Edit a quote individually to change its text, author, work, and tags
-- Edit a selection of quotes in bulk to overwrite their authors and works and edit their tags
+- Edit a quote individually to change its collection, text, author, work, and tags
+- Edit a selection of quotes in bulk to overwrite their authors and/or works, edit their tags, and change their styles
   - If editing tags, choose to replace tags, add tags, or remove tags
 
 ### Move
@@ -70,11 +75,6 @@ Despite my lack of formal education in iOS app development, I was able to put th
 - Delete a selection of quote collections in bulk (which also deletes all of their quotes)
 - Delete a quote individually
 - Delete a selection of quotes in bulk
-
-### Style
-
-- Customize the style of a quote in display mode by choosing whether or not to surround it with quotation marks, to include its author and work, and to put the author and work on a new line
-- Persist style settings on a per-quote basis
 
 ### Share
 

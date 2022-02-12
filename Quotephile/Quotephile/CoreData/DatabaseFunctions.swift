@@ -356,8 +356,9 @@ struct DatabaseFunctions {
         displayWork: Bool? = nil,
         displayAuthorAndWorkOnNewLine: Bool? = nil
     ) {
-        if newAuthorFirstName == nil && newAuthorLastName == nil
-           && newWork == nil && tags == nil { return }
+        if newAuthorFirstName == nil && newAuthorLastName == nil && newWork == nil &&
+           tags == nil && displayQuotationMarks == nil && displayAuthor == nil &&
+           displayWork == nil && displayAuthorAndWorkOnNewLine == nil { return }
         let now = Date.now
         var formattedNewAuthorFirstName: String? = nil
         var formattedNewAuthorLastName: String? = nil
