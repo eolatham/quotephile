@@ -66,7 +66,12 @@ struct _QuoteCollectionsView: View {
                 },
                 constantListPrefixViewBuilder: {
                     NavigationLink { AllQuotesView() }
-                    label: { Text("All Quotes").font(.headline) }
+                    label: {
+                        _QuoteCollectionRowView(
+                            name: "All Quotes",
+                            size: DatabaseFunctions.fetchQuoteCollectionSize(context: context)
+                        )
+                    }
                 },
                 addEntitiesSheetViewBuilder: {
                     SingleAddQuoteCollectionFormView()

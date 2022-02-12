@@ -69,14 +69,17 @@ struct DatabaseFunctions {
     }
 
     /**
-     * Returns the count of quotes contained within the given quote collection.
+     * Returns the count of quotes contained within the given quote collection
+     * (or all quote collections if no quote collection is provided).
      */
     static func fetchQuoteCollectionSize(
         context: NSManagedObjectContext,
-        quoteCollection: QuoteCollection
+        quoteCollection: QuoteCollection? = nil
     ) -> Int {
         let fetchRequest: NSFetchRequest<Quote> = Quote.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "collection == %@", quoteCollection)
+        if quoteCollection != nil {
+            fetchRequest.predicate = NSPredicate(format: "collection == %@", quoteCollection!)
+        }
         let count: Int
         do { count = try context.count(for: fetchRequest) }
         catch { count = 0 }
