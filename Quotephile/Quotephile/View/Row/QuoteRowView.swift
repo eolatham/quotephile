@@ -8,7 +8,7 @@ struct QuoteRowView: View {
             VStack(alignment: .leading) {
                 Text(quote.rawText)
                     .font(.body)
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .truncationMode(.tail)
                 Text(quote.authorAndWork)
                     .font(.caption)
