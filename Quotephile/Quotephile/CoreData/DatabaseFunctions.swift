@@ -350,7 +350,11 @@ struct DatabaseFunctions {
         newAuthorLastName: String? = nil,
         newWork: String? = nil,
         tags: String? = nil,
-        tagsMode: EditMode = EditMode.replace
+        tagsMode: EditMode = EditMode.replace,
+        displayQuotationMarks: Bool? = nil,
+        displayAuthor: Bool? = nil,
+        displayWork: Bool? = nil,
+        displayAuthorAndWorkOnNewLine: Bool? = nil
     ) {
         if newAuthorFirstName == nil && newAuthorLastName == nil
            && newWork == nil && tags == nil { return }
@@ -391,6 +395,18 @@ struct DatabaseFunctions {
                 case .remove:
                     quote.tags = QuoteValues.removeTags(remove: formattedTags!, from: quote.tags!)
                 }
+            }
+            if displayQuotationMarks != nil {
+                quote.displayQuotationMarks = displayQuotationMarks!
+            }
+            if displayAuthor != nil {
+                quote.displayAuthor = displayAuthor!
+            }
+            if displayWork != nil {
+                quote.displayWork = displayWork!
+            }
+            if displayAuthorAndWorkOnNewLine != nil {
+                quote.displayAuthorAndWorkOnNewLine = displayAuthorAndWorkOnNewLine!
             }
             quote.authorFullName = Utility.join(
                 strings: [quote.authorFirstName!, quote.authorLastName!]

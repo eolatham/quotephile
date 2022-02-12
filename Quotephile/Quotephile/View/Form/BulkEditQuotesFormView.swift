@@ -15,11 +15,16 @@ struct BulkEditQuotesFormView: View {
     @State private var editTags: Bool = false
     @State private var tagsEditMode: EditMode = EditMode.replace
     @State private var tags: String = ""
+    @State private var changeStyle: Bool = false
+    @State private var displayQuotationMarks: Bool = true
+    @State private var displayAuthor: Bool = true
+    @State private var displayWork: Bool = true
+    @State private var displayAuthorAndWorkOnNewLine: Bool = true
 
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("AUTHOR (optional)")) {
+                Section(header: Text("AUTHOR")) {
                     Toggle(isOn: $replaceAuthorFirstName) { Text("Replace author first name") }
                         .tint(.accentColor)
                     if replaceAuthorFirstName {
@@ -31,14 +36,14 @@ struct BulkEditQuotesFormView: View {
                         TextField("Last Name", text: $authorLastName).lineLimit(1)
                     }
                 }
-                Section(header: Text("WORK (optional)")) {
+                Section(header: Text("WORK")) {
                     Toggle(isOn: $replaceWork) { Text("Replace work") }
                         .tint(.accentColor)
                     if replaceWork {
                         TextField("Work", text: $work).lineLimit(1)
                     }
                 }
-                Section(header: Text("TAGS (optional)")) {
+                Section(header: Text("TAGS")) {
                     Toggle(isOn: $editTags) { Text("Edit tags") }
                         .tint(.accentColor)
                     if editTags {
@@ -48,6 +53,20 @@ struct BulkEditQuotesFormView: View {
                             Text("Add").tag(EditMode.add)
                             Text("Remove").tag(EditMode.remove)
                         }.pickerStyle(.segmented)
+                    }
+                }
+                Section(header: Text("STYLE")) {
+                    Toggle(isOn: $changeStyle) { Text("Change style") }
+                        .tint(.accentColor)
+                    if changeStyle {
+                        Toggle(isOn: $displayQuotationMarks) { Text("Display quotation marks") }
+                        .tint(.accentColor)
+                        Toggle(isOn: $displayAuthor) { Text("Display author") }
+                        .tint(.accentColor)
+                        Toggle(isOn: $displayWork) { Text("Display work") }
+                        .tint(.accentColor)
+                        Toggle(isOn: $displayAuthorAndWorkOnNewLine) { Text("Display author and work on new line") }
+                        .tint(.accentColor)
                     }
                 }
                 Section {
@@ -60,7 +79,11 @@ struct BulkEditQuotesFormView: View {
                                 newAuthorLastName: replaceAuthorLastName ? authorLastName : nil,
                                 newWork: replaceWork ? work : nil,
                                 tags: editTags ? tags : nil,
-                                tagsMode: tagsEditMode
+                                tagsMode: tagsEditMode,
+                                displayQuotationMarks: changeStyle ? displayQuotationMarks : nil,
+                                displayAuthor: changeStyle ? displayAuthor : nil,
+                                displayWork: changeStyle ? displayWork : nil,
+                                displayAuthorAndWorkOnNewLine: changeStyle ? displayAuthorAndWorkOnNewLine : nil
                             )
                             dismiss()
                         },
