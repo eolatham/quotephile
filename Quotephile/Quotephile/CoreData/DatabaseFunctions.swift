@@ -69,6 +69,21 @@ struct DatabaseFunctions {
     }
 
     /**
+     * Returns the count of quotes contained within the given quote collection.
+     */
+    static func fetchQuoteCollectionSize(
+        context: NSManagedObjectContext,
+        quoteCollection: QuoteCollection
+    ) -> Int {
+        let fetchRequest: NSFetchRequest<Quote> = Quote.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "collection == %@", quoteCollection)
+        let count: Int
+        do { count = try context.count(for: fetchRequest) }
+        catch { count = 0 }
+        return count
+    }
+
+    /**
      * For adding or editing a quote.
      * Formats and validates values before saving.
      */
