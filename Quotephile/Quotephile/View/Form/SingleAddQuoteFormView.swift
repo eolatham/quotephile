@@ -5,11 +5,31 @@ import SwiftUI
  */
 struct SingleAddQuoteFormView: View {
     @Environment(\.managedObjectContext) private var context
-    @Environment(\.dismiss) private var dismiss
 
     var quoteCollection: QuoteCollection
     var quote: Quote?
 
+    var body: some View {
+        _SingleAddQuoteFormView(
+            quoteCollection: quoteCollection,
+            quote: quote,
+            collectionOptions:
+                quote != nil
+                    ? DatabaseFunctions.fetchQuoteCollections(context: context)
+                    : nil
+        )
+    }
+}
+
+struct _SingleAddQuoteFormView: View {
+    @Environment(\.managedObjectContext) private var context
+    @Environment(\.dismiss) private var dismiss
+
+    var quoteCollection: QuoteCollection
+    var quote: Quote?
+    var collectionOptions: [QuoteCollection]?
+
+    @State private var collection: QuoteCollection
     @State private var text: String
     @State private var authorFirstName: String
     @State private var authorLastName: String
@@ -18,9 +38,14 @@ struct SingleAddQuoteFormView: View {
     @State private var isError: Bool
     @State private var errorMessage: String?
 
-    init(quoteCollection: QuoteCollection, quote: Quote? = nil) {
+    init(
+        quoteCollection: QuoteCollection,
+        quote: Quote? = nil,
+        collectionOptions: [QuoteCollection]?
+    ) {
         self.quoteCollection = quoteCollection
         self.quote = quote
+        self.collectionOptions = collectionOptions
         if quote != nil {
             _text = State<String>(initialValue: quote!.text!)
             _authorFirstName = State<String>(initialValue: quote!.authorFirstName!)
@@ -34,6 +59,7 @@ struct SingleAddQuoteFormView: View {
             _work = State<String>(initialValue: "")
             _tags = State<String>(initialValue: "")
         }
+        _collection = State<QuoteCollection>(initialValue: quoteCollection)
         _isError = State<Bool>(initialValue: false)
         _errorMessage = State<String?>(initialValue: nil)
     }
@@ -41,6 +67,15 @@ struct SingleAddQuoteFormView: View {
     var body: some View {
         NavigationView {
             Form {
+                if collectionOptions != nil && !collectionOptions!.isEmpty {
+                    Section(header: Text("COLLECTION")) {
+                        Picker("Pick a quote collection...", selection: $collection) {
+                            ForEach(collectionOptions!) { option in
+                                Text(option.name!).tag(option as QuoteCollection)
+                            }
+                        }
+                    }
+                }
                 Section(header: Text("TEXT")) {
                     TextEditor(text: $text)
                 }
@@ -58,7 +93,7 @@ struct SingleAddQuoteFormView: View {
                     Button(
                         action: {
                             let values: QuoteValues = QuoteValues(
-                                collection: quoteCollection,
+                                collection: collection,
                                 text: text,
                                 authorFirstName: authorFirstName,
                                 authorLastName: authorLastName,
