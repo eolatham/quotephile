@@ -38,7 +38,7 @@ struct QuoteView: View {
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .fixedSize(horizontal: false, vertical: true) // Ensure text wraps
-                    .padding([.top, .bottom], 5)
+                    .padding([.top, .bottom], 6)
                     .padding([.leading, .trailing], 2)
                 Button {
                     UIPasteboard.general.string = displayText
@@ -79,6 +79,9 @@ struct QuoteView: View {
                     quote.dateChanged = Date.now
                     DatabaseFunctions.commitChanges(context: context)
                 }
+            }
+            Section(header: Text("COLLECTION")) {
+                Text(quote.collection!.name!).lineLimit(1).padding(.vertical, 10)
             }
             if quote.tags!.count > 0 {
                 Section(header: Text("TAGS")) {
