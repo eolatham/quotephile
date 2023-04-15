@@ -6,7 +6,7 @@ Email: ericoliverlatham@gmail.com
 
 ## Description
 
-An [iOS app](https://apps.apple.com/us/app/quotephile/id1602992535) that makes it easy to collect, organize, and share text quotes
+An iOS app that makes it easy to collect, organize, and share text quotes
 
 ## Development
 
